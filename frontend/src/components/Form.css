@@ -1,0 +1,14 @@
+.form-container {
+  border: 2px solid black;
+  padding: 20px;
+  width: 250px;
+  margin: 8px;
+}
+
+.main-form-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100px;
+  margin: 8px;
+}

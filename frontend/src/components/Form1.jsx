@@ -1,6 +1,6 @@
-// Form/Formulario.jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import './Form.css';
 
 const Formulario = () => {
   const {
@@ -34,15 +34,18 @@ const Formulario = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className='form-container' onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor='firstName'>First name:</label>
       <input {...register('firstName', { required: true, minLength: 3 })} />
       {errors.firstName?.type === 'required' && <p>Name is required!</p>}
       {errors.firstName?.type === 'minLength' && <p>min 3 characteres required!</p>}
+      <br />
       <label htmlFor='lastName'>Last name:</label>
       <input {...register('lastName')} />
+      <br />
       <label htmlFor='city'>City:</label>
       <input {...register('city')} />
+      <br />
       <input type='submit' value='enviar' />
     </form>
   );
