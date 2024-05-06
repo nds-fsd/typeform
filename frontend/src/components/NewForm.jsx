@@ -20,10 +20,6 @@ const NewForm = ({ onAddSubject }) => {
     console.log('Form Data:', forms[formIndex]);
   };
 
-  const addNewForm = () => {
-    setForms([...forms, [{ answer: '', question: '' }]]);
-  };
-
   return (
     <div>
       {forms.map((form, formIndex) => (
@@ -58,9 +54,6 @@ const NewForm = ({ onAddSubject }) => {
           </form>
         </div>
       ))}
-      <button type='button' onClick={addNewForm}>
-        Create Form
-      </button>
     </div>
   );
 };

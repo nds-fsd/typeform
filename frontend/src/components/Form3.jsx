@@ -32,20 +32,19 @@ const Formulario = () => {
         alert(error);
       });
   };
-  git;
 
   return (
     <form className='form-container' onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor='Car'>Car brand:</label>
-      <input {...register('Car', { required: true, minLength: 3 })} />
+      <label htmlFor='firstName'>First name:</label>
+      <input {...register('firstName', { required: true, minLength: 3 })} />
       {errors.firstName?.type === 'required' && <p>Name is required!</p>}
       {errors.firstName?.type === 'minLength' && <p>min 3 characteres required!</p>}
       <br />
-      <label htmlFor='color'>Color:</label>
-      <input {...register('color')} />
+      <label htmlFor='lastName'>Last name:</label>
+      <input {...register('lastName')} />
       <br />
-      <label htmlFor='year'>Year:</label>
-      <input {...register('year')} />
+      <label htmlFor='city'>City:</label>
+      <input {...register('city')} />
       <br />
       <input type='submit' value='enviar' />
     </form>
