@@ -12,9 +12,16 @@ const getAllForms = async (req, res) => {
     //     });
 };
 
-const getForm = async (req, res) => {
+const getForm = (req, res) => {
     const formId = req.params.id;
-    await Form.findById(formId).then(console.log(formId))
+    Form.findById(formId)
+        .then(formFound => {
+            if (!formFound) {
+                return res.status(404)
+            };
+            return res.status(200).json(formFound);
+        })
+        .catch(error => next(error))
 }
 
 const createForm = async (req, res) => {
@@ -47,4 +54,4 @@ const deleteForm = async (req, res) => {
 };
 
 
-module.exports = { getAllForms, createForm, deleteForm }
+module.exports = { getAllForms, getForm, createForm, deleteForm }
