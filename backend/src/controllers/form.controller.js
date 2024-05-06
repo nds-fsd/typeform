@@ -21,20 +21,12 @@ const getForm = async (req, res) => {
         .catch(error => {
             res.status(404).json({ error: 'failed to get form' })
         })
-}
+};
 
 const createForm = async (req, res) => {
-    // // Ejemplo simplificado clase 06/05:
-    // const body = req.body;
-    // const data = {
-    //     title: body.title,
-    //     status: body.status,
-    // };
-    // const newForm = new Form(data);
+    // Model.create() une: const newForm = new Form(data);
     // await newForm.save();
     // res.send(newForm);
-
-    // Model.create() une new Model(...) y newModel.save()
     const body = req.body
     await Form.create({
         body
@@ -47,13 +39,13 @@ const createForm = async (req, res) => {
             res.status(500).json({ error: 'Failed to create form' });
         })
 };
+
 const updateForm = (req, res) => {
     // automatically saves the datetime of the last update
     req.body.editDateTime = new Date();
 
     const updatedForm = Form.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
-        // upsert: true,
     })
         .then(updateForm => {
             if (!updatedForm) {
