@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const formSchema = new mongoose.Schema({
-    title: String,
+    title: {
+        type: String,
+        default: 'My form'
+    },
     status: String,
     creationDateTime: {
         type: Date,

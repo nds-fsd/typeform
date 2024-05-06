@@ -1,28 +1,20 @@
 const Form = require('../schemas/form.schema')
 
 const getAllForms = async (req, res) => {
-    // // clase de lunes 06/05, la forma mas simple sin error handling
-    // const all = Form.find();
-    // res.json(all)
-
-    // Test en mentoria Slack 06/05
-    // const forms = await Form.find()
-    // console.log(forms)
-    // res.status(200).json('ok')
-
     await Form.find()
-        .then(forms => { res.json(forms) })
+        .then(allForms => { res.json(allForms) })
         .catch(error => {
             console.log('error fetching forms:', error);
             res.status(500).json({ error: 'Failed to fetch forms' })
-        });
+        })
 };
 
 const getForm = async (req, res) => {
     await Form.findById(req.params.id)
         .then(formFound => {
             if (!formFound) {
-                return res.status(404)
+                res.status(404).json({ error: 'failed to get form' });
+                console.log(`failed to get form with ID ${req.params.id}`)
             };
             return res.status(200).json(formFound);
         })
@@ -32,33 +24,36 @@ const getForm = async (req, res) => {
 }
 
 const createForm = async (req, res) => {
-    const body = req.body;
-    const data = {
-        title: body.title,
-        status: body.status,
-    };
-    const newForm = new Form(data);
-    await newForm.save();
-    res.send(newForm);
-
-    // await Form.create({
+    // // Ejemplo simplificado clase 06/05:
+    // const body = req.body;
+    // const data = {
     //     title: body.title,
-    //     status: 'Active',
-    //     creationDateTime: new Date(),
-    // })
-    //     .then(createdForm => {
-    //     res.json(createForm)
-    // })
-    // .catch(error => {
-    //     console.error('Error creating form:', error);
-    //     res.status(500).json({ error: 'Failed to create form' });
-    // })
+    //     status: body.status,
+    // };
+    // const newForm = new Form(data);
+    // await newForm.save();
+    // res.send(newForm);
+
+    // Model.create() une new Model(...) y newModel.save()
+    const body = req.body
+    await Form.create({
+        body
+    })
+        .then(newForm => {
+            res.json(newForm)
+        })
+        .catch(error => {
+            console.error('Failed to create form:', error);
+            res.status(500).json({ error: 'Failed to create form' });
+        })
 };
 const updateForm = (req, res) => {
+    // automatically saves the datetime of the last update
+    req.body.editDateTime = new Date();
+
     const updatedForm = Form.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         // upsert: true,
-        editDateTime: new Date(),
     })
         .then(updateForm => {
             if (!updatedForm) {
@@ -75,6 +70,12 @@ const updateForm = (req, res) => {
 const deleteForm = async (req, res) => {
     await Form.findByIdAndDelete(req.params.id)
         .then(deletedForm => {
+            if (!deletedForm) {
+                res.status(404).json
+                    ({
+                        error: 'the form you want to delete was not found'
+                    })
+            }
             res.json(console.log('form deleted successfully', deletedForm));
         })
         .catch(error => {
