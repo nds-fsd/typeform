@@ -9,6 +9,7 @@ app.use(express.json());
 
 connectDB().then(() => console.log('Connected to database!'));
 
+app.use('/', router)
 
 const port = process.env.PORT || 3000;
 

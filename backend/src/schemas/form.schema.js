@@ -1,23 +1,23 @@
 // crear new schema conforme estructura
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-const questionSchema = new Schema({
-    text: String
-});
+// const questionSchema = new mongoose.Schema({
+//     text: String
+// });
 
-//const Question = mongoose.model('Question', questionSchema);
+// const Question = mongoose.model('Question', questionSchema);
 
-const formSchema = new Schema({
+const formSchema = new mongoose.Schema({
     title: String,
     status: String,
     creationDateTime: Date,
-    // questions: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'Question'
-    //     }
-    // ]
+    questions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Question'
+        }
+    ]
 });
-const Form = new model('Form', formSchema);
+const Form = new mongoose.model('Form', formSchema);
 
 module.exports = Form;
