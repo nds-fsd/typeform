@@ -2,14 +2,13 @@ const express = require('express');
 const { connectDB } = require('./mongo/connection');
 const cors = require('cors');
 const app = express();
-const router = require('./routers/router');
+const router = require('./routers/forms');
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/', router);
-
 connectDB().then(() => console.log('Connected to database!'));
+
 
 const port = process.env.PORT || 3000;
 

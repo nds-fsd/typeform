@@ -1,17 +1,25 @@
 const Form = require('../schemas/form.schema')
 
-const getAllForms = (req, res) => {
-    Form.find()
-        .then(forms => { res.json(forms) })
-        .catch(error => {
-            console.log('error fetching forms:', error);
-            res.status(500).json({ error: 'Failed to fetch forms' })
-        });
+const getAllForms = async (req, res) => {
+    const forms = await Form.find()
+    console.log(Form)
+    res.status(200).json('ok')
+    // Form.find()
+    //     .then(forms => { res.json(forms) })
+    //     .catch(error => {
+    //         console.log('error fetching forms:', error);
+    //         res.status(500).json({ error: 'Failed to fetch forms' })
+    //     });
 };
 
-const createForm = (req, res) => {
+const getForm = async (req, res) => {
+    const formId = req.params.id;
+    await Form.findById(formId).then(console.log(formId))
+}
+
+const createForm = async (req, res) => {
     const body = req.body;
-    Form.create({
+    await Form.create({
         title: body.title,
         status: 'Active',
         creationDateTime: new Date(),
@@ -25,10 +33,10 @@ const createForm = (req, res) => {
         })
 };
 
-const deleteForm = (req, res) => {
+const deleteForm = async (req, res) => {
     const formId = req.params.id;
 
-    Form.findByIdAndDelete(formId)
+    await Form.findByIdAndDelete(formId)
         .then(deletedForm => {
             res.json(console.log('form deleted successfully', deletedForm));
         })
