@@ -18,9 +18,8 @@ const getAllForms = async (req, res) => {
         });
 };
 
-const getForm = (req, res) => {
-    const formId = req.params.id;
-    Form.findById(formId)
+const getForm = async (req, res) => {
+    await Form.findById(req.params.id)
         .then(formFound => {
             if (!formFound) {
                 return res.status(404)
@@ -28,7 +27,6 @@ const getForm = (req, res) => {
             return res.status(200).json(formFound);
         })
         .catch(error => {
-            console.log('error getting form', error);
             res.status(404).json({ error: 'failed to get form' })
         })
 }
@@ -37,8 +35,7 @@ const createForm = async (req, res) => {
     const body = req.body;
     const data = {
         title: body.title,
-        status: 'Active',
-        creationDateTime: new Date(),
+        status: body.status,
     };
     const newForm = new Form(data);
     await newForm.save();
@@ -57,28 +54,26 @@ const createForm = async (req, res) => {
     //     res.status(500).json({ error: 'Failed to create form' });
     // })
 };
-const updateForm = async (req, res) => {
-    const formId = req.params.id;
-    const body = req.body;
-    await Form.findByIdAndUpdate(formId, body, {
-        title: body.title,
-        //status: body.status
-        //editDateTime: new Date(),
+const updateForm = (req, res) => {
+    const updatedForm = Form.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        // upsert: true,
+        editDateTime: new Date(),
     })
-        .then(
-            res.json(Form)
-        )
+        .then(updateForm => {
+            if (!updatedForm) {
+                return res.status(404).json({ error: 'Form not found' });
+            }
+            res.json(updatedForm)
+        })
         .catch(error => {
             console.error('Error updating form:', error);
             res.status(500).json({ error: 'Failed to update form' });
         })
-
 };
 
 const deleteForm = async (req, res) => {
-    const formId = req.params.id;
-
-    await Form.findByIdAndDelete(formId)
+    await Form.findByIdAndDelete(req.params.id)
         .then(deletedForm => {
             res.json(console.log('form deleted successfully', deletedForm));
         })
