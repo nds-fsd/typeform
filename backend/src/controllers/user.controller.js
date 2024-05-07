@@ -6,13 +6,21 @@ const getAllUsers = async (req, res) => {
     res.status(200).json(allUsers);
   } catch (error) {
     console.log(error);
-    res.status(400);
+    res.status(500).json({ message: 'Error fetching all users' });
   }
 };
 
 const getUser = async (req, res) => {
-  const user = await User.findById(req.params.id);
-  res.json(user);
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error fetching user' });
+  }
 };
 
 const createUser = async (req, res) => {
@@ -30,24 +38,40 @@ const createUser = async (req, res) => {
   try {
     console.log('saving user..');
     await newUser.save();
-    res.json(newUser);
+    res.status(200).json(newUser);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ message: 'Error creating user' });
   }
 };
 
 const updateUser = async (req, res) => {
-  const id = req.params.id;
-  const updatedUser = await User.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
-  res.json(updatedUser);
+  try {
+    const id = req.params.id;
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error updating user' });
+  }
 };
 
 const deleteUser = async (req, res) => {
-  const user = await User.findByIdAndDelete(req.params.id);
-  res.json(user);
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error deleting user' });
+  }
 };
 
 module.exports = {
