@@ -1,10 +1,15 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const formSchema = new mongoose.Schema({
+const formSchema = new Schema({
     title: {
         type: String,
-        default: 'My form'
+        // podemos usar "My form" como default title si el user 
+        // no le asigna uno en la creación, pero no aqui, 
+        // sino en el frontend, como placeholder del input respectivo
+        //default: 'My form'
+        require: true
     },
+    // a depender de cuales serán los estados, adaptar aqui o en frontend
     status: String,
     creationDateTime: {
         type: Date,
@@ -13,16 +18,17 @@ const formSchema = new mongoose.Schema({
     },
     editDateTime: {
         type: Date,
+        // quizá sea útil registrar hora de la última edición(?)
         default: new Date()
     },
     questions: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Question'
         }
     ]
 });
 
-const Form = new mongoose.model('Form', formSchema);
+const Form = model('Form', formSchema);
 
 module.exports = Form;
