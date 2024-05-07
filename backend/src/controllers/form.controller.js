@@ -1,15 +1,32 @@
 const Form = require('../schemas/form.schema')
 
 const getAllForms = async (req, res) => {
-    await Form.find()
-        .then(allForms => { res.json(allForms) })
-        .catch(error => {
-            console.log('error fetching forms:', error);
-            res.status(500).json({ error: 'Failed to fetch forms' })
-        })
+    try {
+        const allForms = await Form.find();
+        res.json(allForms)
+    } catch (error) {
+        console.log('Failed to get forms:', error);
+        res.status(500).json({ error: 'Failed to get forms' });
+    }
+    // // alternativa .then .catch para lidar com a promise
+    // await Form.find()
+    //     .then(allForms => { res.json(allForms) })
+    //     .catch(error => {
+    //         console.log('Failed to get forms:', error);
+    //         res.status(500).json({ error: 'Failed to get forms' })
+    //     })
 };
 
 const getForm = async (req, res) => {
+    try {
+        const formFound = await Form.findById(req.params.id);
+        if (!formFound) {
+            res.status(404).json({ error: `Form with ID ${req.params.id} not found` };
+        }
+        res.status(200).json(formFound)
+    } catch (error) {
+        res.status(500).json({ error: 'failed to get form' })
+    }
     await Form.findById(req.params.id)
         .then(formFound => {
             if (!formFound) {
@@ -24,15 +41,10 @@ const getForm = async (req, res) => {
 };
 
 const createForm = async (req, res) => {
-    // Model.create() une: const newForm = new Form(data);
-    // await newForm.save();
-    // res.send(newForm);
-    const body = req.body
-    await Form.create({
-        body
-    })
+    await Form.create(req.body)
         .then(newForm => {
             res.json(newForm)
+            console.log(newForm)
         })
         .catch(error => {
             console.error('Failed to create form:', error);
@@ -40,7 +52,7 @@ const createForm = async (req, res) => {
         })
 };
 
-const updateForm = (req, res) => {
+const updateForm = async (req, res) => {
     // automatically saves the datetime of the last update
     req.body.editDateTime = new Date();
 
