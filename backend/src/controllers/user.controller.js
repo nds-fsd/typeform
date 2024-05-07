@@ -1,8 +1,13 @@
 const User = require('../schemas/user.schema');
 
 const getAllUsers = async (req, res) => {
-  const allUsers = await User.find();
-  res.json(allUsers);
+  try {
+    const allUsers = await User.find();
+    res.status(200).json(allUsers);
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+  }
 };
 
 const getUser = async (req, res) => {
