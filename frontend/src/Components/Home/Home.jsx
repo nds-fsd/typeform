@@ -2,7 +2,7 @@ import React from 'react';
 import style from './Home.module.css';
 
 const handleClick = () =>{
-    alert("click")
+    window.open ('https://www.typeform.com/', '_blank')
 }
 
 const Home = () => {
