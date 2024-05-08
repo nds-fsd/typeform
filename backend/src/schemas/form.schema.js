@@ -19,7 +19,7 @@ const formSchema = new Schema({
     editDateTime: {
         type: Date,
         // quizá sea útil registrar hora de la última edición(?)
-        default: new Date()
+        default: undefined
     },
     questions: [
         {
