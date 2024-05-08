@@ -1,7 +1,10 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const formSchema = new mongoose.Schema({
-    title: String,
+const formSchema = new Schema({
+    title: {
+        type: String,
+        require: true
+    },
     status: String,
     creationDateTime: {
         type: Date,
@@ -10,7 +13,8 @@ const formSchema = new mongoose.Schema({
     },
     editDateTime: {
         type: Date,
-        default: new Date()
+        // quizá sea útil registrar hora de la última edición(?)
+        default: undefined
     },
     questions: [
         {
@@ -20,6 +24,6 @@ const formSchema = new mongoose.Schema({
     ]
 });
 
-const Form = new mongoose.model('Form', formSchema);
+const Form = model('Form', formSchema);
 
 module.exports = Form;

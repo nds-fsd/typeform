@@ -7,11 +7,11 @@ const router = require('./routers/router');
 app.use(cors());
 app.use(express.json());
 
-app.use('/', router);
-
 connectDB().then(() => console.log('Connected to database!'));
 
-const port = process.env.PORT || 3000;
+app.use('/', router)
+
+const port = process.env.PORT || 3001;
 
 const server = app.listen(port, () => {
   console.log('Server is up and running ⚡');
