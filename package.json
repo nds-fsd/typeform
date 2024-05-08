@@ -14,5 +14,8 @@
     "dotenv-cli": "^7.0.0",
     "turbo": "^1.13.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "react-hook-form": "^7.51.3"
+  }
 }

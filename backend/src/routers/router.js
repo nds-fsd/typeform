@@ -1,4 +1,5 @@
 const express = require('express');
+<<<<<<< HEAD
 const userRouter = require('./user.router');
 
 const router = express.Router();
@@ -6,3 +7,12 @@ const router = express.Router();
 router.use('/user', userRouter);
 
 module.exports = router;
+=======
+const formRouter = require('./form')
+
+const router = express.Router();
+
+router.use('/form', formRouter);
+
+module.exports = router;
+>>>>>>> sprint1
