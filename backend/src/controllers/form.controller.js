@@ -6,7 +6,7 @@ const getAllForms = async (req, res) => {
         const allForms = await Form.find();
         res.json(allForms)
     } catch (error) {
-        console.log('Failed to get forms:', error);
+        console.error('Failed to get forms:', error);
         res.status(500).json({ error: 'Failed to get forms' });
     }
 };
@@ -21,7 +21,7 @@ const getForm = async (req, res) => {
         }
         res.status(200).json(formFound)
     } catch (error) {
-        console.log('Failed to get form:', error);
+        console.error('Failed to get form:', error);
         res.status(500).json({ error: 'Failed to get form' })
     }
 };
@@ -71,11 +71,11 @@ const deleteForm = async (req, res) => {
         const { id } = req.params;
         const formToDelete = await Form.findByIdAndDelete(id);
         if (!formToDelete) {
-            res.status(404).json({ error: 'Form not found' });
+            return res.status(404).json({ error: 'Form not found' });
         }
         res.status(204).json();
     } catch (error) {
-        console.log('Failed to delete form:', error);
+        console.error('Failed to delete form:', error);
         res.status(500).json({ error: 'Failed to delete form' })
     }
 };
