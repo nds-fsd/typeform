@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {Routes, Route} from "react-router-dom";
 import Home from "./Components/Home/Home.jsx";
+import Workspace from "./Components/Workspace/Workspace.jsx";
+
 
 
 function App() {
+
     return (
-        <div>
-            <Home />
-        </div>
+            <Routes> 
+                <Route path='/home' element={<Home />} />
+                <Route path='/workspace' element={<Workspace />} />   
+            </Routes>  
     ) 
-    
+
 }
 
 export default App;
