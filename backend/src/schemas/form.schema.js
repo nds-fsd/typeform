@@ -18,7 +18,7 @@ const formSchema = new Schema({
     },
     questions: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Question'
         }
     ]
