@@ -1,59 +1,63 @@
 import React, { useState } from 'react';
 
-const NewForm = ({ onAddSubject }) => {
-  const [forms, setForms] = useState([[{ answer: '', question: '' }]]);
+const NewForm = () => {
+  const [questions, setQuestions] = useState([{ question: '' }]);
+  const [formName, setFormName] = useState('');
 
-  const handleChange = (formIndex, fieldIndex, event) => {
-    const newForms = [...forms];
-    newForms[formIndex][fieldIndex][event.target.name] = event.target.value;
-    setForms(newForms);
+  const handleChange = (index, event) => {
+    const { name, value } = event.target;
+    const updatedQuestions = [...questions];
+    updatedQuestions[index][name] = value;
+    setQuestions(updatedQuestions);
   };
 
-  const addNewField = (formIndex) => {
-    const newForms = [...forms];
-    newForms[formIndex].push({ answer: '', question: '' });
-    setForms(newForms);
+  const handleAddQuestion = () => {
+    setQuestions([...questions, { question: '' }]);
   };
 
-  const handleSubmit = (formIndex) => {
-    onAddSubject(forms[formIndex]);
-    console.log('Form Data:', forms[formIndex]);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Form Data:', questions);
+    console.log('Form Name:', formName);
   };
 
   return (
-    <div>
-      {forms.map((form, formIndex) => (
-        <div key={formIndex} className='main-form-container'>
-          <form>
-            {form.map((field, fieldIndex) => (
-              <div key={fieldIndex}>
-                <label htmlFor={`field-${formIndex}-${fieldIndex}`}>{fieldIndex + 1}:</label>
-                <input
-                  type='text'
-                  name='question'
-                  value={field.question}
-                  onChange={(event) => handleChange(formIndex, fieldIndex, event)}
-                  placeholder='Enter question'
-                  id={`field-${formIndex}-${fieldIndex}`}
-                />
-                <input
-                  type='text'
-                  name='answer'
-                  value={field.answer}
-                  onChange={(event) => handleChange(formIndex, fieldIndex, event)}
-                  placeholder='Enter answer'
-                />
-              </div>
-            ))}
-            <button type='button' onClick={() => addNewField(formIndex)}>
-              Add New question
-            </button>
-            <button type='button' onClick={() => handleSubmit(formIndex)}>
-              Save
-            </button>
-          </form>
-        </div>
-      ))}
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <h1>Route / New Form</h1>
+      <p>My workspace</p>
+      <form className='newFormContainer' onSubmit={handleSubmit}>
+        <p>My workspace - New Form</p>
+
+        <input
+          className='inputfFormName'
+          type='text'
+          value={formName}
+          onChange={(e) => setFormName(e.target.value)}
+          placeholder='Form Name'
+          style={{ marginBottom: '10px' }}
+        />
+
+        {questions.map((question, index) => (
+          <div key={index}>
+            <label htmlFor={`question-${index}`}></label>
+            <input
+              type='text'
+              id={`question-${index}`}
+              name='question'
+              value={question.question}
+              onChange={(event) => handleChange(index, event)}
+              placeholder='Whats your name?'
+            />
+            <br />
+          </div>
+        ))}
+        <button type='button' className='addQuestionBtn' onClick={handleAddQuestion}>
+          Add Question
+        </button>
+        <button type='submit' style={{ position: 'fixed', bottom: '10px', right: '10px' }}>
+          Save
+        </button>
+      </form>
     </div>
   );
 };

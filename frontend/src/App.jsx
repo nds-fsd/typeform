@@ -1,10 +1,11 @@
 import React from 'react';
-import MainForm from './components/MainForm';
+import NewForm from './components/NewForm';
+import './components/NewForm.css';
 
 const App = () => {
   return (
-    <div>
-      <MainForm />
+    <div className='container'>
+      <NewForm />
     </div>
   );
 };
