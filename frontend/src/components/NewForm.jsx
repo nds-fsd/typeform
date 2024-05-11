@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './NewForm.module.css';
 
 const NewForm = () => {
   const [questions, setQuestions] = useState([{ question: '' }]);
@@ -25,11 +26,11 @@ const NewForm = () => {
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <h1>Route / New Form</h1>
       <p>My workspace</p>
-      <form className='newFormContainer' onSubmit={handleSubmit}>
+      <form className={styles.newFormContainer} onSubmit={handleSubmit}>
         <p>My workspace - New Form</p>
 
         <input
-          className='inputfFormName'
+          className={styles.inputfFormName}
           type='text'
           value={formName}
           onChange={(e) => setFormName(e.target.value)}
@@ -49,13 +50,23 @@ const NewForm = () => {
               placeholder='Whats your name?'
             />
             <br />
+            <div key={index}>
+              <label htmlFor={`question-${index}`}></label>
+              <input
+                type='text'
+                id={`question-${index}`}
+                name='question'
+                value={question.question}
+                onChange={(event) => handleChange(index, event)}
+                placeholder='Whats your age?'
+              />
+
+              <br />
+            </div>
           </div>
         ))}
-        <button type='button' className='addQuestionBtn' onClick={handleAddQuestion}>
-          Add Question
-        </button>
-        <button type='submit' style={{ position: 'fixed', bottom: '10px', right: '10px' }}>
-          Save
+        <button type='button' className={styles.addQuestionBtn} onClick={handleAddQuestion}>
+          Add Question +
         </button>
       </form>
     </div>
