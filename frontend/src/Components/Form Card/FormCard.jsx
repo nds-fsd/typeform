@@ -21,27 +21,9 @@ const FormCard = () => {
         getForms();
     }, []);
 
-    // useEffect(() => {
-    //     const getForms = [
-    //     {
-    //         title: "form 1"
-    //     },
-    //     {
-    //         title: "form 2"
-    //     },
-    //     {
-    //         title: "form 3"
-    //     }
-    // ]; //reemplazar esto por el fetch
-
-
-//     setForms(getForms); 
-// }, []);
-    
-
     return (
-        <div>
-            {forms.map((form,index) => (<p className={style.parag} key={index}>{form.title}</p>))}
+        <div className={style.formgrid}>
+            {forms.map((form,index) => (<p className={style.formcard}key={index}>{form.title}</p>))}
         </div>
     )  
 }

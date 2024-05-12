@@ -1,5 +1,6 @@
 import React from 'react';
 import FormCard from '../Form Card/FormCard';
+import style from './Workspace.module.css';
 
 const handleClick = () => {
     console.log ("hice click")
@@ -8,10 +9,14 @@ const handleClick = () => {
 
 const Workspace = () => {
     return (
-        <div>
-            <button onClick={handleClick}>Add New Form</button>
-            <FormCard /> 
+        <div className={style.viewport}>
+            <h1>My Workspace</h1>
+            <div className={style.frame}>
+                <button onClick={handleClick}>Add New Form</button>
+                <FormCard className={style.formcard} /> 
+            </div>
         </div>
+        
     )
 }
 

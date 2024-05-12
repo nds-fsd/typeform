@@ -1,0 +1,14 @@
+.formcard {
+    border: solid 1px red;
+    display: flex; /* Usando flexbox para centrar el contenido */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+}
+
+.formgrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Cuatro columnas iguales */
+    grid-template-rows: repeat(4, 1fr); /* Cuatro filas iguales */
+    gap: 15px; /* Espacio entre celdas */
+    position: relative; /* Posicionamiento relativo para los botones de acción */
+}
