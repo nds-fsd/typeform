@@ -10,3 +10,5 @@
 .footerNewForm {
   height: 55px;
 }
+/*<div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+<div style={{ marginBottom: '50px' }}>*/
