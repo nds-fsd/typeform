@@ -3,7 +3,7 @@ import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
 
 const handleClick = () => {
-    console.log ("hice click")
+    alert ("ir a new form")
     //acá solo debe haber una ruta que me lleve a newform nada mas es un simple link
 } 
 
