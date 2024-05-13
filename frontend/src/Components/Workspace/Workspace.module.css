@@ -1,17 +1,32 @@
 .viewport {
+    margin: 0px;
+    height: 100vh;
+    background: rgb(160,158,194);
+    background: linear-gradient(90deg, rgba(160,158,194,0.5410758053221288) 0%, rgba(197,197,255,0.5550814075630253) 43%, rgba(0,212,255,0.4710477941176471) 100%);
+    width: 100vw;
     overflow-y: auto;
-    margin: 20px;
 }
 
+h1 {
+    margin-top: 10px;
+    margin-left: 20px;
+}
 .frame {
     display: grid;
-    grid-template-columns: 1fr 4fr; /* División entre el panel lateral y la cuadrícula */
-    height: 100vh; /* Ajusta la altura a la vista del usuario */
+    margin: 20px;
+    background-color: azure;
+    padding: 20px;
+    border-radius: 20px;
+    grid-template-columns: 1fr 4fr; 
+    height: auto; 
     gap: 10px;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
 }
 
 
-button {
+.btn {
     font-family: "Space Mono", monospace;
     font-weight: 400;
     font-style: normal;

@@ -2,7 +2,7 @@ import React from 'react';
 import style from './Home.module.css';
 
 const handleClick = () =>{
-    window.open ('https://www.typeform.com/', '_blank')
+    window.location.href = 'http://localhost:3000/workspace'
 }
 
 const Home = () => {

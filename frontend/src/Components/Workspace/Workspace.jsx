@@ -12,7 +12,7 @@ const Workspace = () => {
         <div className={style.viewport}>
             <h1>My Workspace</h1>
             <div className={style.frame}>
-                <button onClick={handleClick}>Add New Form</button>
+                <button className={style.btn} onClick={handleClick}>Add New Form</button>
                 <FormCard className={style.formcard} /> 
             </div>
         </div>
