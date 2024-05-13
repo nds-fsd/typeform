@@ -1,0 +1,14 @@
+.saveButton {
+  width: 150px;
+  height: 40px;
+  margin: 8px;
+  border-radius: 14px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+}
+.footerNewForm {
+  height: 55px;
+}
+/*<div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+<div style={{ marginBottom: '50px' }}>*/
