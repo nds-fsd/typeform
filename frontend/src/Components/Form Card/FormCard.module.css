@@ -1,0 +1,20 @@
+.formcard {
+    font-family: "Space Mono", monospace;
+    display: flex; /* Usando flexbox para centrar el contenido */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    border-radius: 20px;
+    height: 200px;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+}
+
+.formgrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Cuatro columnas iguales */
+    margin: 30px;
+    grid-template-rows: auto-fit; /* Cuatro filas iguales */
+    gap: 15px; /* Espacio entre celdas */
+    position: relative; /* Posicionamiento relativo para los botones de acción */
+}

@@ -1,0 +1,45 @@
+.viewport {
+    margin: 0px;
+    height: 100vh;
+    background: rgb(160,158,194);
+    background: linear-gradient(90deg, rgba(160,158,194,0.5410758053221288) 0%, rgba(197,197,255,0.5550814075630253) 43%, rgba(0,212,255,0.4710477941176471) 100%);
+    width: 100vw;
+    overflow-y: auto;
+}
+
+h1 {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.frame {
+    display: grid;
+    margin: 20px;
+    background-color: azure;
+    padding: 20px;
+    border-radius: 20px;
+    grid-template-columns: 1fr 4fr; 
+    height: auto; 
+    gap: 10px;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+}
+
+
+.btn {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    background-color: azure;
+    height: 50px;
+    width: 200px;
+    margin-top: 50px;
+    border: none;
+    border-radius: 50px;
+    border: 1px solid rgba(162, 156, 156, 0.433);
+    transition: 0.3s;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+    box-shadow: 0px 0px 5px 1px rgba(171,171,171,1);
+}
