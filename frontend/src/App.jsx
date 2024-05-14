@@ -12,7 +12,7 @@ function App() {
             <Routes> 
                 <Route path='/home' element={<Home />} />
                 <Route path='/workspace' element={<Workspace />} />  
-                <Route path='/createform' element={<CreateForms />} />
+                <Route path='/CreateForms' element={<CreateForms />} />
             </Routes>  
     ) 
 
