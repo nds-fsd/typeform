@@ -2,7 +2,13 @@ body {
   font-family: 'Space Mono', monospace;
 }
 h1 {
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Rubik', serif;
+}
+
+.background {
+  background: rgb(160,158,194);
+  background: linear-gradient(90deg, rgba(160,158,194,0.5410758053221288) 0%, rgba(197,197,255,0.5550814075630253) 43%, rgba(0,212,255,0.4710477941176471) 100%);
+  width: 100vw;
 }
 
 .newFormContainer {
