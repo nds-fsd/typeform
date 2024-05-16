@@ -24,7 +24,7 @@
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
     "prettier": "^3.2.5",
-    "react-hook-form": "^7.51.3",
+    "react-hook-form": "^7.51.4",
     "react-router-dom": "^6.23.0"
   }
 }
