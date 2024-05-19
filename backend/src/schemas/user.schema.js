@@ -1,14 +1,15 @@
-require('dotenv').config();
 const { Schema, model } = require('mongoose');
-const secret = process.env.JWT_SECRET;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
+
+const secret = process.env.JWT_SECRET;
 
 const userSchema = new Schema({
   email: { type: String },
   name: { type: String },
   password: { type: String },
-  createdAt: { type: Date },
+  createdAt: { type: Date, default: Date.now },
 });
 
 userSchema.pre('save', function (next) {

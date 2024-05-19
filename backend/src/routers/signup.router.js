@@ -3,6 +3,6 @@ const singUpController = require('../controllers/singup.controller');
 
 const router = express.Router();
 
-router.post('/', singUpController.register);
+router.post('/', singUpController.signUp);
 
 module.exports = router;

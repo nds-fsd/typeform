@@ -1,54 +1,48 @@
 const User = require('../schemas/user.schema');
 
-const register = (req, res) => {
-  const body = req.body;
-  const email = req.body.email;
+const signUp = async (req, res) => {
+  const { email, name, password } = req.body;
 
-  if (!email) {
-    res.status(400).json({ error: { register: 'email not received' } });
-  }
-  User.findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        res.status(400).json({ email: 'email already registered' });
-      }
-      console.log('pruebaaaaa');
+  try {
+    if (!email) {
+      return res.status(400).json({ error: { register: 'email not received' } });
+    }
+    const existingUser = await User.findOne({ email: email });
 
-      const data = {
-        email: body.email,
-        name: body.name,
-        password: body.password,
-        createdAt: new Date(),
-      };
+    if (existingUser) {
+      return res.status(400).json({ error: 'email already registered' });
+    }
 
-      const newUser = new User(data);
-
-      newUser
-        .save()
-        .then((createdUser) => {
-          return res.status(201).json({
-            token: createdUser.generateJWT(),
-            user: {
-              id: createdUser._id,
-              email: createdUser.email,
-              name: createdUser.name,
-              createdAt: createdUser.createdAt,
-            },
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          return res.status(500).json({ error: 'Error saving user' });
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.status(500).json({ error: 'Error finding user' });
+    const newUser = new User({
+      email,
+      name,
+      password,
+      createdAt: new Date(),
     });
+
+    await newUser.save(); 
+    //antes de guardarse se encripta la contraseña. El codigo que encripta la contraseña esta en el archivo de 'user.schema.js'(el que pone ).
+
+    const token = newUser.generateJWT(); 
+    // el metodo "generateJWT" esta definido en 'user.schema.js'
+
+    return res.status(201).json({
+      token,
+      user: {
+        id: newUser._id,
+        email: newUser.email,
+        name: newUser.name,
+        createdAt: newUser.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 module.exports = {
-  register,
+  signUp,
 };
 
 // backedn - crear endpoint para registrarnos == recoger datos del usuarios que vienen en el body y validar que los datos son correctos
