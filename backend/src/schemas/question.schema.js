@@ -47,5 +47,3 @@ const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion'
 const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
 
 exports.QuestionSchema = QuestionSchema;
-
-
