@@ -6,7 +6,7 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET;
 
 const userSchema = new Schema({
-  email: { type: String },
+  email: { type: String }, //ver si es necesario acá que sea required, 
   name: { type: String },
   password: { type: String },
   createdAt: { type: Date, default: Date.now },
