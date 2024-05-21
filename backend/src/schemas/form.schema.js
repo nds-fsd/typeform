@@ -7,24 +7,21 @@ const FormSchema = new Schema({
         type: String,
         require: true
     },
-    status: {type: String, enum: ['draft', 'published'], default: 'draft'},
+    status: { type: String, enum: ['draft', 'published'], default: 'draft' },
     creationDateTime: {
         type: Date,
         default: new Date(),
         immutable: true
     },
-    editDateTime: {
+    updateDateTime: {
         type: Date,
-        // quizá sea útil registrar hora de la última edición(?)
-        default: undefined
+        default: new Date(),
+
     },
     questions: [
         QuestionSchema
     ]
 });
-
-
-
 
 const Form = model('Form', FormSchema);
 

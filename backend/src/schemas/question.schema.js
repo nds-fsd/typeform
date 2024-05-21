@@ -9,7 +9,7 @@ const QuestionSchema = new Schema({
         type: String,
         required: false
     },
-    createDateTime: {
+    creationDateTime: {
         type: Date,
         default: new Date(),
         immutable: true
@@ -18,15 +18,13 @@ const QuestionSchema = new Schema({
         type: Date,
         default: new Date(),
     },
-
 }, {
     discriminatorKey: 'type'
 });
 
-
-
-const TextQuestion = QuestionSchema.discriminator('TextQuestion', new Schema({
-}));
+const TextQuestion = QuestionSchema.discriminator('TextQuestion',
+    new Schema({
+    }));
 
 const QuestionChoice = new Schema({
     label: {
@@ -42,7 +40,6 @@ const MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuest
 const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', new Schema({
     choices: [QuestionChoice]
 }));
-
 
 const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
 

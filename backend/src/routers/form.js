@@ -1,8 +1,8 @@
-import { CreateFormBodyValidation } from '../validators/form.validators';
+const { CreateFormBodyValidation } = require('../validators/form.validators');
 
 const express = require('express');
 const { getAllForms, getForm, createForm, deleteForm, updateForm } = require('../controllers/form.controller');
-import { validateRequest } from 'zod-express-middleware';
+const { validateRequest } = require('zod-express-middleware');
 
 const router = express.Router();
 
