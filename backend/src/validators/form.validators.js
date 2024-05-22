@@ -12,31 +12,44 @@ const questionValidationSchema = z.object({
     label: z.string(),
   })).optional(),
 }).refine((data) => {
-  console.log((data.type === 'MultipleChoiceQuestion' || data.type === 'SingleChoiceQuestion') && data.choices.length > 1);
-  return (data.type === 'MultipleChoiceQuestion' || data.type === 'SingleChoiceQuestion') && data.choices.length > 1
-},
-  {
-    message: "There has to be at least two options for the question",
-    path: ["choices"]
-  });
-//console.log(QuestionSchema._applyDiscriminators.YesNoQuestion);
+  // está bien la organizacion/indentacion abajo?
+  if (
+    (
+      data.type === 'MultipleChoiceQuestion'
+      || data.type === 'SingleChoiceQuestion'
+    ) && (
+      !data.choices || data.choices.length < 2
+    )
+  ) {
+    return false;
+  }
+  return true;
+}, {
+  message: "At least two unique options are required for this type of question",
+  path: ["choices"],
+});
+
 exports.CreateFormBodyValidation = z.object({
   title: z.string(),
   questions: z.array(questionValidationSchema).optional(),
 })
 
+// // resultou em comportamento estranho em CREATE method (retornou erro corretamente para 
+// // SingleChoice mas para MultipleChoice fez ö contrario", osea, ha dejado crear con una sola
+// pregunta, pero no com varias!):
 
+// .refine((data) => {
+//   return (
+//     (data.type === 'SingleChoiceQuestion' && (!data.choices || data.choices.length !== 1))
+//     || (data.type === 'MultipleChoiceQuestion' && (!data.choices || data.choices.length < 2))
+//   )
+// },
+//   {
+//     message: "At least two options are requires for this type of the question",
+//     path: ["choices"]
+//   });
 
-
-
-
-
-
-// understand this vs above
-// }).refine((data) => {
-//   // Ensure that choices are provided for MultipleChoiceQuestion and SingleChoiceQuestion
-//   if ((data.type === 'MultipleChoiceQuestion' || data.type === 'SingleChoiceQuestion') && (!data.choices || data.choices.length < 2)) {
-//     return false;
-//   }
-//   return true;
-// });
+//   // Verifica labels duplicados
+//   const labels = data.choices.map(choice => choice.label);
+//   return new Set(labels).size === labels.length; // Retorna verdadeiro se todas as opções são únicas
+// },
