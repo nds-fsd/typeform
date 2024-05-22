@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { QuestionSchema } = require('./question.schema');
+const { Question } = require('./question.schema');
 
 
 const FormSchema = new Schema({
@@ -15,11 +15,13 @@ const FormSchema = new Schema({
     },
     updateDateTime: {
         type: Date,
-        default: new Date(),
-
     },
     questions: [
-        QuestionSchema
+        // QuestionSchema
+        {
+            type: Schema.Types.ObjectId,
+            ref: Question
+        }
     ]
 });
 

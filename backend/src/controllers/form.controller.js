@@ -1,9 +1,10 @@
-const Form = require('../schemas/form.schema')
+const Form = require('../schemas/form.schema');
+const { Question } = require('../schemas/question.schema')
 
 // Obtiene todos los formularios
 const getAllForms = async (req, res) => {
     try {
-        const allForms = await Form.find();
+        const allForms = await Form.find().populate('questions');
         res.json(allForms)
     } catch (error) {
         console.error('Failed to get forms:', error);
@@ -15,7 +16,7 @@ const getAllForms = async (req, res) => {
 const getForm = async (req, res) => {
     try {
         const { id } = req.params;
-        const formFound = await Form.findById(id);
+        const formFound = await Form.findById(id).populate('questions');
         if (!formFound) {
             return res.status(404).json({ error: 'Form not found' });
         }
@@ -30,11 +31,18 @@ const getForm = async (req, res) => {
 const createForm = async (req, res) => {
     try {
         const { body } = req;
+        const questionsPromise = body.questions.map(async questionData => {
+            const question = await Question.create(questionData);
+            return question._id;
+        });
+        const questionsIds = await Promise.all(questionsPromise);
+        // const { body } = req;
         const newForm = await Form.create({
             title: body.title,
+            questions: questionsIds,
             creationDateTime: new Date()
         });
-        res.json(newForm)
+        res.status(201).json(newForm);
 
     } catch (error) {
         console.error('Failed to create form:', error);
@@ -47,17 +55,25 @@ const updateForm = async (req, res) => {
     try {
         const { id } = req.params;
         const { body } = req;
-        // Guarda fecha y hora de la última actualización
-        req.body.editDateTime = new Date();
-        const updatedForm = await Form.findByIdAndUpdate(
-            id,
-            body,
-            { new: true }
-        );
+        // get question _ids to access and update them
+        const questionsPromise = body.questions.map(async questionData => {
+            const question = await Question.create(questionData);
+            return question._id;
+        });
+        const questionsIds = await Promise.all(questionsPromise);
+
+        const updatedForm = await Form.findByIdAndUpdate(id, {
+            questions: questionsIds,
+            title: body.title,
+            updateDateTime: new Date()
+        },
+            { new: true });
+
         if (!updatedForm) {
             return res.status(404).json({ error: 'Form not found' });
-        }
-        res.json(updatedForm)
+        };
+        const updatedFormPopulated = await Form.findById(id).populate('questions');
+        res.json(updatedFormPopulated)
 
     } catch (error) {
         console.error('Failed to update form:', error);

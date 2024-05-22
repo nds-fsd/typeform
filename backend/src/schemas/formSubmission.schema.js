@@ -15,7 +15,7 @@ const FormSubmissionSchema = new Schema({
     default: new Date(),
     immutable: true
   },
-  editDateTime: {
+  updateDateTime: {
     type: Date,
     default: undefined
   },

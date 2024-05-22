@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const QuestionSchema = new Schema({
     text: {
@@ -42,5 +42,50 @@ const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion'
 }));
 
 const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
+console.log(Object.keys(QuestionSchema._applyDiscriminators)); // This should print discriminator keys
 
-exports.QuestionSchema = QuestionSchema;
+const Question = model('Question', QuestionSchema)
+
+module.exports = {
+    QuestionSchema,
+    Question,
+    TextQuestion,
+    MultipleChoiceQuestion,
+    SingleChoiceQuestion,
+    YesNoQuestion
+};
+
+// // OTRA ALTERNATIVA, MÁS "SIMPLES"(DISCRIMINATORS DECLARADOS DENTRO DEL PROPIO SCHEMA)
+// const { Schema, model } = require('mongoose');
+
+// const QuestionSchema = new Schema({
+//     text: {
+//         type: String,
+//         required: true
+//     },
+//     description: {
+//         type: String,
+//         required: false
+//     },
+//     creationDateTime: {
+//         type: Date,
+//         default: Date.now,
+//         immutable: true
+//     },
+//     updateDateTime: {
+//         type: Date,
+//         default: Date.now
+//     },
+//     type: {
+//         type: String,
+//         enum: ['TextQuestion', 'MultipleChoiceQuestion', 'SingleChoiceQuestion', 'YesNoQuestion'],
+//         required: true
+//     },
+//     choices: [{
+//         label: String
+//     }]
+// });
+
+// const Question = model('Question', QuestionSchema);
+
+// module.exports = { Question };
