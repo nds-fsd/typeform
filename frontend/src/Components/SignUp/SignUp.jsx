@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { api } from '../../Utils/api';
 import { useMutation } from 'react-query';
+import { setUserSession } from '../../Utils/localStorage';
+import style from './SignUp.module.css';
 
 const SignUp = () => {
   const [error, setError] = useState();
@@ -13,16 +15,23 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({});
 
-  const newUser = (data) => {
-    api.post('/signup', data);
+  const newUser = async (data) => {
+    try {
+      const response = await api.post('/signup', data);
+      if (response?.data.token) {
+        setUserSession(response.data);
+      }
+      return response.data;
+    } catch (err) {
+      throw err.response?.data.error;
+    }
   };
 
   const mutation = useMutation(newUser, {
     onSuccess: () => {
-      setError(undefined);
+      setError(null);
     },
     onError: (error) => {
-      console.log(error);
       setError(error);
     },
   });
@@ -32,9 +41,9 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>SIGN UP</h1>
+    <div className={style.container}>
+      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+        <h1 className={style.title}>SIGN UP</h1>
         <label htmlFor='email'>EMAIL</label>
         <input
           {...register('email', {
@@ -63,7 +72,7 @@ const SignUp = () => {
         ></input>
         {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
 
-        <input type='submit' value={'Sign up'}></input>
+        <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>
