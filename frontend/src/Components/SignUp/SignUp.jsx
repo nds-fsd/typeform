@@ -80,3 +80,5 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+//use navigate
