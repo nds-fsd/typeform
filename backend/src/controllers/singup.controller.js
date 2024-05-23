@@ -20,10 +20,10 @@ const signUp = async (req, res) => {
       createdAt: new Date(),
     });
 
-    await newUser.save(); 
-    //antes de guardarse se encripta la contraseña. El codigo que encripta la contraseña esta en el archivo de 'user.schema.js'(el que pone ).
+    await newUser.save();
+    //antes de guardarse se encripta la contraseña. El codigo que encripta la contraseña esta en el archivo de 'user.schema.js'.
 
-    const token = newUser.generateJWT(); 
+    const token = newUser.generateJWT();
     // el metodo "generateJWT" esta definido en 'user.schema.js'
 
     return res.status(201).json({
