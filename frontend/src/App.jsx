@@ -4,6 +4,7 @@ import Home from './Components/Home/Home.jsx';
 import Workspace from './Components/Workspace/Workspace.jsx';
 import CreateForms from './Components/CreateForms/CreateForms.jsx';
 import SignUp from './Components/SignUp/SignUp.jsx';
+import Auth from './Components/Auth/Auth.jsx';
 import { getUserToken } from './Utils/localStorage.js';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   return (
     <Routes>
       <Route path='/home' element={<Home />} />
+      <Route path='/auth' element={<Auth />} />
       <Route path='/signup' element={<SignUp />} />
       {token && (
         <>
