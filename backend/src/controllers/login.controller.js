@@ -1,5 +1,8 @@
+const User = require('../schemas/user.schema');
 
-const login = {
-    name: 'hello'
+const login = async (req, res) => {
+   console.log(req.body);
+   res.send('pepino'); 
 }
+    
 module.exports = { login }

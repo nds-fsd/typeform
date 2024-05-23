@@ -15,6 +15,7 @@ function App() {
       <Route path='/home' element={<Home />} />
       <Route path='/auth' element={<Auth />} />
       <Route path='/signup' element={<SignUp />} />
+      <Route path='/login'element={<Login />} />
       {token && (
         <>
           <Route path='/workspace' element={<Workspace />} />

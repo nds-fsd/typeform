@@ -3,7 +3,7 @@ const loginController = require('../controllers/login.controller');
 
 const router = express.Router();
 
-router.get('/', loginController.login); 
+router.post('/', loginController.login); 
 
 // //probablemente esto es un get ya que requiero los datos del usuario
 // //falta el schema de login y luego los controlers (ver como usar zod para validar y no tener que crear la lógica)
