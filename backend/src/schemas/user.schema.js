@@ -29,16 +29,29 @@ userSchema.pre('save', function (next) {
   });
 });
 
+userSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 userSchema.methods.generateJWT = function () {
+  const today = new Date();
+  const expirationDate = new Date();
+
+  expirationDate.setDate(today.getDate() + 60);
+
   const user = this;
-  let data = {
+  let payload = {
     id: user._id,
     name: user.name,
     email: user.email,
     createdAt: user.createdAt,
   };
-  return jwt.sign(data, secret);
+  return jwt.sign(payload, secret, {
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10)
+  });
 };
+
+
 
 const User = model('user', userSchema);
 
