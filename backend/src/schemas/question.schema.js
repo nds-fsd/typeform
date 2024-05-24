@@ -33,15 +33,22 @@ const QuestionChoice = new Schema({
     },
 });
 
-const MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuestion', new Schema({
-    choices: [QuestionChoice]
-}));
+const MultipleChoiceQuestion = QuestionSchema.discriminator(
+    'MultipleChoiceQuestion', new Schema({
+        choices: [QuestionChoice]
+    })
+);
 
-const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', new Schema({
-    choices: [QuestionChoice]
-}));
+const SingleChoiceQuestion = QuestionSchema.discriminator(
+    'SingleChoiceQuestion', new Schema({
+        choices: [QuestionChoice]
+    })
+);
 
-const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
+const YesNoQuestion = QuestionSchema.discriminator(
+    'YesNoQuestion',
+    new Schema({}));
+
 console.log(Object.keys(QuestionSchema._applyDiscriminators)); // This should print discriminator keys
 
 const Question = model('Question', QuestionSchema)

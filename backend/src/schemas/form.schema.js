@@ -7,7 +7,11 @@ const FormSchema = new Schema({
         type: String,
         require: true
     },
-    status: { type: String, enum: ['draft', 'published'], default: 'draft' },
+    status: {
+        type: String,
+        enum: ['draft', 'published'],
+        default: 'draft'
+    },
     creationDateTime: {
         type: Date,
         default: new Date(),
