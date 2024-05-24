@@ -4,9 +4,11 @@ import { api } from '../../Utils/api';
 import { useMutation } from 'react-query';
 import { setUserSession } from '../../Utils/localStorage';
 import style from './SignUp.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [error, setError] = useState();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -30,6 +32,7 @@ const SignUp = () => {
   const mutation = useMutation(newUser, {
     onSuccess: () => {
       setError(null);
+      navigate('/workspace');
     },
     onError: (error) => {
       setError(error);
@@ -43,12 +46,12 @@ const SignUp = () => {
   return (
     <div className={style.container}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-        <h1 className={style.title}>SIGN UP</h1>
+        <h1 className={style.title}>Sign Up</h1>
         <label htmlFor='email'>EMAIL</label>
         <input
           {...register('email', {
-            required: { value: true, message: 'email is required' },
-            pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
+            required: { value: true, message: '*email is required' },
+            pattern: { value: /^\S+@\S+$/i, message: '*Invalid email format' },
           })}
           placeholder='email'
         ></input>
@@ -56,7 +59,7 @@ const SignUp = () => {
 
         <label htmlFor='name'>NAME</label>
         <input
-          {...register('name', { required: { value: true, message: 'name is required' } })}
+          {...register('name', { required: { value: true, message: '*name is required' } })}
           placeholder='name'
         ></input>
         {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
@@ -65,8 +68,8 @@ const SignUp = () => {
         <input
           type='password'
           {...register('password', {
-            required: { value: true, message: 'password is required' },
-            minLength: { value: 6, message: 'password needs at least 6 characters' },
+            required: { value: true, message: '*password is required' },
+            minLength: { value: 6, message: '*password needs at least 6 characters' },
           })}
           placeholder='password'
         ></input>
@@ -74,6 +77,17 @@ const SignUp = () => {
 
         <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        <p>
+          ¿Ya tienes una cuenta?{' '}
+          <span
+            className={style.login}
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            Login
+          </span>
+        </p>
       </form>
     </div>
   );
