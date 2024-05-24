@@ -35,14 +35,16 @@ const createForm = async (req, res) => {
             const question = await Question.create(questionData);
             return question._id;
         });
+        console.log(questionsPromise);
         const questionsIds = await Promise.all(questionsPromise);
-        // const { body } = req;
         const newForm = await Form.create({
             title: body.title,
+            status: body.status,
             questions: questionsIds,
             creationDateTime: new Date()
         });
-        res.status(201).json(newForm);
+        const createdFormPopulated = await newForm.populate('questions');
+        res.status(200).json(createdFormPopulated);
 
     } catch (error) {
         console.error('Failed to create form:', error);
@@ -63,6 +65,8 @@ const updateForm = async (req, res) => {
         const questionsIds = await Promise.all(questionsPromise);
 
         const updatedForm = await Form.findByIdAndUpdate(id, {
+            title: body.title,
+            status: body.status,
             questions: questionsIds,
             title: body.title,
             updateDateTime: new Date()

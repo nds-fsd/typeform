@@ -11,7 +11,9 @@ router.get('/:id', getForm);
 router.post('/', validateRequest({
   body: CreateFormBodyValidation
 }), createForm);
-router.patch('/:id', updateForm);
+router.patch('/:id', validateRequest({
+  body: CreateFormBodyValidation
+}), updateForm);
 router.delete('/:id', deleteForm);
 
 module.exports = router;
