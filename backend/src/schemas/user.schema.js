@@ -40,13 +40,13 @@ userSchema.methods.generateJWT = function () {
   expirationDate.setDate(today.getDate() + 60);
 
   const user = this;
-  let payload = {
+  let data = {
     id: user._id,
     name: user.name,
     email: user.email,
     createdAt: user.createdAt,
   };
-  return jwt.sign(payload, secret, {
+  return jwt.sign(data, secret, {
     expiresIn: parseInt(expirationDate.getTime() / 1000, 10)
   });
 };

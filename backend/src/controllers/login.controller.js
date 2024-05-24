@@ -4,8 +4,9 @@ const login = async (req, res) => {
    const { email, password} = req.body
 
    if ( !email || !password) {
-      return res.status(400).json( { error : { login: "Falta email o contraseña"}
-   })
+      return res.status(400).json( { error : { login: "Falta email o contraseña"}})
+   }
+
    User.findOne({ email })
    .then ((foundUser) => {
       if (!foundUser) {
@@ -25,12 +26,8 @@ const login = async (req, res) => {
       })
    })
 .catch((err) => {
-   return res.status(500).json( { error: { register: "Error login in: (", error}})
+   return res.status(500).json( { error: { register: "Error login in:", error }})
 })
-
-}
-   console.log(req.body);
-   res.send('pepino'); 
 }
     
 module.exports = { login }
