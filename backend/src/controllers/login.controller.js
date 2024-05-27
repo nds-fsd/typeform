@@ -1,7 +1,7 @@
 const User = require('../schemas/user.schema');
 
 const login = async (req, res) => {
-   const { email, password} = req.body
+   const { email, password } = req.body
 
    if ( !email || !password) {
       return res.status(400).json( { error : { login: "Falta email o contraseña"}})
