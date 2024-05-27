@@ -25,7 +25,7 @@ const login = async (req, res) => {
          },
       })
    })
-.catch((err) => {
+.catch((error) => {
    return res.status(500).json( { error: { register: "Error login in:", error }})
 })
 }
