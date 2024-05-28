@@ -19,7 +19,7 @@ const SignUp = () => {
 
   const newUser = async (data) => {
     try {
-      const response = await api.post('/signup', data);
+      const response = await api().post('/signup', data);
       if (response?.data.token) {
         setUserSession(response.data);
       }

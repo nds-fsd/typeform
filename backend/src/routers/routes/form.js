@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllForms, getForm, createForm, deleteForm, updateForm } = require('../controllers/form.controller');
+const { getAllForms, getForm, createForm, deleteForm, updateForm } = require('../../controllers/form.controller');
 
 const router = express.Router();
 
