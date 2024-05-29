@@ -1,32 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import style from './FormCard.module.css';
-
+import { api } from '../../Utils/api';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 const FormCard = () => {
+  const queryClient = useQueryClient();
 
-    const [forms, setForms] = useState([])
+  const fetchForms = async () => {
+    const res = await api().get('/form');
+    return res.data;
+  };
 
-    useEffect(() => {
-        const url = 'http://localhost:3001/form'; //reemplazar url real
-        const getForms = async () => {
-            try {
-                const response = await fetch (url);
-                if (!response.ok) throw new Error('Something bad happended');
-                const json = await response.json();
-                setForms(json);
-            } catch(error) {
-                alert(error);
-            }
-        }
-        getForms();
-    }, []);
+  const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
 
-    return (
-        <div className={style.formgrid}>
-            {forms.map((form,index) => (<p className={style.formcard}key={index}>{form.title}</p>))}
+  const deleteForm = async (formId) => {
+    const res = await api().delete(`/form/${formId}`);
+    return res.data;
+  };
+
+  const mutation = useMutation(deleteForm, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('forms');
+      console.log('Form deleted successfully', data);
+    },
+    onError: (error) => {
+      console.error('Error deleting form', error);
+    },
+  });
+
+  const handleClick = (formId) => {
+    mutation.mutate(formId);
+  };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  return (
+    <div className={style.formgrid}>
+      {data.map((form) => (
+        <div className={style.formcard} key={form._id}>
+          <p>{form.title}</p>
+          <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
+            X
+          </button>
         </div>
-    )  
-}
-export default FormCard
+      ))}
+    </div>
+  );
+};
 
-// hay un use effect por lo que cada vez que entremos a workspace va a ejecutar un get y tiene que ser solo el title
+export default FormCard;
