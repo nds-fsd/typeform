@@ -4,7 +4,7 @@ const login = async (req, res) => {
    const { email, password } = req.body
 
    if (!email || !password) {
-      return res.status(400).json( { error : { login: "Falta email o contraseña" } })
+      return res.status(400).json({ error : { login: "Falta email o contraseña" } })
    }
 
    User.findOne({ email })

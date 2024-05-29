@@ -4,14 +4,15 @@ import { api } from '../../Utils/api';
 import { useMutation } from 'react-query';
 import { setUserSession } from '../../Utils/localStorage';
 import style from './SignUp.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [error, setError] = useState();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({});
 
@@ -20,6 +21,7 @@ const SignUp = () => {
       const response = await api.post('/signup', data);
       if (response?.data.token) {
         setUserSession(response.data);
+        navigate('/workspace');
       }
       return response.data;
     } catch (err) {
@@ -74,6 +76,7 @@ const SignUp = () => {
 
         <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        <a href='http://localhost:3000/login'>Registered? Log In!</a>
       </form>
     </div>
   );
