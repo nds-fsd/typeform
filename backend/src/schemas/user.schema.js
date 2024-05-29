@@ -6,7 +6,7 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET;
 
 const userSchema = new Schema({
-  email: { type: String },
+  email: { type: String }, //ver si es necesario acá que sea required, 
   name: { type: String },
   password: { type: String },
   createdAt: { type: Date, default: Date.now },
@@ -29,7 +29,16 @@ userSchema.pre('save', function (next) {
   });
 });
 
+userSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 userSchema.methods.generateJWT = function () {
+  const today = new Date();
+  const expirationDate = new Date();
+
+  expirationDate.setDate(today.getDate() + 60);
+
   const user = this;
   let data = {
     id: user._id,
@@ -37,8 +46,12 @@ userSchema.methods.generateJWT = function () {
     email: user.email,
     createdAt: user.createdAt,
   };
-  return jwt.sign(data, secret);
+  return jwt.sign(data, secret, {
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10)
+  });
 };
+
+
 
 const User = model('user', userSchema);
 
