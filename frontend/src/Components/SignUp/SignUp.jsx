@@ -13,7 +13,6 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({});
 
@@ -22,6 +21,7 @@ const SignUp = () => {
       const response = await api().post('/signup', data);
       if (response?.data.token) {
         setUserSession(response.data);
+        navigate('/workspace');
       }
       return response.data;
     } catch (err) {
