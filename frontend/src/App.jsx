@@ -7,12 +7,11 @@ import SignUp from './Components/SignUp/SignUp.jsx';
 import Auth from './Components/Auth/Auth.jsx';
 import { getUserToken } from './Utils/localStorage.js';
 import Login from './Components/Login/Login.jsx';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const token = getUserToken();
-  const navigate = useNavigate();
 
   // useEffect (() => {
   //   if(!token) {
