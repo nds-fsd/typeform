@@ -93,12 +93,11 @@ const deleteForm = async (req, res) => {
         if (!formToDelete) {
             return res.status(404).json({ error: 'Form not found' });
         }
-        res.status(204).json();
+        res.status(204).json(formToDelete);
     } catch (error) {
         console.error('Failed to delete form:', error);
-        res.status(500).json({ error: 'Failed to delete form' })
+        res.status(500).json({ error: 'Failed to delete form' });
     }
 };
-
 
 module.exports = { getAllForms, getForm, createForm, updateForm, deleteForm };
