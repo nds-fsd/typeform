@@ -25,7 +25,7 @@ const EditForm = () => {
         setFormTitle(event.target.value);
     };
 
-    console.log(formTitle)
+    console.log()
     // const getFormById = async (formId) => {
     //     try {
     //         const res = await api().get('/form');
@@ -56,13 +56,13 @@ const EditForm = () => {
                     {data.updateDateTime && <h3>Update: {data.updateDateTime}</h3>}
                     {data.questions[0] && (
                         <div>
-                            <p>Type: {data.questions[0].type}</p>
+                            <p>Type: {data.questions.type}</p>
                             <p>Text: {data.questions[0].text}</p>
                             {data.questions[0].choices &&
                                 <div>
                                     <p>Choices:</p>
                                     {data.questions[0].choices.map((choice, i) => (
-                                        <input type="radio" key={choice._id} value={choice.label} />
+                                        <p>{choice.label}</p>
                                     ))}
                                 </div>
                             }
