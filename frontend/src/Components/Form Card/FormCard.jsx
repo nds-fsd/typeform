@@ -2,6 +2,8 @@ import React from 'react';
 import style from './FormCard.module.css';
 import { api } from '../../Utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+// import { Link } from 'react-router-dom';
+
 
 const FormCard = () => {
   const queryClient = useQueryClient();
@@ -43,15 +45,22 @@ const FormCard = () => {
   return (
     <div className={style.formgrid}>
       {data.map((form) => (
-        <div className={style.formcard} key={form._id}>
-          <p>{form.title}</p>
-          <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
-            X
-          </button>
-        </div>
+        <a href={`/editform/${form._id}`}>
+          <div className={style.formcard} key={form._id} >
+            <p>{form.title}</p>
+            <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
+              X
+            </button>
+
+          </div>
+        </a>
       ))}
+
     </div>
   );
 };
 
 export default FormCard;
+
+// <a> or <Link />?
+// <Link to={`/editform/${form._id}`}>?</Link>
