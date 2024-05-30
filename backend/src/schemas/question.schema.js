@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const QuestionSchema = new Schema({
     text: {
@@ -44,6 +44,4 @@ const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion'
 const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
 console.log(Object.keys(QuestionSchema._applyDiscriminators)); // This should print discriminator keys
 
-const Question = model('Question', QuestionSchema)
-
-module.exports = { Question };
+exports.QuestionSchema = QuestionSchema;

@@ -1,5 +1,4 @@
 const Form = require('../schemas/form.schema');
-const { Question } = require('../schemas/question.schema')
 
 // Obtiene todos los formularios
 const getAllForms = async (req, res) => {
@@ -31,20 +30,13 @@ const getForm = async (req, res) => {
 const createForm = async (req, res) => {
     try {
         const { body } = req;
-        const questionsPromise = body.questions.map(async questionData => {
-            const question = await Question.create(questionData);
-            return question._id;
-        });
-        console.log(questionsPromise);
-        const questionsIds = await Promise.all(questionsPromise);
         const newForm = await Form.create({
             title: body.title,
             status: body.status,
-            questions: questionsIds,
+            questions: body.questions,
             creationDateTime: new Date()
         });
-        const createdFormPopulated = await newForm.populate('questions');
-        res.status(200).json(createdFormPopulated);
+        res.status(200).json(newForm);
 
     } catch (error) {
         console.error('Failed to create form:', error);
@@ -57,27 +49,14 @@ const updateForm = async (req, res) => {
     try {
         const { id } = req.params;
         const { body } = req;
-        // get question _ids to access and update them
-        const questionsPromise = body.questions.map(async questionData => {
-            const question = await Question.create(questionData);
-            return question._id;
-        });
-        const questionsIds = await Promise.all(questionsPromise);
 
-        const updatedForm = await Form.findByIdAndUpdate(id, {
-            title: body.title,
-            status: body.status,
-            questions: questionsIds,
-            title: body.title,
-            updateDateTime: new Date()
-        },
-            { new: true });
+        const updatedForm = await Form.findByIdAndUpdate(id, body, { new: true });
 
         if (!updatedForm) {
             return res.status(404).json({ error: 'Form not found' });
-        };
-        const updatedFormPopulated = await Form.findById(id).populate('questions');
-        res.json(updatedFormPopulated)
+        }
+
+        res.json(updatedForm)
 
     } catch (error) {
         console.error('Failed to update form:', error);
