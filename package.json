@@ -20,14 +20,12 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "prettier": "^3.2.5",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
+    "prettier": "^3.2.5",
     "react-hook-form": "^7.51.4",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.23.0",
-    "zod": "^3.23.8",
-    "zod-express-middleware": "^1.4.0"
+    "react-router-dom": "^6.23.0"
   }
 }
