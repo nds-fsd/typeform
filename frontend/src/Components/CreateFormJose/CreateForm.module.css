@@ -11,3 +11,51 @@ button {
     border: 1px solid black;
     align-items: center;
 }
+
+.fixedHeader {
+    position: ;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100%;
+    background-color: #fff !important;
+    padding: 10px !important;
+    z-index: 1000 !important;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    gap: 10px;
+}
+
+.inputForm {
+    border: none;
+    font-family: Space Mono;
+    font-size: .8em;
+    color: #000;
+    max-width: 25%;
+}
+
+.inputForm:hover {
+    border: 1px solid black;
+}
+
+#inputFormTitle {
+    border: 0px solid black;
+    font-family: Space Mono;
+    font-size: 1.4em;
+    letter-spacing: 2px;
+    color: #000;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.workspaceLink {
+    text-decoration: none;
+    color: #000;
+    font-family: Abril Fatface;
+    letter-spacing: 1px;
+    font-size: 1.5em;
+}
+
+.workspaceLink:hover {
+    text-decoration: none;
+    color: #000;
+}

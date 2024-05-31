@@ -5,6 +5,7 @@ import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { useMutation } from 'react-query';
+import { baseUrl } from '../../Utils/config';
 
 const Login = () => {
   const [error, setError] = useState('');
@@ -60,7 +61,7 @@ const Login = () => {
           </div>
           <input className={styles.submitbutton} type="submit" value="Login" />
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          <a href='http://localhost:3000/signup'>Not registered? Sign Up!</a>
+          <a href={`${baseUrl}/signup`}>Not registered? Sign Up!</a>
         </form>
       </div>
     </div>

@@ -2,9 +2,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { api } from '../../Utils/api.js';
 import { useQuery, useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import styles from './CreateForm.module.css'
-
 
 const questionTypes = [{
   value: "TextQuestion",
@@ -72,9 +71,16 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
   });
 
   return (<div>
+    <header className={styles.fixedHeader}>
+      <Link reloadDocument={false} className={styles.workspaceLink} to={'/workspace'}>my workspace</Link>
+
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.question}>
+        <input id={styles.inputFormTitle} type="text" {...register('title')} />
+        <br />
+      </form>
+    </header>
+
     <form onSubmit={handleSubmit(onSubmit)} className={styles.question}>
-      <label>Title</label>
-      <input type="text" {...register('title')} />
 
       {fields.map((question, index) => (
         <div className={styles.question}>
@@ -93,7 +99,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
       <button type="submit">Submit</button>
 
     </form>
-  </div>)
+  </div >)
     ;
 }
 
