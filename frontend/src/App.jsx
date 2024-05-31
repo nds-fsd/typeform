@@ -30,7 +30,7 @@ function App() {
         <>
           <Route path='/workspace' element={<Workspace />} />
           <Route path='/createforms' element={<CreateForms />} />
-          <Route path='/createformjose' element={<CreateForm />} />
+          <Route path='/createform' element={<CreateForm />} />
           <Route path='/editform/:id' element={<EditForm />} />
         </>
       )}
