@@ -49,7 +49,7 @@ const FormCard = () => {
     <div className={style.formgrid}>
       {data.map((form) => (
         <div className={style.formcard} key={form._id} >
-          <Link to={`/createform/${form._id}`}>
+          <Link to={`/create-form/${form._id}`}>
             <p>{form.title}</p>
           </Link>
 

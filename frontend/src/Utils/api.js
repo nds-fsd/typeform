@@ -11,3 +11,13 @@ export const api = () => {
     },
   });
 };
+
+export const fetchForm = async (formId) => {
+  try {
+    const res = await api().get(`/form/${formId}`);
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching form', error);
+    throw new Error('Error fetching form');
+  }
+};

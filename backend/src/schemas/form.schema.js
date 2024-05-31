@@ -5,6 +5,7 @@ const { QuestionSchema } = require('./question.schema');
 const FormSchema = new Schema({
     title: {
         type: String,
+        default: 'New form',
         require: true
     },
     status: { type: String, enum: ['draft', 'published'], default: 'draft' },
@@ -17,7 +18,7 @@ const FormSchema = new Schema({
         type: Date,
     },
     questions: [
-         QuestionSchema,
+        QuestionSchema,
     ]
 });
 
