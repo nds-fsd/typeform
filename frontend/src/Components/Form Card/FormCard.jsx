@@ -2,7 +2,7 @@ import React from 'react';
 import style from './FormCard.module.css';
 import { api } from '../../Utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-
+import { useNavigate } from 'react-router-dom';
 const FormCard = () => {
   const queryClient = useQueryClient();
 
@@ -10,6 +10,7 @@ const FormCard = () => {
     const res = await api().get('/form');
     return res.data;
   };
+  const navigate = useNavigate();
 
   const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
 
@@ -40,10 +41,14 @@ const FormCard = () => {
     return <p>Error: {error.message}</p>;
   }
 
+  const handleEdit = (id) => {
+    navigate(`/editform/${id}`)
+  }
+
   return (
     <div className={style.formgrid}>
       {data.map((form) => (
-        <div className={style.formcard} key={form._id}>
+        <div className={style.formcard} key={form._id} onClick={() => handleEdit(form._id)}>
           <p>{form.title}</p>
           <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
             X

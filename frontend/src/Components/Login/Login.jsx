@@ -18,32 +18,19 @@ const Login = () => {
       formState: { errors },
     } = useForm({});
 
-  
 
-  const user = async (data) => {
-    try {
-        const response = await api.post('/login', data);
-        if (response?.data.token) {
-          setUserSession(response.data);
-          navigate('/workspace');
-        }
-        return response.data;
-      } catch (error) {
-        throw error.response?.data.error;
-      }
-    };
 
-  const mutation = useMutation(user, {
-    onSuccess: () => {
-      setError(null);
-    },
-    onError: (error) => {
-      setError(error);
-    },
-  });
+
 
   const onSubmit = (data) => {
-    mutation.mutate(data);
+    api().post('/login', data)
+      .then((response) => {
+        setUserSession(response.data);
+        navigate('/workspace');
+      })
+      .catch((error) => {
+        setError(error.response.data);
+      });
   };
 
   return (
@@ -54,9 +41,9 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.inputgroup}>
               <label htmlFor="email">Email</label>
-              <input type="text" placeholder="Email" 
+              <input type="text" placeholder="Email"
               {...register ("email", {
-              required: { value: true, message: 'Email is required'}, 
+              required: { value: true, message: 'Email is required'},
               pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
               })}/>
               {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
@@ -70,10 +57,10 @@ const Login = () => {
             </div>
           </form>
         </div>
-      </div> 
-        
-        );     
+      </div>
+
+        );
     };
-    
+
 
 export default Login;
