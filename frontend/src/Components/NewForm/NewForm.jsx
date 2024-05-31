@@ -3,37 +3,63 @@ import { useForm } from 'react-hook-form';
 import style from './NewForm.module.css';
 import { useParams } from 'react-router-dom';
 import { baseUrl } from '../../Utils/config';
+import { useQuery, useQueryClient } from 'react-query';
 
 
 const NewForm = () => {
   const [questions, setQuestions] = useState([]);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const queryClient = useQueryClient();
+  const { formId } = useParams();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const submitData = async (data) => {
-    console.log('Submitting form data:', data);
+  const fetchForm = async () => {
     try {
-      const response = await fetch(`${baseUrl}/form`, {
-        // REMEMBER TO UPDATE THE URL WITH REAL ONE FROM BACKEND
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const res = await api().get(`/form/${formId}`);
+      console.log(res.data)
+      return res.data;
+    } catch (error) {
+      console.log('Error fetching form')
+    };
+  }
+  const { data, error, isLoading, isError } = useQuery(['form', formId], fetchForm);
+
+
+  // hace lo mismo que el fetch normal, pero con axios
+  const onSubmit = async (data) => {
+    try {
+      const response = await api().post(`/form`);
       if (!response.ok) {
         throw new Error('Failed to submit data');
       }
       console.log('Form data submitted successfully');
     } catch (error) {
-      console.error('Error submitting form data:', error.message);
+      console.log('Error submitting form data: ', error.message)
     }
-  };
+  }
+  // const submitData = async (data) => {
+  //   console.log('Submitting form data:', data);
+  //   try {
+  //     const response = await fetch(`${baseUrl}/form`, {
+  //       // REMEMBER TO UPDATE THE URL WITH REAL ONE FROM BACKEND
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error('Failed to submit data');
+  //     }
+  //     console.log('Form data submitted successfully');
+  //   } catch (error) {
+  //     console.error('Error submitting form data:', error.message);
+  //   }
+  // };
 
   const addQuestion = () => {
     setQuestions([...questions, { question: '', answer: '' }]);
@@ -83,7 +109,7 @@ const NewForm = () => {
     const fetchData = async () => {
       console.log('Fetching questions');
       try {
-        const response = await fetch(`${baseUrl}/createForms`);
+        const response = await fetch(`${baseUrl}/form`);
         if (!response.ok) {
           throw new Error('Failed to fetch questions');
         }
@@ -110,14 +136,14 @@ const NewForm = () => {
 
       <div className={style.parentContainer}>
         <div className={style.formContainer}>
-          <form onSubmit={handleSubmit(submitData)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             {questions.map((q, index) => (
               <div key={index} className={style.questionContainer}>
                 <input
                   type='text'
-                  value={q.question}
+                  value={q.type}
                   onChange={(e) => handleQuestionChange(index, e.target.value)}
-                  placeholder='Type your question here'
+                  placeholder={q.title}
                 />
                 <input
                   type='text'

@@ -15,12 +15,13 @@ const FormCard = () => {
 
   const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
 
-  const deleteForm = async (formId) => {
+  const handleDeleteForm = async (formId, event) => {
+    // event.stopPropagation();   no ha funcionado en conjunto con useMutation
     const res = await api().delete(`/form/${formId}`);
     return res.data;
   };
 
-  const mutation = useMutation(deleteForm, {
+  const mutation = useMutation(handleDeleteForm, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('forms');
       console.log('Form deleted successfully', data);
@@ -41,19 +42,22 @@ const FormCard = () => {
   if (isError) {
     return <p>Error: {error.message}</p>;
   }
-
+  // add <p>created: {data.creationDateTime}</p> as onHover to each card 
+  // add confirmation to delete button and move it to be option in a menu (appears onClick on ...)
+  // OR add 
   return (
     <div className={style.formgrid}>
       {data.map((form) => (
-        <Link to={`/editform/${form._id}`}>
-          <div className={style.formcard} key={form._id} >
+        <div className={style.formcard} key={form._id} >
+          <Link to={`/createform/${form._id}`}>
             <p>{form.title}</p>
-            <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
-              X
-            </button>
+          </Link>
 
-          </div>
-        </Link>
+          <button className={style.deleteButton} onClick={(event) => handleClick(form._id, event)}>
+            X
+          </button>
+
+        </div>
       ))}
 
     </div>

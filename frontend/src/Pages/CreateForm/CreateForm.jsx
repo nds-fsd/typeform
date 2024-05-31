@@ -5,35 +5,36 @@ import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 
 
-
-
-const EditForm = () => {
+const CreateForm = () => {
     // mover lógica para fuera del componente (creacion de API?)
     const { formId } = useParams();
+    const queryClient = useQueryClient();
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
-
-    const fetchForm = async () => {
-        const res = await api().get(`/form/${formId}`);
-        console.log(res.data)
-        return res.data;
-    };
-    const { data, error, isLoading, isError } = useQuery('form', fetchForm);
-
     const [formTitle, setFormTitle] = useState()
-    const handleTitleChange = (event) => {
-        setFormTitle(event.target.value);
+    // como quito wl fetchForm por ejemplo desde aqui para otro archivo?
+    const fetchForm = async () => {
+        try {
+            const res = await api().get(`/form/${formId}`);
+            console.log(res.data)
+            return res.data;
+        } catch (error) {
+            console.log('Error fetching form')
+        };
+    }
+    const { data, error, isLoading, isError } = useQuery(['form', formId], fetchForm);
+
+    const onSubmit = async (formData) => {
+        try {
+            console.log(formData)
+            const response = await api().patch(`/form/${formId}`, formData);
+            console.log(response.data);
+            // Invalidate and refetch the form data
+            queryClient.invalidateQueries(['form', formId]);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    console.log()
-    // const getFormById = async (formId) => {
-    //     try {
-    //         const res = await api().get('/form');
-    //         return res.data;
-    //     } catch (error) {
-    //         console.log('Error fetching form')
-    //     }
-    // }
     return (
         <div>
             {isLoading &&
@@ -41,22 +42,15 @@ const EditForm = () => {
             {isError && <p>Error: {error.message}</p>}
             {data && (
                 <div>
-
-                    <h3>Created: {data.creationDateTime}</h3>
-
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input {...register("title")} />
-
-
-
+                        <input type="submit" value="submit" />
                     </form>
                     <h2>{data.title}</h2>
-                    <input type="text" value={formTitle} placeholder={data.title} onChange={handleTitleChange} />
-
                     {data.updateDateTime && <h3>Update: {data.updateDateTime}</h3>}
                     {data.questions[0] && (
                         <div>
-                            <p>Type: {data.questions.type}</p>
+                            <p>Type: {data.questions[0].type}</p>
                             <p>Text: {data.questions[0].text}</p>
                             {data.questions[0].choices &&
                                 <div>
@@ -73,4 +67,4 @@ const EditForm = () => {
         </div>
     );
 };
-export default EditForm;
+export default CreateForm;

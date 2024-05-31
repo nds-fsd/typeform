@@ -7,7 +7,7 @@ import SignUp from './Components/SignUp/SignUp.jsx';
 import Auth from './Components/Auth/Auth.jsx';
 import { getUserToken } from './Utils/localStorage.js';
 import Login from './Components/Login/Login.jsx';
-import EditForm from './Components/EditForm/EditForm.jsx';
+import CreateForm from './Pages/CreateForm/CreateForm.jsx';
 // import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
       <Route path='/auth' element={<Auth />} />
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/editform/:formId' element={<EditForm />} />
+      <Route path='/create-form/:formId' element={<CreateForm />} />
       {token && (
         <>
           <Route path='/workspace' element={<Workspace />} />
