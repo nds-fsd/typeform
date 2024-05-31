@@ -1,0 +1,13 @@
+.question {
+    display: flex;
+}
+
+button {
+    height: 50px;
+}
+
+.questionChoice {
+    display: flex;
+    border: 1px solid black;
+    align-items: center;
+}

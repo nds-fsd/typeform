@@ -2,7 +2,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { api } from '../../Utils/api.js';
 import { useQuery, useQueryClient } from 'react-query';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import styles from './CreateForm.module.css'
 
 
 const questionTypes = [{
@@ -12,15 +13,15 @@ const questionTypes = [{
   value: "MultipleChoiceQuestion",
   label: 'Multiple Choice Question'
 },
-  {
-    value: "SingleChoiceQuestion",
-    label: 'Single Choice Question'
-  }]
+{
+  value: "SingleChoiceQuestion",
+  label: 'Single Choice Question'
+}]
 
-const Choices = ({register, control, index}) => {
+const Choices = ({ register, control, index }) => {
 
 
-  const {fields, append, prepend, remove, swap, move, insert} = useFieldArray({
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
     control,
     name: `questions[${index}].choices`
   });
@@ -28,25 +29,28 @@ const Choices = ({register, control, index}) => {
   return (
     <div>
       {fields.map((choice, choiceIndex) => (
-        <div>
+        <div className={styles.questionChoice}>
           <label>Choice</label>
           <input type="text" {...register(`questions[${index}].choices[${choiceIndex}].label`)} />
+          <button type="button" onClick={() => remove(choiceIndex)}>x</button>
         </div>
-      ))}
+      ))
+      }
       <button type="button" onClick={() => append({})}>Add Choice</button>
-    </div>
+
+    </div >
 
   )
 
 }
 
-const QuestionForm = ({register, index, watch, control}) => {
+const QuestionForm = ({ register, index, watch, control }) => {
   const type = watch(`questions[${index}].type`);
 
   return (
     <div>
       <label>Question Type</label>
-      <select {...register(`questions[${index}].type`, {value: "TextQuestion"})}>
+      <select {...register(`questions[${index}].type`, { value: "TextQuestion" })}>
         {questionTypes.map((questionType) => <option value={questionType.value}>{questionType.label}</option>)}
       </select>
       <label>Text</label>
@@ -54,29 +58,40 @@ const QuestionForm = ({register, index, watch, control}) => {
       <label>Description</label>
       <input type="text" {...register(`questions[${index}].description`)} />
       {type !== "TextQuestion" && (
-       <Choices register={register} control={control} index={index} />
+        <Choices register={register} control={control} index={index} />
       )}
     </div>
   )
-
 }
 
-const FormForm = ({register, handleSubmit, onSubmit, watch, control}) => {
+const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
 
-  const {fields, append, prepend, remove, swap, move, insert} = useFieldArray({
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
     control,
     name: "questions"
   });
 
   return (<div>
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.question}>
       <label>Title</label>
       <input type="text" {...register('title')} />
 
-      {fields.map(((question, index) => <QuestionForm register={register} index={index} watch={watch}
-                                                      control={control} />))}
+      {fields.map((question, index) => (
+        <div className={styles.question}>
+          <QuestionForm
+            key={question.id}
+            register={register}
+            index={index}
+            watch={watch}
+            control={control}
+          />
+          <button type="button" onClick={() => remove(index)}>x</button>
+        </div>
+
+      ))}
       <button type="button" onClick={() => append({})}>Add Question</button>
       <button type="submit">Submit</button>
+
     </form>
   </div>)
     ;
@@ -86,7 +101,7 @@ export const EditForm = () => {
 
   const { id } = useParams();
 
-  const {data} = useQuery('form', () => api().get(`/form/${id}`).then(res => res.data));
+  const { data } = useQuery('form', () => api().get(`/form/${id}`).then(res => res.data));
 
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
@@ -94,13 +109,15 @@ export const EditForm = () => {
   });
 
   useEffect(() => {
-    if(data){
-      console.log("data", data)
-      setValue('title', data.title);
-      setValue('questions', data.questions);
-
+    if (data) {
+      console.log("data", data);
+      setValue('title', data.title || '');
+      setValue('questions', data.questions.map((question) => ({
+        ...question,
+        choices: question.choices || [],
+      })) || []);
     }
-  }, [data, setValue()]);
+  }, [data, setValue]);
 
 
   const navigate = useNavigate();
@@ -117,10 +134,10 @@ export const EditForm = () => {
   }
   return (
     <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} />
-    )
+  )
 }
 
-export const CreateFormJose = () => {
+export const CreateForm = () => {
   const { register, control, handleSubmit, watch } = useForm({
     defaultValues: {
       title: '',
@@ -145,7 +162,7 @@ export const CreateFormJose = () => {
     });
   }
 
-   return (
+  return (
     <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} />
   )
 
