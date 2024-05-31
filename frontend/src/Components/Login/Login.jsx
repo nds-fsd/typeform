@@ -13,14 +13,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({});
-
-
-
-
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({});
 
   const onSubmit = (data) => {
     api().post('/login', data)
@@ -34,7 +30,6 @@ const Login = () => {
   };
 
   return (
-
       <div className={styles.mastercontainer}>
         <div className={styles.logincontainer}>
           <h1>Login</h1>
@@ -58,8 +53,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-
-        );
+             );
     };
 
 

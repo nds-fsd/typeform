@@ -6,14 +6,24 @@ const { CreateFormBodyValidation } = require('../../validators/form.validators')
 
 const router = express.Router();
 
-router.get('/', Authorization,  getAllForms);
-router.get('/:id', Authorization, getForm);
-router.post('/', Authorization, validateRequest({
+router.get('/', getAllForms);
+router.get('/:id', getForm);
+router.post('/', validateRequest({
   body: CreateFormBodyValidation
-}),createForm);
-router.patch('/:id', Authorization, validateRequest({
+}), createForm);
+router.patch('/:id', validateRequest({
   body: CreateFormBodyValidation
-}),updateForm);
-router.delete('/:id', Authorization, deleteForm);
+}), updateForm);
+router.delete('/:id', deleteForm);
+
+// router.get('/', Authorization, getAllForms);
+// router.get('/:id', Authorization, getForm);
+// router.post('/', Authorization, validateRequest({
+//   body: CreateFormBodyValidation
+// }), createForm);
+// router.patch('/:id', Authorization, validateRequest({
+//   body: CreateFormBodyValidation
+// }), updateForm);
+// router.delete('/:id', Authorization, deleteForm);
 
 module.exports = router;

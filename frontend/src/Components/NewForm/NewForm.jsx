@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import style from './NewForm.module.css';
+import { useParams } from 'react-router-dom';
+import { baseUrl } from '../../Utils/config';
+
 
 const NewForm = () => {
   const [questions, setQuestions] = useState([]);
@@ -15,7 +18,7 @@ const NewForm = () => {
   const submitData = async (data) => {
     console.log('Submitting form data:', data);
     try {
-      const response = await fetch('http://localhost:3002/form-data', {
+      const response = await fetch(`${baseUrl}/form`, {
         // REMEMBER TO UPDATE THE URL WITH REAL ONE FROM BACKEND
         method: 'POST',
         headers: {
@@ -80,8 +83,7 @@ const NewForm = () => {
     const fetchData = async () => {
       console.log('Fetching questions');
       try {
-        const response = await fetch('http://localhost:3002/questions');
-        // REMEMBER TO UPDATE THE URL WITH REAL ONE FROM BACKEND
+        const response = await fetch(`${baseUrl}/form`);
         if (!response.ok) {
           throw new Error('Failed to fetch questions');
         }
@@ -115,7 +117,7 @@ const NewForm = () => {
                   type='text'
                   value={q.question}
                   onChange={(e) => handleQuestionChange(index, e.target.value)}
-                  placeholder='Type your question here'
+                  placeholder={q.questions[0].text}
                 />
                 <input
                   type='text'

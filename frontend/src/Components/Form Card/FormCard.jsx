@@ -14,12 +14,13 @@ const FormCard = () => {
 
   const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
 
-  const deleteForm = async (formId) => {
+  const handleDeleteForm = async (formId, event) => {
+    // event.stopPropagation();   no ha funcionado en conjunto con useMutation
     const res = await api().delete(`/form/${formId}`);
     return res.data;
   };
 
-  const mutation = useMutation(deleteForm, {
+  const mutation = useMutation(handleDeleteForm, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('forms');
       console.log('Form deleted successfully', data);
@@ -53,8 +54,10 @@ const FormCard = () => {
           <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
             X
           </button>
+
         </div>
       ))}
+
     </div>
   );
 };
