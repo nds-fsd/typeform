@@ -5,12 +5,12 @@ const signUp = async (req, res) => {
 
   try {
     if (!email) {
-      return res.status(400).json({ error: { register: 'email not received' } });
+      return res.status(400).json({ error: { register: '*email not received' } });
     }
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'email already registered' });
+      return res.status(400).json({ error: '*email already registered' });
     }
 
     const newUser = new User({
@@ -20,10 +20,10 @@ const signUp = async (req, res) => {
       createdAt: new Date(),
     });
 
-    await newUser.save(); 
-    //antes de guardarse se encripta la contraseña. El codigo que encripta la contraseña esta en el archivo de 'user.schema.js'(el que pone ).
+    await newUser.save();
+    //antes de guardarse se encripta la contraseña. El codigo que encripta la contraseña esta en el archivo de 'user.schema.js'.
 
-    const token = newUser.generateJWT(); 
+    const token = newUser.generateJWT();
     // el metodo "generateJWT" esta definido en 'user.schema.js'
 
     return res.status(201).json({

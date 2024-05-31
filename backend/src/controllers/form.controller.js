@@ -1,9 +1,9 @@
-const Form = require('../schemas/form.schema')
+const Form = require('../schemas/form.schema');
 
 // Obtiene todos los formularios
 const getAllForms = async (req, res) => {
     try {
-        const allForms = await Form.find();
+        const allForms = await Form.find().populate('questions');
         res.json(allForms)
     } catch (error) {
         console.error('Failed to get forms:', error);
@@ -15,7 +15,7 @@ const getAllForms = async (req, res) => {
 const getForm = async (req, res) => {
     try {
         const { id } = req.params;
-        const formFound = await Form.findById(id);
+        const formFound = await Form.findById(id).populate('questions');
         if (!formFound) {
             return res.status(404).json({ error: 'Form not found' });
         }
@@ -32,9 +32,11 @@ const createForm = async (req, res) => {
         const { body } = req;
         const newForm = await Form.create({
             title: body.title,
+            status: body.status,
+            questions: body.questions,
             creationDateTime: new Date()
         });
-        res.json(newForm)
+        res.status(200).json(newForm);
 
     } catch (error) {
         console.error('Failed to create form:', error);
@@ -47,16 +49,13 @@ const updateForm = async (req, res) => {
     try {
         const { id } = req.params;
         const { body } = req;
-        // Guarda fecha y hora de la última actualización
-        req.body.editDateTime = new Date();
-        const updatedForm = await Form.findByIdAndUpdate(
-            id,
-            body,
-            { new: true }
-        );
+
+        const updatedForm = await Form.findByIdAndUpdate(id, body, { new: true });
+
         if (!updatedForm) {
             return res.status(404).json({ error: 'Form not found' });
         }
+
         res.json(updatedForm)
 
     } catch (error) {
@@ -73,12 +72,11 @@ const deleteForm = async (req, res) => {
         if (!formToDelete) {
             return res.status(404).json({ error: 'Form not found' });
         }
-        res.status(204).json();
+        res.status(204).json(formToDelete);
     } catch (error) {
         console.error('Failed to delete form:', error);
-        res.status(500).json({ error: 'Failed to delete form' })
+        res.status(500).json({ error: 'Failed to delete form' });
     }
 };
-
 
 module.exports = { getAllForms, getForm, createForm, updateForm, deleteForm };

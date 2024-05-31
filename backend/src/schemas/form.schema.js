@@ -1,29 +1,26 @@
 const { Schema, model } = require('mongoose');
+const { QuestionSchema } = require('./question.schema');
 
-const formSchema = new Schema({
+
+const FormSchema = new Schema({
     title: {
         type: String,
         require: true
     },
-    status: String,
+    status: { type: String, enum: ['draft', 'published'], default: 'draft' },
     creationDateTime: {
         type: Date,
         default: new Date(),
         immutable: true
     },
-    editDateTime: {
+    updateDateTime: {
         type: Date,
-        // quizá sea útil registrar hora de la última edición(?)
-        default: undefined
     },
     questions: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Question'
-        }
+         QuestionSchema,
     ]
 });
 
-const Form = model('Form', formSchema);
+const Form = model('Form', FormSchema);
 
 module.exports = Form;
