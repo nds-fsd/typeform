@@ -24,8 +24,8 @@ jobs:
 
       - name: 'Build Backend Image'
         run: |
-          docker build . --tag ghcr.io/nds-fsd/typeform:${{ github.sha }}
-          docker push ghcr.io/nds-fsd/typeform:${{ github.sha }}
+          docker build . --tag ghcr.io/nds-fsd/surflow:${{ github.sha }}
+          docker push ghcr.io/nds-fsd/surflow:${{ github.sha }}
 
       - name: Install and configure the Koyeb CLI
         uses: koyeb-community/install-koyeb-cli@v2
@@ -34,7 +34,7 @@ jobs:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Update image in koyeb
-        run: koyeb service update typeform/proposed-ira --docker ghcr.io/nds-fsd/typeform:${{ github.sha }}
+        run: koyeb service update surflow/proposed-ira --docker ghcr.io/nds-fsd/surflow:${{ github.sha }}
 
       - name: Redeploy service in koyeb
-        run: koyeb service redeploy typeform/proposed-ira
+        run: koyeb service redeploy surflow/proposed-ira
