@@ -26,7 +26,6 @@ function App() {
       <Route path='/auth' element={<Auth />} />
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/create-form/:formId' element={<CreateForm />} />
       {token && (
         <>
           <Route path='/workspace' element={<Workspace />} />
