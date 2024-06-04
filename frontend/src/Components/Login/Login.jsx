@@ -17,20 +17,15 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      console.log('Form data:', data); // Adicionando log para verificar os dados
-      const response = await api().post('/login', data);
-      setUserSession(response.data);
-      navigate('/workspace');
-    } catch (error) {
-      console.error('Login error:', error.response); // Adicionando log para verificar o erro
-      if (error.response && error.response.data) {
-        setError(error.response.data.message || 'Login failed');
-      } else {
-        setError('Login failed');
-      }
-    }
+  const onSubmit = (data) => {
+    api().post('/login', data)
+      .then((response) => {
+        setUserSession(response.data);
+        navigate('/workspace');
+      })
+      .catch((error) => {
+        setError(error.response.data);
+      });
   };
 
   return (
