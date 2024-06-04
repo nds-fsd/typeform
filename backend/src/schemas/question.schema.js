@@ -42,6 +42,5 @@ const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion'
 }));
 
 const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
-console.log(Object.keys(QuestionSchema._applyDiscriminators)); // This should print discriminator keys
 
 exports.QuestionSchema = QuestionSchema;
