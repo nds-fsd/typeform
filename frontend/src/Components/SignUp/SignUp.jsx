@@ -7,7 +7,7 @@ import style from './SignUp.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
-  const [error, setError] = useState();
+  const [error, setError] = useState([]);
   const navigate = useNavigate();
 
   const {
@@ -16,7 +16,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({});
 
-  const newUser = async (data) => {
+  const onSubmit = async (data) => {
     try {
       const response = await api().post('/signup', data);
       if (response?.data.token) {
@@ -29,19 +29,19 @@ const SignUp = () => {
     }
   };
 
-  const mutation = useMutation(newUser, {
-    onSuccess: () => {
-      setError(null);
-      navigate('/workspace');
-    },
-    onError: (error) => {
-      setError(error);
-    },
-  });
+  // const mutation = useMutation(newUser, {
+  //   onSuccess: () => {
+  //     setError(null);
+  //     navigate('/workspace');
+  //   },
+  //   onError: (error) => {
+  //     setError(error);
+  //   },
+  // });
 
-  const onSubmit = (data) => {
-    mutation.mutate(data);
-  };
+  // const onSubmit = (data) => {
+  //   mutation.mutate(data);
+  // };
 
   return (
     <div className={style.container}>
@@ -50,32 +50,52 @@ const SignUp = () => {
         <label htmlFor='email'>EMAIL</label>
         <input
           {...register('email', {
-            required: { value: true, message: '*email is required' },
-            pattern: { value: /^\S+@\S+$/i, message: '*Invalid email format' },
+            required: {
+              value: true,
+              message: '*email is required'
+            },
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: '*Invalid email format'
+            },
           })}
           placeholder='email'
-        ></input>
-        {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
+        />
+        {errors.email &&
+          <p style={{ color: 'red' }}>{errors.email.message}</p>}
 
         <label htmlFor='name'>NAME</label>
         <input
-          {...register('name', { required: { value: true, message: '*name is required' } })}
+          {...register('name', {
+            required: {
+              value: true,
+              message: '*name is required'
+            }
+          })}
           placeholder='name'
-        ></input>
-        {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+        />
+        {errors.name &&
+          <p style={{ color: 'red' }}>{errors.name.message}</p>}
 
         <label htmlFor='password'>PASSWORD</label>
         <input
           type='password'
           {...register('password', {
-            required: { value: true, message: '*password is required' },
-            minLength: { value: 6, message: '*password needs at least 6 characters' },
+            required: {
+              value: true,
+              message: '*password is required'
+            },
+            minLength: {
+              value: 6,
+              message: '*password needs at least 6 characters'
+            },
           })}
           placeholder='password'
-        ></input>
-        {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
+        />
+        {errors.password &&
+          <p style={{ color: 'red' }}>{errors.password.message}</p>}
 
-        <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
+        <input className={style.submit} type='submit' value={'Sign up'} />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <p>
           ¿Ya tienes una cuenta?{' '}
