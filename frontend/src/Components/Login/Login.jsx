@@ -5,7 +5,6 @@ import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { useMutation } from 'react-query';
-import { baseUrl } from '../../Utils/config';
 
 const Login = () => {
   const [error, setError] = useState('');
