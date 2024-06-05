@@ -56,7 +56,9 @@ const Login = () => {
           </div>
           <input className={styles.submitbutton} type="submit" value="Login" />
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          <a href={`${baseUrl}/signup`}>Not registered? Sign Up!</a>
+          <span onClick={() => { navigate('/signup') }}>
+            Not registered? Sign Up!
+          </span>
         </form>
       </div>
     </div>

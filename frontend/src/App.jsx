@@ -7,7 +7,7 @@ import SignUp from './Components/SignUp/SignUp.jsx';
 import Auth from './Components/Auth/Auth.jsx';
 import { getUserToken } from './Utils/localStorage.js';
 import Login from './Components/Login/Login.jsx';
-import { CreateForm, EditForm } from './Components/CreateFormJose/CreateForm.jsx';
+import { CreateForm, EditForm } from './Components/CreateFormJose/CreateFormJose.jsx';
 // import { useNavigate } from 'react-router-dom';
 
 function App() {
