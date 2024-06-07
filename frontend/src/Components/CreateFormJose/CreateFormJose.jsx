@@ -131,11 +131,17 @@ export const EditForm = () => {
   const queryClient = useQueryClient();
 
   const onSubmit = (data) => {
-    api().patch(`/form/${id}`, data).then((response) => {
+    const processedData = {
+      ...data,
+      questions: data.questions.map((question) => {
+        const { _id, ...rest } = question;
+        return rest
+      })
+    };
+    api().patch(`/form/${id}`, processedData).then((response) => {
       console.log(response.data);
       queryClient.invalidateQueries('forms');
       navigate('/workspace');
-
     });
   }
   return (
