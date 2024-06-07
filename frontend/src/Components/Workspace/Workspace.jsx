@@ -1,7 +1,7 @@
 import React from 'react';
 import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
-import { api } from '../../Utils/api';
+import { api } from '../../utils/api';
 
 const handleClick = () => {
   // const createForm = async () => {

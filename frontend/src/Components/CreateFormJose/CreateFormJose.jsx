@@ -1,6 +1,6 @@
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { api } from '../../Utils/api.js';
+import { api } from '../../utils/api.js';
 import { useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import styles from './CreateForm.module.css'

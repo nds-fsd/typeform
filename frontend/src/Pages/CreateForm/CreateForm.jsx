@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { api, fetchForm } from "../../Utils/api";
+import { api, fetchForm } from "../../utils/api";
 import { useQuery, useQueryClient } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';

@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './FormCard.module.css';
-import { api } from '../../Utils/api';
+import { api } from '../../utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 const FormCard = () => {

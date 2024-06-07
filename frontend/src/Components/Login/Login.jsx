@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { api } from '../../Utils/api';
-import { setUserSession } from '../../Utils/localStorage';
+import { api } from '../../utils/api';
+import { setUserSession } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { useMutation } from 'react-query';
