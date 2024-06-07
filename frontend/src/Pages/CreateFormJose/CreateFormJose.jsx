@@ -28,7 +28,7 @@ const Choices = ({ register, control, index }) => {
   return (
     <div>
       {fields.map((choice, choiceIndex) => (
-        <div className={styles.questionChoice}>
+        <div className={styles.questionChoice} key={choice._id} >
           <label>Choice</label>
           <input type="text" {...register(`questions[${index}].choices[${choiceIndex}].label`)} />
           <button type="button" onClick={() => remove(choiceIndex)}>x</button>
@@ -36,11 +36,8 @@ const Choices = ({ register, control, index }) => {
       ))
       }
       <button type="button" onClick={() => append({})}>Add Choice</button>
-
     </div >
-
   )
-
 }
 
 const QuestionForm = ({ register, index, watch, control }) => {
@@ -50,7 +47,7 @@ const QuestionForm = ({ register, index, watch, control }) => {
     <div>
       <label>Question Type</label>
       <select {...register(`questions[${index}].type`, { value: "TextQuestion" })}>
-        {questionTypes.map((questionType) => <option value={questionType.value}>{questionType.label}</option>)}
+        {questionTypes.map((questionType, index) => <option value={questionType.value} key={index}>{questionType.label}</option>)}
       </select>
       <label>Text</label>
       <input type="text" {...register(`questions[${index}].text`)} />
@@ -83,7 +80,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.question}>
 
       {fields.map((question, index) => (
-        <div className={styles.question}>
+        <div className={styles.question} key={index}>
           <QuestionForm
             key={question.id}
             register={register}
@@ -171,8 +168,4 @@ export const CreateForm = () => {
   return (
     <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} />
   )
-
 }
-
-
-
