@@ -1,7 +1,8 @@
 import React from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
-import { api } from '../../Utils/api';
+import { api } from '../../utils/api';
 
 const handleClick = () => {
   // const createForm = async () => {
@@ -16,20 +17,21 @@ const handleClick = () => {
   // createForm();
 
 
-  window.location.href = 'http://localhost:3000/createforms';
 };
 
 const Workspace = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={style.viewport}>
       <h1>My Workspace</h1>
       <div className={style.frame}>
-        <button className={style.btn} onClick={handleClick}>
+        <button className={style.btn} onClick={() => navigate('/createforms')}>
           Add New Form
         </button>
         <FormCard className={style.formcard} />
       </div>
-    </div>
+    </div >
   );
 };
 
