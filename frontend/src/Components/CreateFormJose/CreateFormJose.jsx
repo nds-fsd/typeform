@@ -104,15 +104,13 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
 }
 
 export const EditForm = () => {
-
   const { id } = useParams();
-
   const { data } = useQuery('form', () => api().get(`/form/${id}`).then(res => res.data));
-
-
   const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: data ?? {}
   });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (data) {
@@ -124,11 +122,6 @@ export const EditForm = () => {
       })) || []);
     }
   }, [data, setValue]);
-
-
-  const navigate = useNavigate();
-
-  const queryClient = useQueryClient();
 
   const onSubmit = (data) => {
     const processedData = {
@@ -144,6 +137,7 @@ export const EditForm = () => {
       navigate('/workspace');
     });
   }
+
   return (
     <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} />
   )
