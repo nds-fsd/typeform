@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import style from './NewForm.module.css';
 import { useParams } from 'react-router-dom';
-import { baseUrl } from '../../Utils/config';
 
+// change all fetches to axios format, join this page with EditForm
 
 const NewForm = () => {
   const [questions, setQuestions] = useState([]);
@@ -18,8 +18,7 @@ const NewForm = () => {
   const submitData = async (data) => {
     console.log('Submitting form data:', data);
     try {
-      const response = await fetch(`${baseUrl}/form`, {
-        // REMEMBER TO UPDATE THE URL WITH REAL ONE FROM BACKEND
+      const response = await fetch('http://localhost:3001/form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +82,7 @@ const NewForm = () => {
     const fetchData = async () => {
       console.log('Fetching questions');
       try {
-        const response = await fetch(`${baseUrl}/form`);
+        const response = await fetch('http://localhost:3001/form');
         if (!response.ok) {
           throw new Error('Failed to fetch questions');
         }
