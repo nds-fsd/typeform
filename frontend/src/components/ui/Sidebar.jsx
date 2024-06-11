@@ -1,9 +1,10 @@
 import styles from './Sidebar.module.css';
 
-const Sidebar = () => {
+const Sidebar = ({ questions }) => {
     return (
         <div className={styles.sidebar}>
             <ul>
+                <p>a</p>
                 <li>numero question</li>
                 <li>question type</li>
             </ul>

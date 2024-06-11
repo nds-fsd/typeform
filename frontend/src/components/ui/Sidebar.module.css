@@ -1,4 +1,4 @@
-.sidebar {
+  /* .sidebar {
     width: 20%;
     background-color: azure;
     height: 100vh;
@@ -7,3 +7,12 @@
     overflow-y: auto;
     border-radius: 20px;
 }
+*/
+  .sidebar {
+      grid-row: 2 / -1;
+      background-color: azure;
+      border-right: 1px solid #dee2e6;
+      padding: 20px;
+      height: calc(100vh - 50px);
+      overflow-y: auto;
+  }
