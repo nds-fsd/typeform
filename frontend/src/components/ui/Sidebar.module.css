@@ -1,0 +1,9 @@
+.sidebar {
+    width: 20%;
+    background-color: azure;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    overflow-y: auto;
+    border-radius: 20px;
+}
