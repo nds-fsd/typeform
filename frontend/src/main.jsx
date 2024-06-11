@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { UserProvider } from './context/UserProvider';
+import { UserProvider } from './Context/UserProvider';
 
 const queryClient = new QueryClient();
 
