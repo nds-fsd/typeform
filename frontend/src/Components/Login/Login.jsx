@@ -5,8 +5,6 @@ import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { LargeButton } from '../Buttons/LargeButton';
-import { MediumButton } from '../Buttons/MediumButton';
-import { SmallButton } from '../Buttons/SmallButton';
 
 
 
@@ -53,9 +51,7 @@ const Login = () => {
               {error && <p style={{ color: 'red' }}>{error.password}</p>}
               <button onClick={handleSubmit(onSubmit)}>Login</button>
               <a href='http://localhost:3000/signup'>Not registered? Sign Up!</a>
-              <LargeButton />
-              <MediumButton />
-              <SmallButton />
+              <LargeButton handleSumbit={onSubmit} text={"Login"}/>
             </div>
           </form>
         </div>

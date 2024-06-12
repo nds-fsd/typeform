@@ -1,10 +1,11 @@
 import React from 'react'
-import styles from './MediumButton.module.css';
 
 export const MediumButton = () => {
   return (
     <> 
-    <button className={styles.mediumbutton}>medium</button>
+    <button className="w-60 h-14 shadow-md bg-azure hover:bg-white 
+        hover:shadow-none hover:border hover:border-gray-600 rounded-4xl transition-all
+        duration-300">MEDIUM</button>
     </>
   )
 }

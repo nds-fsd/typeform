@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      borderRadius: {
+        '4xl': '3rem', // Define el valor personalizado
+      },
+      colors: {
+        azure: 	'#F0FFFF',
+      },
+    },
   },
   plugins: [],
 }

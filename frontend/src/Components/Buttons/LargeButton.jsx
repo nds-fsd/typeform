@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from './LargeButton.module.css'
 
-export const LargeButton = () => {
+export const LargeButton = ({ handleSubmit, text }) => {
   return (
     <div> 
-        <button className="text-3xl font-bold underline">large</button>
-        <p>hello</p>
+        <button onClick={handleSubmit} className="w-80 h-20 shadow-md bg-azure hover:bg-white 
+        hover:shadow-none hover:border hover:border-gray-600 rounded-4xl transition-all
+        duration-300">{text}</button>
     </div>
   )
 }
