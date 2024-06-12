@@ -10,13 +10,21 @@
   color: white;
   border: none;
   cursor: pointer;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
-.footerNewForm {
+
+.footer {
   height: 55px;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  grid-area: footer;
 }
+
 /*<div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
 <div style={{ marginBottom: '50px' }}>*/

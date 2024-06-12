@@ -1,0 +1,5 @@
+.questionChoice {
+    display: flex;
+    border: 1px solid black;
+    align-items: baseline;
+}

@@ -2,8 +2,8 @@ import { useFieldArray } from "react-hook-form";
 import styles from './CreateForm.module.css';
 import QuestionForm from "./QuestionForm";
 import { Link } from 'react-router-dom';
-import Sidebar from "../../components/ui/Sidebar";
-
+// import Sidebar from "../../components/ui/Sidebar";
+import Footer from "./Footer";
 // const fieldsMap = () => {fields.map((question, index) => (
 //     <div className={styles.question} key={index}>
 //         <QuestionForm
@@ -24,16 +24,23 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
 
     return (
         <div className={styles.wrapper}>
-            <header className={styles.fixedHeader}>
+            <header className={styles.header}>
                 <Link reloadDocument={false} className={styles.workspaceLink} to={'/workspace'}>my workspace</Link>
-                <form onSubmit={handleSubmit(onSubmit)} className={styles.question}>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.headerForm}>
                     <input id={styles.inputFormTitle} type="text" {...register('title')} />
                     <br />
                 </form>
             </header>
-            <Sidebar />
-            <div className={styles.container}>
-                <form onSubmit={handleSubmit(onSubmit)} className={styles.question}>
+            <aside className={styles.sidebar}>
+                <ul>
+                    <li>numero question</li>
+                    <li>question type</li>
+                    <li>numero question</li>
+                    <li>question type</li>
+                </ul>
+            </aside>
+            <main className={styles.content}>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     {fields.map((question, index) => (
                         <div className={styles.question} key={index}>
                             <QuestionForm
@@ -45,12 +52,12 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
                             />
                             <button type="button" onClick={() => remove(index)}>x</button>
                         </div>
-
                     ))}
                     <button type="button" onClick={() => append({})}>+ add question</button>
                     <button type="submit">Submit</button>
                 </form>
-            </div>
+                <Footer />
+            </main>
         </div >
     )
 };
