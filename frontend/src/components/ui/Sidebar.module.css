@@ -1,8 +1,0 @@
-.sidebar {
-    background-color: azure;
-    border-right: 1px solid #dee2e6;
-    padding: 20px;
-    height: calc(100vh - 50px);
-    overflow-y: auto;
-    grid-area: sidebar;
-}

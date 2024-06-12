@@ -49,7 +49,6 @@ const QuestionForm = ({ register, index, watch, control }) => {
             </select>
             <label>Text</label>
             <input type="text" {...register(`questions[${index}].text`)} />
-            <label>Description</label>
             <input type="text" {...register(`questions[${index}].description`)} />
             {type !== "TextQuestion" && (
                 <Choices register={register} control={control} index={index} />
