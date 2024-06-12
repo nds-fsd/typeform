@@ -4,7 +4,10 @@ import { api } from '../../Utils/api';
 import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
-import { useMutation } from 'react-query';
+import { LargeButton } from '../Buttons/LargeButton';
+import { MediumButton } from '../Buttons/MediumButton';
+import { SmallButton } from '../Buttons/SmallButton';
+
 
 
 const Login = () => {
@@ -33,7 +36,7 @@ const Login = () => {
       <div className={styles.mastercontainer}>
         <div className={styles.logincontainer}>
           <h1>Login</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <div className={styles.inputgroup}>
               <label htmlFor="email">Email</label>
               <input type="text" placeholder="Email"
@@ -46,9 +49,13 @@ const Login = () => {
             <div className={styles.inputgroup}>
               <label htmlFor="password"> Contraseña </label>
               <input type="password" placeholder="Contraseña" {...register ("password", { required: true })}/>
-              <input className={styles.submitbutton} type="submit" value="Login"/>
+              {/* <input className={styles.submitbutton} type="submit" value="Login"/> */}
               {error && <p style={{ color: 'red' }}>{error.password}</p>}
+              <button onClick={handleSubmit(onSubmit)}>Login</button>
               <a href='http://localhost:3000/signup'>Not registered? Sign Up!</a>
+              <LargeButton />
+              <MediumButton />
+              <SmallButton />
             </div>
           </form>
         </div>

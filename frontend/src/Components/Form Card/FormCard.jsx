@@ -3,13 +3,16 @@ import style from './FormCard.module.css';
 import { api } from '../../Utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+
 const FormCard = () => {
+
   const queryClient = useQueryClient();
 
   const fetchForms = async () => {
     const res = await api().get('/form');
     return res.data;
   };
+  
   const navigate = useNavigate();
 
   const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
