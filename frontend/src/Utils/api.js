@@ -21,3 +21,8 @@ export const fetchForm = async (formId) => {
     throw new Error('Error fetching form');
   }
 };
+
+export const handleDeleteForm = async (formId) => {
+  const res = await api().delete(`/form/${formId}`);
+  return res.data;
+};

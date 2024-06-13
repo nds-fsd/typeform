@@ -3,6 +3,7 @@ import style from './FormCard.module.css';
 import { api } from '../../utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { handleDeleteForm } from '../../utils/api';
 const FormCard = () => {
   const queryClient = useQueryClient();
 
@@ -12,15 +13,19 @@ const FormCard = () => {
   };
   const navigate = useNavigate();
 
-  const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
+  // const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: ['forms'],
+    queryFn: fetchForms
+  })
 
-  const handleDeleteForm = async (formId, event) => {
-    // event.stopPropagation();   no ha funcionado en conjunto con useMutation
-    const res = await api().delete(`/form/${formId}`);
-    return res.data;
+  const handleClick = (formId, event) => {
+    console.log(formId)
+    event.stopPropagation();
+    deleteFormByIdMutation.mutate(formId);
   };
 
-  const mutation = useMutation(handleDeleteForm, {
+  const deleteFormByIdMutation = useMutation(['forms'], handleDeleteForm, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('forms');
       console.log('Form deleted successfully', data);
@@ -30,10 +35,9 @@ const FormCard = () => {
     },
   });
 
-  const handleClick = (formId) => {
-    mutation.mutate(formId);
-  };
-
+  const handleEdit = (id) => {
+    navigate(`/editform/${id}`)
+  }
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -42,22 +46,17 @@ const FormCard = () => {
     return <p>Error: {error.message}</p>;
   }
 
-  const handleEdit = (id) => {
-    navigate(`/editform/${id}`)
-  }
 
   return (
     <div className={style.formgrid}>
       {data.map((form) => (
         <div className={style.formcard} key={form._id} onClick={() => handleEdit(form._id)}>
           <p>{form.title}</p>
-          <button className={style.deleteButton} onClick={() => handleClick(form._id)}>
+          <button className={style.deleteButton} onClick={(event) => handleClick(form._id, event)}>
             X
           </button>
-
         </div>
       ))}
-
     </div>
   );
 };

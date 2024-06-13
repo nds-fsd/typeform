@@ -26,23 +26,29 @@ export const EditForm = () => {
   }, [data, setValue]);
 
   const onSubmit = (data) => {
+    console.log('Original data:', data);
+
     const processedData = {
       ...data,
-      questions: data.questions.map((question) => {
-        const { _id, ...rest } = question;
-        return rest
-      })
+      questions: data.questions.map(({ _id, ...rest }) => rest)
     };
-    api().patch(`/form/${id}`, processedData).then((response) => {
+
+    // Remover _id no nível principal do formulário, se existir
+    const { _id, ...formWithoutId } = processedData;
+
+    console.log('Processed data (without _id):', formWithoutId);
+
+    api().patch(`/form/${id}`, formWithoutId).then((response) => {
       console.log(response.data);
       queryClient.invalidateQueries('forms');
       navigate('/workspace');
+    }).catch((error) => {
+      console.error('Failed to update form:', error);
     });
   }
 
   return (
     <>
-
       <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} />
     </>
   )
@@ -51,7 +57,7 @@ export const EditForm = () => {
 export const CreateForm = () => {
   const { register, control, handleSubmit, watch } = useForm({
     defaultValues: {
-      title: '',
+      title: 'my form',
       questions: [{
         text: '',
         description: '',

@@ -98,7 +98,6 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
 
             </main>
             <Footer onSubmit={handleFormSubmit} />
-
         </div >
     )
 };
