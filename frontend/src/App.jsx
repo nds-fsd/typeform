@@ -9,7 +9,6 @@ import { getUserToken } from './Utils/localStorage.js';
 import Login from './Components/Login/Login.jsx';
 import { CreateFormJose, EditForm } from './Components/CreateFormJose/createFormJose.jsx';
 import ResponseForm from './Components/ResponsePage/ResponseForm.jsx';
-import ResponseForm from './Components/ResponsePage/ResponseForm.jsx';
 // import { useNavigate } from 'react-router-dom';
 
 function App() {

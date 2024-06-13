@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { api } from '../../Utils/api';
 import style from './ResponseForm.module.css';
+import RenderQuestion from './RenderQuestion';
 
 const formData = {
   title: 'Form 3',
@@ -16,7 +17,6 @@ const formData = {
       creationDateTime: '2024-05-31T21:18:55.898Z',
       updateDateTime: '2024-05-31T21:18:55.898Z',
       type: 'TextQuestion',
-      answer: '',
     },
     {
       _id: '668306a75679b08216219pqr',
@@ -35,7 +35,6 @@ const formData = {
           _id: '6682f3e757d462214a529mno',
         },
       ],
-      answer: '',
     },
     {
       _id: '666306a75679b08216219b04',
@@ -58,7 +57,6 @@ const formData = {
           _id: '6662f3e757d462214a5ragrs',
         },
       ],
-      answer: '',
     },
     {
       _id: '667306a75679b08216219b07',
@@ -85,7 +83,6 @@ const formData = {
           _id: '6673f3e757d462214a529jir',
         },
       ],
-      answer: '',
     },
   ],
   __v: 0,
@@ -103,9 +100,8 @@ const ResponseForm = () => {
   //       console.error('Error fetching form data:', error);
   //     }
   //   };
-
   //   getForm(formId);
-  // }, [formId]);
+  // },[]);
 
   const { control, handleSubmit, register } = useForm({
     defaultValues: {
@@ -138,82 +134,6 @@ const ResponseForm = () => {
     // postAwnsers();
   };
 
-  const renderQuestion = (question, index) => {
-    if (!question) return null;
-
-    switch (question.type) {
-      case 'TextQuestion':
-        return (
-          <div className={style.question} key={question._id}>
-            <label>{question.text}</label>
-            <p>{question.description}</p>
-            <input type='text' {...register(`questions.${index}.answer`, { required: true })} />
-          </div>
-        );
-      case 'SingleChoiceQuestion':
-        return (
-          <div className={style.question} key={question._id}>
-            <label>{question.text}</label>
-            <p>{question.description}</p>
-            <div className={style.choices}>
-              {question.choices.map((option) => (
-                <div key={option._id}>
-                  <input
-                    type='radio'
-                    id={option._id}
-                    value={option.label}
-                    {...register(`questions.${index}.answer`, { required: true })}
-                  />
-                  <label htmlFor={option._id}>{option.label}</label>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      case 'MultipleChoiceQuestion':
-        return (
-          <div className={style.question} key={question._id}>
-            <label>{question.text}</label>
-            <p>{question.description}</p>
-            <div className={style.choices}>
-              {question.choices.map((option) => (
-                <div key={option._id}>
-                  <input
-                    type='checkbox'
-                    id={option._id}
-                    value={option.label}
-                    {...register(`questions.${index}.answer`, { required: true })}
-                  />
-                  <label htmlFor={option._id}>{option.label}</label>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      case 'YesNoQuestion':
-        return (
-          <div className={style.question} key={question._id}>
-            <label>{question.text}</label>
-            <p>{question.description}</p>
-            <div className={style.choices}>
-              {question.choices.map((option) => (
-                <div key={option._id}>
-                  <input
-                    type='radio'
-                    id={option._id}
-                    value={option.label}
-                    {...register(`questions.${index}.answer`, { required: true })}
-                  />
-                  <label htmlFor={option._id}>{option.label}</label>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const nextQuestion = () => {
@@ -221,6 +141,7 @@ const ResponseForm = () => {
     const newIndex = isLastQuestion ? 0 : currentQuestion + 1;
     setCurrentQuestion(newIndex);
   };
+
   const prevQuestion = () => {
     const isFirstQuestion = currentQuestion === 0;
     const newIndex = isFirstQuestion ? fields.length - 1 : currentQuestion - 1;
@@ -232,7 +153,14 @@ const ResponseForm = () => {
       <h2>{formData.title}</h2>
       <form className={style.container} onSubmit={handleSubmit(onSubmit)}>
         <div className={style.questionContainer}>
-          {fields.length > 0 && renderQuestion(fields[currentQuestion], currentQuestion)}
+          {fields.length > 0 && (
+            <RenderQuestion
+              question={fields[currentQuestion]}
+              index={currentQuestion}
+              register={register}
+              style={style}
+            />
+          )}
         </div>
 
         <div onClick={prevQuestion} className={style.navButton}>
