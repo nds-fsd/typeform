@@ -4,7 +4,6 @@ import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
 import { api } from '../../utils/api';
 
-
 const Workspace = () => {
   const navigate = useNavigate();
 
@@ -20,3 +19,5 @@ const Workspace = () => {
     </div >
   );
 };
+
+export default Workspace;

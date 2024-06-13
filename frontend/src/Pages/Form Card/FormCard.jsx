@@ -36,7 +36,7 @@ const FormCard = () => {
   });
 
   const handleEdit = (id) => {
-    navigate(`/editform/${id}`)
+    navigate(`/createform/${id}`)
   }
   if (isLoading) {
     return <p>Loading...</p>;
