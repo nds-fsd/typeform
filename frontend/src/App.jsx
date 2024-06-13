@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp/SignUp.jsx';
 import Auth from './pages/Auth/Auth.jsx';
 import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
-import { CreateForm, EditForm } from './pages/CreateFormJose/CreateFormJose.jsx';
+import { CreateForm, EditForm } from './pages/CreateForm/CreateForm.jsx';
 // import { useNavigate } from 'react-router-dom';
 
 function App() {

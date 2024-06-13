@@ -1,0 +1,19 @@
+.saveButton {
+  width: 150px;
+  height: 40px;
+  border-radius: 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  cursor: pointer;
+  margin-right: 3%;
+}
+
+.footer {
+  height: 55px;
+  width: 100%;
+  background-color: #f0f0f088;
+  padding: 10px;
+  grid-area: footer;
+  display: flex;
+  justify-content: flex-end;
+}

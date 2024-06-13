@@ -27,8 +27,7 @@ const Choices = ({ register, control, index }) => {
         <div>
             {fields.map((choice, choiceIndex) => (
                 <div className={styles.questionChoice} key={choice.id} >
-                    <label>Choice</label>
-                    <input type="text" {...register(`questions[${index}].choices[${choiceIndex}].label`)} />
+                    <input id={styles.inputChoice} type="text" {...register(`questions[${index}].choices[${choiceIndex}].label`)} />
                     <button type="button" onClick={() => remove(choiceIndex)}>x</button>
                 </div>
             ))
@@ -43,13 +42,11 @@ const QuestionForm = ({ register, index, watch, control }) => {
 
     return (
         <div>
-            <label>{index + 1}</label>
-            <select {...register(`questions[${index}].type`, { value: "TextQuestion" })}>
+            <select {...register(`questions[${index}].type`)}>
                 {questionTypes.map((questionType, index) => <option value={questionType.value} key={index}>{questionType.label}</option>)}
             </select>
-            <label>Text</label>
-            <input type="text" {...register(`questions[${index}].text`)} />
-            <input type="text" {...register(`questions[${index}].description`)} />
+            <input id={styles.inputQuestionText} type="text" {...register(`questions[${index}].text`)} />
+            <input id={styles.inputQuestionDescription} type="text" {...register(`questions[${index}].description`)} />
             {type !== "TextQuestion" && (
                 <Choices register={register} control={control} index={index} />
             )}

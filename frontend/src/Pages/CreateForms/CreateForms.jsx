@@ -1,5 +1,5 @@
 import NewForm from '../NewForm/NewForm';
-import Footer from '../CreateFormJose/Footer';
+import Footer from '../CreateForm/Footer';
 const CreateForms = () => {
   return (
     <div>

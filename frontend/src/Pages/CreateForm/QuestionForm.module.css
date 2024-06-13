@@ -1,0 +1,20 @@
+.questionChoice {
+    display: flex;
+    align-items: baseline;
+}
+
+#inputQuestionText,
+#inputQuestionDescription {
+    border: 1px solid rgba(0, 0, 0, 0.148);
+    margin: 1%;
+}
+
+#inputChoice {
+    border: 1px solid rgba(0, 0, 0, 0.148);
+    background-color: azure;
+    border-radius: 10px;
+    padding-left: 5%;
+    max-height: 300px;
+    max-width: 300px;
+    field-sizing: content
+}

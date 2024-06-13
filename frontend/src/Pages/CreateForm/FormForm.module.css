@@ -7,7 +7,6 @@
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 300px 1fr;
     height: 100vh;
-
 }
 
 .header {
@@ -25,11 +24,9 @@
     background-color: azure;
     border-right: 1px solid #dee2e6;
     padding: 0px;
-    height: calc(100vh - 50px);
-    /* Ajuste para compensar a altura do header */
+    /*height: calc(100vh - 50px); */
     overflow-y: auto;
 }
-
 
 .content {
     grid-area: content;
@@ -37,6 +34,11 @@
     overflow-y: auto;
     margin-top: 50px;
     /* adjust this according to your header height */
+}
+
+.footer {
+    background-color: aqua;
+    grid-area: footer;
 }
 
 .inputForm {
@@ -52,7 +54,7 @@
 }
 
 #inputFormTitle {
-    border: 0px solid black;
+    border: 0px;
     font-family: Space Mono;
     font-size: 1.4em;
     letter-spacing: 2px;

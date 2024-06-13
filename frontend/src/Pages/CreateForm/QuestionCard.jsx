@@ -12,7 +12,8 @@ const QuestionCard = (props) => {
             onDrop={onDrop}
             onDragOver={onDragOver}
         >
-            <p>{index + 1}</p>
+
+            <p id={styles.indexNumber}>{index + 1}</p>
             <p>{questionText}</p>
             <button type="button" onClick={remove}>x</button>
         </li >

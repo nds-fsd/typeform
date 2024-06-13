@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // import Sidebar from "../../components/ui/Sidebar";
 import Footer from "./Footer";
 import QuestionCard from "./QuestionCard";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 // const fieldsMap = () => {fields.map((question, index) => (
 //     <div className={styles.question} key={index}>
 //         <QuestionForm
@@ -23,6 +23,8 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
         control,
         name: "questions"
     });
+
+    const formRef = useRef();
 
     const [draggedIndex, setDraggedIndex] = useState(null);
 
@@ -44,6 +46,11 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
         console.log('draggedIndex while dragging over is: ', draggedIndex);
     }
 
+    const handleFormSubmit = () => {
+        const submitEvent = new SubmitEvent('submit', { bubbles: true });
+        formRef.current.dispatchEvent(submitEvent)
+    };
+
     return (
         <div className={styles.wrapper}>
             <header className={styles.header}>
@@ -54,6 +61,8 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
                 </form>
             </header>
             <aside className={styles.sidebar}>
+                <button type="button" onClick={() => append({})}>+ add question</button>
+
                 <ul>{fields.map((question, index) => (
                     <div className={styles.question} key={index}>
                         <QuestionCard
@@ -73,7 +82,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
 
             </aside>
             <main className={styles.content}>
-                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+                <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     {fields.map((question, index) => (
                         <div className={styles.question} key={index}>
                             <QuestionForm
@@ -83,14 +92,13 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
                                 watch={watch}
                                 control={control}
                             />
-                            <button type="button" onClick={() => remove(index)}>x</button>
                         </div>
                     ))}
-                    <button type="button" onClick={() => append({})}>+ add question</button>
-                    <button type="submit">Submit</button>
                 </form>
-                <Footer />
+
             </main>
+            <Footer onSubmit={handleFormSubmit} />
+
         </div >
     )
 };
