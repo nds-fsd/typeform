@@ -19,7 +19,7 @@ const FormCard = () => {
     queryFn: fetchForms
   })
 
-  export const handleDeleteForm = async (formId) => {
+  const handleDeleteForm = async (formId) => {
     const res = await api().delete(`/form/${formId}`);
     return res.data;
   };
