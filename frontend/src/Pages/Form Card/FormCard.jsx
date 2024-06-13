@@ -3,7 +3,7 @@ import style from './FormCard.module.css';
 import { api } from '../../utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { handleDeleteForm } from '../../utils/api';
+// import { handleDeleteForm } from '../../utils/api';
 const FormCard = () => {
   const queryClient = useQueryClient();
 
@@ -18,6 +18,11 @@ const FormCard = () => {
     queryKey: ['forms'],
     queryFn: fetchForms
   })
+
+  export const handleDeleteForm = async (formId) => {
+    const res = await api().delete(`/form/${formId}`);
+    return res.data;
+  };
 
   const handleClick = (formId, event) => {
     console.log(formId)
