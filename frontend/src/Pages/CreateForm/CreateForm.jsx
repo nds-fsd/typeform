@@ -7,6 +7,7 @@ import FormForm from './FormForm.jsx';
 
 export const CreateForm = () => {
   const { id } = useParams();
+  console.log(id);
   const isEditMode = !!id;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -69,7 +70,7 @@ export const CreateForm = () => {
 
   return (
     <>
-      <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} />
+      <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} idForm={id} />
     </>
   )
 }

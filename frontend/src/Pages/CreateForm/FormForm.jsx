@@ -1,7 +1,7 @@
 import { useFieldArray } from "react-hook-form";
 import styles from './FormForm.module.css';
 import QuestionForm from "./QuestionForm";
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 // import Sidebar from "../../components/ui/Sidebar";
 import Footer from "./Footer";
 import QuestionCard from "./QuestionCard";
@@ -18,11 +18,12 @@ import { useState, useRef } from "react";
 //         <button type="button" onClick={() => remove(index)}>x</button>
 //     </div>
 // ))};
-const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
+const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) => {
     const { fields, append, remove, swap, move, insert } = useFieldArray({
         control,
         name: "questions"
     });
+    const something = 1111;
 
     const formRef = useRef();
 
@@ -61,12 +62,13 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
                 </form>
             </header>
             <aside className={styles.sidebar}>
-                <button type="button" onClick={() => append({})}>+ add question</button>
-
+                <button type="button" onClick={() => append({ 'value': '1' })}>+ add question</button>
                 <ul>{fields.map((question, index) => (
                     <div className={styles.question} key={index}>
                         <QuestionCard
                             key={question.id}
+                            idQuestion={question._id}
+                            idForm={idForm}
                             register={register}
                             index={index}
                             watch={watch}
@@ -95,7 +97,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control }) => {
                         </div>
                     ))}
                 </form>
-
+                <Outlet context={[fields, something]} />
             </main>
             <Footer onSubmit={handleFormSubmit} />
         </div >

@@ -4,7 +4,7 @@ import { api } from '../../utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 // import { handleDeleteForm } from '../../utils/api';
-const FormCard = () => {
+const FormCard = ({ }) => {
   const queryClient = useQueryClient();
 
   const fetchForms = async () => {
