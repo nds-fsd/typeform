@@ -84,20 +84,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
 
             </aside>
             <main className={styles.content}>
-                <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                    {fields.map((question, index) => (
-                        <div className={styles.question} key={index}>
-                            <QuestionForm
-                                key={question.id}
-                                register={register}
-                                index={index}
-                                watch={watch}
-                                control={control}
-                            />
-                        </div>
-                    ))}
-                </form>
-                <Outlet context={{ fields, register, watch, control }} />
+                <Outlet context={{ fields, register, watch, control, handleSubmit, onSubmit }} />
             </main>
             <Footer onSubmit={handleFormSubmit} />
         </div >
