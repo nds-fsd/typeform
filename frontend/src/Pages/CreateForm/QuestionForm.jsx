@@ -1,7 +1,8 @@
-import React from 'react';
-import styles from './QuestionForm.module.css';
+import React, { useRef } from 'react';
+import styles from './FormForm.module.css';
+import { useOutletContext, useParams } from 'react-router-dom';
+import Footer from './Footer';
 import QuestionChoices from './QuestionChoices';
-import { useParams } from 'react-router-dom';
 
 const questionTypes = [
     { value: 'TextQuestion', label: 'Text' },
@@ -10,56 +11,64 @@ const questionTypes = [
     { value: 'YesNoQuestion', label: 'Yes/No' }
 ];
 
-const QuestionForm = ({ register, index, watch, control, onSubmit }) => {
-    const type = watch(`questions[${index}].type`);
+const QuestionDetails = () => {
     const { idQuestion } = useParams();
-    console.log('id recebido da question em formmmmm', idQuestion)
+    const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault(); // Prevenir o comportamento padrão do formulário se necessário
-        onSubmit(); // Chamar a função onSubmit passada como prop
-    };
+    //index of question: clean up unnecessary code and make calling the _id as
+    // direct as possible
+    console.log('recebido:', fields, typeof fields)
+    const selectedQuestion = fields.find(question => question._id === idQuestion);
+    const index = fields.indexOf(selectedQuestion)
+
+    const type = watch(`questions[${index}].type`);
 
     return (
-        <form onSubmit={handleFormSubmit} className={styles.form}>
-            <div>
-                <select {...register(`questions[${index}].type`)}>
-                    {questionTypes.map((questionType, idx) => (
-                        <option value={questionType.value} key={idx}>
-                            {questionType.label}
-                        </option>
-                    ))}
-                </select>
-                <input
-                    id={styles.inputQuestionText}
-                    type="text"
-                    {...register(`questions[${index}].text`)}
-                />
-                <input
-                    id={styles.inputQuestionDescription}
-                    type="text"
-                    {...register(`questions[${index}].description`)}
-                />
-                {type !== 'TextQuestion' && (
-                    <QuestionChoices
-                        register={register}
-                        control={control}
-                        index={index}
-                        questionType={type}
+        <div>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                onBlur={handleSubmit(onSubmit)}
+                className={styles.form}
+            >
+                <div>
+                    <select {...register(`questions[${index}].type`)}>
+                        {questionTypes.map((questionType, idx) => (
+                            <option value={questionType.value} key={idx}>
+                                {questionType.label}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        id={styles.inputQuestionText}
+                        type="text"
+                        {...register(`questions[${index}].text`)}
                     />
-                )}
-                {type === 'YesNoQuestion' && (
-                    <QuestionChoices
-                        register={register}
-                        control={control}
-                        index={index}
-                        questionType={type}
-                        isYesNo={true}
+                    <input
+                        id={styles.inputQuestionDescription}
+                        type="text"
+                        {...register(`questions[${index}].description`)}
                     />
-                )}
-            </div>
-        </form>
+                    {type !== 'TextQuestion' && (
+                        <QuestionChoices
+                            register={register}
+                            control={control}
+                            index={index}
+                            questionType={type}
+                        />
+                    )}
+                    {type === 'YesNoQuestion' && (
+                        <QuestionChoices
+                            register={register}
+                            control={control}
+                            index={index}
+                            questionType={type}
+                            isYesNo={true}
+                        />
+                    )}
+                </div>
+            </form>
+        </div>
     );
 };
 
-export default QuestionForm;
+export default QuestionDetails;

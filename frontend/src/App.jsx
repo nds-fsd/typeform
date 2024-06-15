@@ -8,7 +8,7 @@ import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
 import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
 import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
-import QuestionDetails from './pages/CreateForm/QuestionDetails.jsx';
+import QuestionDetails from './pages/CreateForm/QuestionForm.jsx';
 // import CreateFormLayout from './pages/CreateForm/CreateFormLayout.jsx';
 // import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ function App() {
         <>
           <Route path='/workspace' element={<Workspace />} />
           <Route path="/createform/:id?" element={<CreateForm />}>
-            <Route path=":idQuestion" element={<QuestionDetails />} />
+            <Route path=":idQuestion" element={<QuestionForm />} />
           </Route>
         </>
       )}

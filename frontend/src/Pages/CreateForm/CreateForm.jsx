@@ -54,7 +54,7 @@ export const CreateForm = () => {
       api().patch(`/form/${id}`, formWithoutId).then((response) => {
         console.log(response.data);
         queryClient.invalidateQueries('forms');
-        navigate('/workspace');
+        // navigate('/workspace');
       }).catch((error) => {
         console.error('Failed to update form:', error);
       });

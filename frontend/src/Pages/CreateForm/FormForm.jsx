@@ -6,18 +6,7 @@ import { Link, Outlet } from 'react-router-dom';
 import Footer from "./Footer";
 import QuestionCard from "./QuestionCard";
 import { useState, useRef } from "react";
-// const fieldsMap = () => {fields.map((question, index) => (
-//     <div className={styles.question} key={index}>
-//         <QuestionForm
-//             key={question.id}
-//             register={register}
-//             index={index}
-//             watch={watch}
-//             control={control}
-//         />
-//         <button type="button" onClick={() => remove(index)}>x</button>
-//     </div>
-// ))};
+
 const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) => {
     const { fields, append, remove, swap, move, insert } = useFieldArray({
         control,
@@ -45,11 +34,15 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
     const handleDragOver = (e) => {
         e.preventDefault();
         console.log('draggedIndex while dragging over is: ', draggedIndex);
-    }
+    };
 
-    const handleFormSubmit = () => {
-        const submitEvent = new SubmitEvent('submit', { bubbles: true });
-        formRef.current.dispatchEvent(submitEvent)
+    const handleAddQuestion = () => {
+        // Adiciona uma nova pergunta
+        append({ text: '', description: '', type: 'TextQuestion' });
+
+        // Captura os dados do formulário para submissão
+        const formData = watch();
+        handleSubmit(onSubmit)(formData);
     };
 
     return (
@@ -62,7 +55,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
                 </form>
             </header>
             <aside className={styles.sidebar}>
-                <button type="button" onClick={() => append({ 'value': '1' })}>+ add question</button>
+                <button type="button" onClick={handleAddQuestion}>+ add question</button>
                 <ul>{fields.map((question, index) => (
                     <div className={styles.question} key={index}>
                         <QuestionCard
@@ -86,7 +79,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
             <main className={styles.content}>
                 <Outlet context={{ fields, register, watch, control, handleSubmit, onSubmit }} />
             </main>
-            <Footer onSubmit={handleFormSubmit} />
+            <Footer onSubmit={handleSubmit(onSubmit)} />
         </div >
     )
 };
