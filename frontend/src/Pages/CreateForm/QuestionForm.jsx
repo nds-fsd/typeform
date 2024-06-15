@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './FormForm.module.css';
 import { useOutletContext, useParams } from 'react-router-dom';
 import Footer from './Footer';
@@ -11,17 +11,30 @@ const questionTypes = [
     { value: 'YesNoQuestion', label: 'Yes/No' }
 ];
 
-const QuestionDetails = () => {
+const QuestionForm = () => {
     const { idQuestion } = useParams();
     const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
 
     //index of question: clean up unnecessary code and make calling the _id as
     // direct as possible
-    console.log('recebido:', fields, typeof fields)
+    //console.log('recebido:', fields, typeof fields)
     const selectedQuestion = fields.find(question => question._id === idQuestion);
     const index = fields.indexOf(selectedQuestion)
 
+    useEffect(() => {
+        console.log('selectedQuestion:', selectedQuestion);
+        console.log('index:', index);
+    }, [selectedQuestion, index]);
+
     const type = watch(`questions[${index}].type`);
+
+    useEffect(() => {
+        console.log('selectedQuestion:', selectedQuestion);
+        console.log('index:', index);
+        console.log('type:', type);
+    }, [selectedQuestion, index, type]);
+
+    if (!selectedQuestion) return <div>Loading...</div>;
 
     return (
         <div>
@@ -71,4 +84,4 @@ const QuestionDetails = () => {
     );
 };
 
-export default QuestionDetails;
+export default QuestionForm;

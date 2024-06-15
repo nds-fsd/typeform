@@ -3,7 +3,7 @@ import { useFieldArray } from 'react-hook-form';
 import styles from './QuestionChoices.module.css';
 
 const QuestionChoices = ({ register, control, index, isYesNo }) => {
-    console.log('yesno?:', isYesNo)
+    // console.log('yesno?:', isYesNo)
     const { fields, append, remove } = useFieldArray({
         control,
         name: `questions[${index}].choices`,

@@ -7,7 +7,6 @@ import FormForm from './FormForm.jsx';
 
 export const CreateForm = () => {
   const { id } = useParams();
-  console.log(id);
   const isEditMode = !!id;
   const navigate = useNavigate();
   const queryClient = useQueryClient();

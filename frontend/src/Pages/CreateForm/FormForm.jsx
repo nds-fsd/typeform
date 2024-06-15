@@ -5,42 +5,40 @@ import { Link, Outlet } from 'react-router-dom';
 // import Sidebar from "../../components/ui/Sidebar";
 import Footer from "./Footer";
 import QuestionCard from "./QuestionCard";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) => {
     const { fields, append, remove, swap, move, insert } = useFieldArray({
         control,
         name: "questions"
     });
-    const something = () => console.log('abc');
-
-    const formRef = useRef();
 
     const [draggedIndex, setDraggedIndex] = useState(null);
+    const [questions, setQuestions] = useState(fields);
+
+    useEffect(() => {
+        console.log('fields updated:', fields);
+        console.log('watch:', watch());
+    }, [fields, watch]);
+
 
     const handleDragStart = (e, index) => {
         setDraggedIndex(index)
-        console.log('draggedIndex vai ser: ', index);
     };
 
     const handleOnDrop = (e, dropIndex) => {
         e.preventDefault();
         if (draggedIndex !== null && draggedIndex !== dropIndex) {
             swap(draggedIndex, dropIndex);
-            console.log('draggedIndex went from: ', draggedIndex, 'to', dropIndex);
         }
         setDraggedIndex(null)
     };
     const handleDragOver = (e) => {
         e.preventDefault();
-        console.log('draggedIndex while dragging over is: ', draggedIndex);
     };
 
     const handleAddQuestion = () => {
-        // Adiciona uma nova pergunta
         append({ text: '', description: '', type: 'TextQuestion' });
-
-        // Captura os dados do formulário para submissão
         const formData = watch();
         handleSubmit(onSubmit)(formData);
     };
