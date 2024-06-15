@@ -3,42 +3,71 @@ import styles from './FormForm.module.css';
 import QuestionForm from './QuestionForm';
 import { useOutletContext, useParams } from 'react-router-dom';
 import Footer from './Footer';
+import QuestionChoices from './QuestionChoices';
+
+const questionTypes = [
+    { value: 'TextQuestion', label: 'Text' },
+    { value: 'MultipleChoiceQuestion', label: 'Multiple Choice' },
+    { value: 'SingleChoiceQuestion', label: 'Single Choice' },
+    { value: 'YesNoQuestion', label: 'Yes/No' }
+];
 
 const QuestionDetails = () => {
+
     const { idQuestion } = useParams();
-    console.log('id recebido da question é ', idQuestion)
     const formRef = useRef();
 
     const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
+
+    //index da question
+
     console.log('recebido:', fields, typeof fields)
     const selectedQuestion = fields.find(question => question._id === idQuestion);
+    const index = fields.indexOf(selectedQuestion)
 
-    const handleFormSubmit = () => {
-        const submitEvent = new SubmitEvent('submit', { bubbles: true });
-        formRef.current.dispatchEvent(submitEvent)
-    };
+    const type = watch(`questions[${index}].type`);
 
     return (
         <div>
-            {selectedQuestion ? (
-                <form ref={formRef} onBlur={handleSubmit(onSubmit)} className={styles.form}>
 
-                    <div className={styles.question}>
-                        <QuestionForm
-                            key={selectedQuestion.id}
+            <form onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)} className={styles.form}>
+                <div>
+                    <select {...register(`questions[${index}].type`)}>
+                        {questionTypes.map((questionType, idx) => (
+                            <option value={questionType.value} key={idx}>
+                                {questionType.label}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        id={styles.inputQuestionText}
+                        type="text"
+                        {...register(`questions[${index}].text`)}
+                    />
+                    <input
+                        id={styles.inputQuestionDescription}
+                        type="text"
+                        {...register(`questions[${index}].description`)}
+                    />
+                    {type !== 'TextQuestion' && (
+                        <QuestionChoices
                             register={register}
-                            index={fields.indexOf(selectedQuestion)}
-                            watch={watch}
                             control={control}
+                            index={index}
+                            questionType={type}
                         />
-                    </div>
-                </form>
-            ) : (
-                <p>Select a question to see its details.</p>
-            )
-
-            }
-            <Footer onSubmit={handleFormSubmit} />
+                    )}
+                    {type === 'YesNoQuestion' && (
+                        <QuestionChoices
+                            register={register}
+                            control={control}
+                            index={index}
+                            questionType={type}
+                            isYesNo={true}
+                        />
+                    )}
+                </div>
+            </form>
 
 
 
