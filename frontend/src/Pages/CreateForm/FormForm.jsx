@@ -23,7 +23,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
         control,
         name: "questions"
     });
-    const something = 1111;
+    const something = () => console.log('abc');
 
     const formRef = useRef();
 
@@ -97,7 +97,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
                         </div>
                     ))}
                 </form>
-                <Outlet context={[fields, something]} />
+                <Outlet context={{ fields, register, watch, control }} />
             </main>
             <Footer onSubmit={handleFormSubmit} />
         </div >

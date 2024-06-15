@@ -31,8 +31,8 @@ function App() {
       {token && (
         <>
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/createform/:id?' element={<CreateForm />}>
-            <Route path='/createform/:id?/:idQuestion' element={<QuestionDetails />} />
+          <Route path="/createform/:id?" element={<CreateForm />}>
+            <Route path=":idQuestion" element={<QuestionDetails />} />
           </Route>
         </>
       )}

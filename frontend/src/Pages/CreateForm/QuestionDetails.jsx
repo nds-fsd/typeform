@@ -1,19 +1,42 @@
 import React from 'react';
 import styles from './FormForm.module.css';
 import QuestionForm from './QuestionForm';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 const QuestionDetails = () => {
-    const [fields, something] = useOutletContext();
-    console.log('recebido:', fields, typeof fields)
-    console.log('tentando entrar no objeto:', fields[0].text, typeof fields)
+    const { idQuestion } = useParams();
+    console.log('id recebido da question é ', idQuestion)
 
+    const { fields, register, watch, control } = useOutletContext();
+    console.log('recebido:', fields, typeof fields)
+    const selectedQuestion = fields.find(question => question._id === idQuestion);
+
+    // console.log('tentando entrar no objeto:', fields[0].text, typeof fields)
     return (
         <>
-            <p>{fields[0].text}</p>
-            <p>{something}</p>
+            {fields.map((info, index) => (
+                <div key={index}>
+                    <p>ID: {info._id}</p>
+                    <p>Text: {info.text}</p>
+                    <p>Description: {info.description}</p>
+                    {/* Renderizar outras propriedades conforme necessário */}
+                </div>
+            ))}
+            selectedQuestion ? (
+            <div className={styles.question}>
+                <QuestionForm
+                    key={selectedQuestion.id}
+                    register={register}
+                    index={fields.indexOf(selectedQuestion)}
+                    watch={watch}
+                    control={control}
+                />
+            </div>
+            ) : (
+            <p>Select a question to see its details.</p>
+            )
+            );
         </>
-
     )
 }
 // find out how to pass onSubmit and other through OutletContext
