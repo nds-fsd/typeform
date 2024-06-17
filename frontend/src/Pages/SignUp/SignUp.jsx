@@ -4,7 +4,7 @@ import { api } from '../../Utils/api';
 import { useMutation } from 'react-query';
 import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../Buttons/LargeButton';
+import { LargeButton } from '../../Components/Buttons/LargeButton';
 
 const SignUp = () => {
   const [error, setError] = useState();

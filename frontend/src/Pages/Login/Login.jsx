@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { api } from '../../Utils/api';
 import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../Buttons/LargeButton';
+import { LargeButton } from '../../Components/Buttons/LargeButton';
 
 
 

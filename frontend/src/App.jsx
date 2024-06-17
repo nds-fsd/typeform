@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Home from './Components/Home/Home.jsx';
-import Workspace from './Components/Workspace/Workspace.jsx';
-import CreateForms from './Components/CreateForms/CreateForms.jsx';
-import SignUp from './Components/SignUp/SignUp.jsx';
+import Home from './Pages/Home/Home.jsx';
+import Workspace from './Pages/Workspace/Workspace.jsx';
+import CreateForms from './Pages/CreateForms/CreateForms.jsx';
+import SignUp from './Pages/SignUp/SignUp.jsx';
 import { getUserToken } from './Utils/localStorage.js';
-import Login from './Components/Login/Login.jsx';
-import { CreateFormJose, EditForm } from './Components/CreateFormJose/createFormJose.jsx';
+import Login from './Pages/Login/Login.jsx';
+import { CreateFormJose, EditForm } from './Pages/CreateFormJose/createFormJose.jsx';
 // import { useNavigate } from 'react-router-dom';
 
 function App() {
