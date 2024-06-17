@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Home from './components/Home/Home.jsx';
-import Workspace from './components/Workspace/Workspace.jsx';
-import CreateForms from './components/CreateForms/CreateForms.jsx';
-import SignUp from './components/SignUp/SignUp.jsx';
-import Auth from './components/Auth/Auth.jsx';
+import Home from './pages/Home/Home.jsx';
+import Workspace from './pages/Workspace/Workspace.jsx';
+import SignUp from './pages/SignUp/SignUp.jsx';
+import Auth from './pages/Auth/Auth.jsx';
 import { getUserToken } from './utils/localStorage.js';
-import Login from './components/Login/Login.jsx';
-import { CreateForm, EditForm } from './components/CreateFormJose/CreateFormJose.jsx';
+import Login from './pages/Login/Login.jsx';
+import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
+import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
+// import CreateFormLayout from './pages/CreateForm/CreateFormLayout.jsx';
 // import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -29,9 +30,9 @@ function App() {
       {token && (
         <>
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/createforms' element={<CreateForms />} />
-          <Route path='/createform' element={<CreateForm />} />
-          <Route path='/editform/:id' element={<EditForm />} />
+          <Route path="/createform/:id?" element={<CreateForm />}>
+            <Route path=":idQuestion" element={<QuestionForm />} />
+          </Route>
         </>
       )}
     </Routes>

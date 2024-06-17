@@ -1,120 +1,75 @@
-import { Link, useParams } from "react-router-dom";
-import { api, fetchForm } from "../../utils/api";
-import { useQuery, useQueryClient } from 'react-query';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
-import style from './CreateForm.module.css';
+import { useEffect, useState } from 'react';
+import { api } from '../../utils/api.js';
+import { useQuery, useQueryClient } from 'react-query';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import FormForm from './FormForm.jsx';
 
+export const CreateForm = () => {
+  const { id } = useParams();
+  const isEditMode = !!id;
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-const CreateForm = () => {
-    // mover lógica para fuera del componente (creacion de API?)
-    const { formId } = useParams();
-    const queryClient = useQueryClient();
-    const { register, handleSubmit } = useForm();
-    const { data, error, isLoading, isError } = useQuery(
-        ['form', formId], () => fetchForm(formId));
-
-    const [questionText, setQuestionText] = useState('');
-    const [questionType, setQuestionType] = useState('');
-    const [formTitle, setFormTitle] = useState('');
-    console.log(questionText)
-
-    // como quito wl fetchForm por ejemplo desde aqui para otro archivo?
-
-    useEffect(() => {
-        if (data) {
-            setQuestionText(data.questions[0]?.text || '');
-            setQuestionType(data.questions[0]?.type || '');
-            setFormTitle(data.title || '');
-        }
-    }, [data]);
-    console.log(data)
-
-    const onSubmit = async (formData) => {
-        try {
-            console.log(formData)
-            const res = await api().patch(`/form/${formId}`, formData);
-            console.log(res.data);
-            // Invalidate and refetch the form data
-            queryClient.invalidateQueries(['form', formId]);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    const handleInputChange = (e) => {
-        console.log('Conteúdo atual:', e.target.innerText);
-        setQuestionText(e.target.value);
-        console.log(questionText)
+  const { data: formData } = useQuery(
+    ['form', id],
+    () => api().get(`/form/${id}`).then(res => res.data),
+    { enabled: isEditMode }
+  );
+  const { register, control, handleSubmit, watch, setValue } = useForm({
+    defaultValues: isEditMode ? {} : {
+      title: 'My form',
+      questions: [{
+        text: '...',
+        description: 'optional description',
+        type: 'TextQuestion'
+      }]
     }
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // prevents line break
-            updateQuestionText();
-        }
-    };
+  });
 
-    const updateQuestionText = async () => {
-        try {
-            const questionId = data.questions[0]._id; // replace absolute index
-            console.log(questionId)
-            console.log(questionText)
-
-            const res = await api().patch(`form/${formId}`, {
-                questions: [{
-                    _id: questionId,
-                    text: questionText
-                }]
-            });
-            console.log('Question text updated successfully:', res.data);
-            return res.data
-        } catch (error) {
-            console.log('Could not update question text: ', error)
-        }
+  useEffect(() => {
+    if (formData) {
+      console.log("formData:", formData);
+      setValue('title', formData.title || '');
+      setValue('questions', formData.questions.map((question) => ({
+        ...question,
+        choices: question.choices || [],
+      })) || []);
     }
-    return (
-        <div>
-            {isLoading &&
-                <div><h1>loading...</h1></div>}
-            {isError && <p>Error: {error.message}</p>}
-            {data && (
-                <div>
-                    <header className={style.fixedHeader}>
-                        <Link reloadDocument={false} className={style.workspaceLink} to={'/workspace'}>my workspace</Link>
-                        <br />
-                        <div className={style.inputFormTitle} contentEditable type='text' placeholder={data.title}>{data.title}</div>
+  }, [formData, setValue]);
 
-                    </header>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <input {...register("title")} />
-                        <input type="submit" value="submit" />
-                    </form>
-                    {data.updateDateTime && <h3>Update: {data.updateDateTime}</h3>}
-                    {data.questions[0] && (
-                        <div>
-                            <p>Type: {data.questions[0].type}</p>
-                            <div className={style.inputForm}
-                                type='text'
-                                role='textbox'
-                                contentEditable={true}
-                                placeholder={data.questions[0].text}
-                                onInput={handleInputChange}
-                                onKeyDown={handleKeyDown}
-                                suppressContentEditableWarning={true}
-                            >{data.questions[0].text}</div>
-                            {data.questions[0].choices &&
-                                <div>
-                                    <p>Choices:</p>
-                                    {data.questions[0].choices.map((choice, i) => (
-                                        <p>{choice.label}</p>
-                                    ))}
-                                </div>
-                            }
-                        </div>
-                    )}
-                </div>
-            )
-            }
-        </div >
-    );
-};
-export default CreateForm;
+  const onSubmit = (data) => {
+    console.log('Original data:', data);
+    if (isEditMode) {
+      const processedData = {
+        ...data,
+        questions: data.questions.map(({ _id, ...rest }) => rest)
+      };
+
+      const { _id, ...formWithoutId } = processedData;
+
+      console.log('Processed data (without _id):', formWithoutId);
+
+      api().patch(`/form/${id}`, formWithoutId).then((response) => {
+        console.log(response.data);
+        queryClient.invalidateQueries('forms');
+        // navigate('/workspace');
+      }).catch((error) => {
+        console.error('Failed to update form:', error);
+      });
+    } else {
+      api().post('/form', data).then((response) => {
+        queryClient.invalidateQueries('forms');
+        navigate('/workspace');
+      }).catch((error) => {
+        console.log('Failed to creat form:', error)
+      })
+    }
+  }
+
+  return (
+    <>
+      <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} idForm={id} />
+    </>
+  )
+}
