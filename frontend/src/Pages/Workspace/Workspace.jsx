@@ -17,7 +17,7 @@ const handleClick = () => {
         <h1 className="text-gray-900 text-3xl mb-8 ml-8 mt-2">My Workspace</h1>
         <div className="flex flex-col space-y-4">
             <Profile />
-            <div className='ml-8'>
+            <div className='ml-8 mb-40 pb-20'>
               <MediumButton onClick={handleClick} text="Add New Form" />
             </div>
           <div className="grid grid-cols-1 gap-4"> 
