@@ -32,11 +32,11 @@ console.log(onSubmit)
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
-      <div className="bg-white p-28 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
+      <div className="bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 font-rubik">Welcome back!</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
           <div className="w-full">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 font-space mono">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-900 font-space mono">Email</label>
             <input 
               type="text" 
               placeholder="Email"
@@ -49,7 +49,7 @@ console.log(onSubmit)
             {errors.email && <p className="text-red-600 text-sm font-space mono">{errors.email.message}</p>}
           </div>
           <div className="w-full">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-900">Password</label>
             <input 
               type="password" 
               placeholder="Password" 
@@ -58,10 +58,9 @@ console.log(onSubmit)
             />
             {error && <p className="text-red-600 text-sm">{error.password}</p>}
           </div>
-          <a href='http://localhost:3000/signup' className="text-blue-600 hover:text-blue-800 text-sm font-space mono">Not registered? Sign Up!</a>
-          <div className="w-full flex justify-center">
             <LargeButton submit={handleSubmit(onSubmit)} text={"LOGIN"} />
-          </div>
+            <a className="flex flex-row text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer" 
+            onClick={() => {navigate('/signup')}}>Not registered? Sign Up!</a>
         </form>
       </div>
     </div>

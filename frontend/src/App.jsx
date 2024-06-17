@@ -4,7 +4,6 @@ import Home from './Components/Home/Home.jsx';
 import Workspace from './Components/Workspace/Workspace.jsx';
 import CreateForms from './Components/CreateForms/CreateForms.jsx';
 import SignUp from './Components/SignUp/SignUp.jsx';
-import Auth from './Components/Auth/Auth.jsx';
 import { getUserToken } from './Utils/localStorage.js';
 import Login from './Components/Login/Login.jsx';
 import { CreateFormJose, EditForm } from './Components/CreateFormJose/createFormJose.jsx';
@@ -23,7 +22,6 @@ function App() {
   return (
     <Routes>
       <Route path='/home' element={<Home />} />
-      <Route path='/auth' element={<Auth />} />
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
       <Route path='/create-form/:formId' element={<CreateForms />} />
