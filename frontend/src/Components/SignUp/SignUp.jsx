@@ -44,51 +44,53 @@ const SignUp = () => {
   };
 
   return (
-    <div className={style.container}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-        <h1 className={style.title}>Sign Up</h1>
-        <label htmlFor='email'>EMAIL</label>
-        <input
-          {...register('email', {
-            required: { value: true, message: '*email is required' },
-            pattern: { value: /^\S+@\S+$/i, message: '*Invalid email format' },
-          })}
-          placeholder='email'
-        ></input>
-        {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
+    <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
+      <div className="bg-white p-28 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="font-rubik">Sign Up</h1>
+          <label className="font-space mono" htmlFor='email'>EMAIL</label>
+          <input
+            {...register('email', {
+              required: { value: true, message: '*email is required' },
+              pattern: { value: /^\S+@\S+$/i, message: '*Invalid email format' },
+            })}
+            placeholder='email'
+          ></input>
+          {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
 
-        <label htmlFor='name'>NAME</label>
-        <input
-          {...register('name', { required: { value: true, message: '*name is required' } })}
-          placeholder='name'
-        ></input>
-        {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+          <label htmlFor='name'>NAME</label>
+          <input
+            {...register('name', { required: { value: true, message: '*name is required' } })}
+            placeholder='name'
+          ></input>
+          {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
 
-        <label htmlFor='password'>PASSWORD</label>
-        <input
-          type='password'
-          {...register('password', {
-            required: { value: true, message: '*password is required' },
-            minLength: { value: 6, message: '*password needs at least 6 characters' },
-          })}
-          placeholder='password'
-        ></input>
-        {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
+          <label htmlFor='password'>PASSWORD</label>
+          <input
+            type='password'
+            {...register('password', {
+              required: { value: true, message: '*password is required' },
+              minLength: { value: 6, message: '*password needs at least 6 characters' },
+            })}
+            placeholder='password'
+          ></input>
+          {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
 
-        <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <p>
-          ¿Ya tienes una cuenta?{' '}
-          <span
-            className={style.login}
-            onClick={() => {
-              navigate('/login');
-            }}
-          >
-            Login
-          </span>
-        </p>
-      </form>
+          <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <p>
+            ¿Ya tienes una cuenta?{' '}
+            <span
+              className={style.login}
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              Login
+            </span>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { api } from '../../Utils/api';
 import { setUserSession } from '../../Utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-import styles from './Login.module.css';
 import { LargeButton } from '../Buttons/LargeButton';
 
 
@@ -29,35 +28,46 @@ const Login = () => {
         setError(error.response.data);
       });
   };
+console.log(onSubmit)
 
   return (
-      <div className={styles.mastercontainer}>
-        <div className={styles.logincontainer}>
-          <h1>Login</h1>
-          <form>
-            <div className={styles.inputgroup}>
-              <label htmlFor="email">Email</label>
-              <input type="text" placeholder="Email"
-              {...register ("email", {
-              required: { value: true, message: 'Email is required'},
-              pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
-              })}/>
-              {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
-            </div>
-            <div className={styles.inputgroup}>
-              <label htmlFor="password"> Contraseña </label>
-              <input type="password" placeholder="Contraseña" {...register ("password", { required: true })}/>
-              {/* <input className={styles.submitbutton} type="submit" value="Login"/> */}
-              {error && <p style={{ color: 'red' }}>{error.password}</p>}
-              <button onClick={handleSubmit(onSubmit)}>Login</button>
-              <a href='http://localhost:3000/signup'>Not registered? Sign Up!</a>
-              <LargeButton handleSumbit={onSubmit} text={"Login"}/>
-            </div>
-          </form>
-        </div>
+    <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
+      <div className="bg-white p-28 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 font-rubik">Welcome back!</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
+          <div className="w-full">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 font-space mono">Email</label>
+            <input 
+              type="text" 
+              placeholder="Email"
+              className=" font-space mono mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              {...register("email", {
+                required: { value: true, message: 'Email is required' },
+                pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
+              })} 
+            />
+            {errors.email && <p className="text-red-600 text-sm font-space mono">{errors.email.message}</p>}
+          </div>
+          <div className="w-full">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <input 
+              type="password" 
+              placeholder="Password" 
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              {...register("password", { required: true })} 
+            />
+            {error && <p className="text-red-600 text-sm">{error.password}</p>}
+          </div>
+          <a href='http://localhost:3000/signup' className="text-blue-600 hover:text-blue-800 text-sm font-space mono">Not registered? Sign Up!</a>
+          <div className="w-full flex justify-center">
+            <LargeButton submit={handleSubmit(onSubmit)} text={"LOGIN"} />
+          </div>
+        </form>
       </div>
-             );
-    };
+    </div>
+  );
+};
+
 
 
 export default Login;
