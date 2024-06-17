@@ -7,17 +7,16 @@ import SignUp from './Pages/SignUp/SignUp.jsx';
 import { getUserToken } from './Utils/localStorage.js';
 import Login from './Pages/Login/Login.jsx';
 import { CreateFormJose, EditForm } from './Pages/CreateFormJose/createFormJose.jsx';
-// import { useNavigate } from 'react-router-dom';
 
 function App() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const token = getUserToken();
 
-  // useEffect (() => {
-  //   if(!token) {
-  //     navigate('/home')
-  //   }
-  // },[token, navigate])
+  useEffect (() => {
+    if(!token) {
+      navigate('/login')
+    }
+  },[token, navigate])
 
   return (
     <Routes>

@@ -20,7 +20,7 @@ const handleClick = () => {
             <div className='ml-8'>
               <MediumButton onClick={handleClick} text="Add New Form" />
             </div>
-          <div className="grid grid-cols-2 gap-4"> 
+          <div className="grid grid-cols-1 gap-4"> 
             <FormCard />
           </div>
         </div>
