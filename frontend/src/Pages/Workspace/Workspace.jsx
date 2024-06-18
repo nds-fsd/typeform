@@ -2,9 +2,21 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
+import { useFormProvider } from '../../context/FormContext';
 
 const Workspace = () => {
   const navigate = useNavigate();
+  const {
+    onEditForm,
+    setOnEditForm,
+    allForms,
+    setAllForms,
+    data,
+    error,
+    isLoading,
+    isError
+  } = useFormProvider();
+
 
   return (
     <div className={style.viewport}>
@@ -14,6 +26,9 @@ const Workspace = () => {
           Add New Form
         </button>
         <FormCard className={style.formcard} />
+        {allForms.map((form) => (
+          <FormCard key={form._id} form={form} />
+        ))}
       </div>
     </div >
   );

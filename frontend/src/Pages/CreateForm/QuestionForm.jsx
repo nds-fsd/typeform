@@ -4,7 +4,7 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import Footer from './Footer';
 import QuestionChoices from './QuestionChoices';
 import { api } from '../../utils/api';
-import { FormContext } from '../../context/FormProvider';
+import { FormContext, useFormProvider } from '../../context/FormContext';
 
 const questionTypes = [
     { value: 'TextQuestion', label: 'Text' },
@@ -14,7 +14,17 @@ const questionTypes = [
 ];
 
 const QuestionForm = ({ }) => {
-    const formFromContext = useContext(FormContext);
+    const {
+        onEditForm,
+        setOnEditForm,
+        allForms,
+        setAllForms,
+        data,
+        error,
+        isLoading,
+        isError
+    } = useFormProvider();
+
     const { idQuestion } = useParams();
     const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
     console.log(idQuestion)
@@ -57,7 +67,9 @@ const QuestionForm = ({ }) => {
                         {...register(`questions[${index}].text`)}
                     />
                     <p>{selectedQuestion.text}</p>
-                    <h1>{formFromContext}</h1>
+                    <h1>{onEditForm}</h1>
+                    <pre>{JSON.stringify(allForms, null, 2)}</pre>
+
 
                     <input
                         id={styles.inputQuestionDescription}

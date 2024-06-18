@@ -1,0 +1,42 @@
+import { createContext, useState, useContext } from "react";
+import { fetchForms } from "../utils/api";
+import { useQuery } from "react-query";
+
+export const FormContext = createContext(null);
+
+export const FormProvider = ({ children }) => {
+    const [onEditForm, setOnEditForm] = useState(123);
+    const [allForms, setAllForms] = useState({});
+
+    const { data, error, isLoading, isError } = useQuery({
+        queryKey: ['forms'],
+        queryFn: fetchForms,
+        onSuccess: (data) => {
+            setAllForms(data);
+        }
+    });
+
+    const value = {
+        onEditForm,
+        setOnEditForm,
+        allForms,
+        setAllForms,
+        data,
+        error,
+        isLoading,
+        isError
+    };
+    return (
+        <FormContext.Provider value={value}>
+            {children}
+        </FormContext.Provider>
+    );
+}
+
+export const useFormProvider = () => useContext(FormContext);
+
+// const { data: formData } = useQuery(
+//     ['form', id],
+//     () => api().get(`/form/${id}`).then(res => res.data),
+//     { enabled: isEditMode }
+// );

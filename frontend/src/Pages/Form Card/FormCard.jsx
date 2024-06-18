@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './FormCard.module.css';
 import { api, fetchForms, handleDeleteForm } from '../../utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { FormContext, useFormProvider } from '../../context/FormContext';
 // import { handleDeleteForm } from '../../utils/api';
-const FormCard = ({ }) => {
+const FormCard = ({ form }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const {
+    onEditForm,
+    setOnEditForm,
+    allForms,
+    setAllForms,
+    data,
+    error,
+    isLoading,
+    isError
+  } = useFormProvider();
+  console.log(form, 'recebido de workspace!')
 
   // const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
-  const { data, error, isLoading, isError } = useQuery({
-    queryKey: ['forms'],
-    queryFn: fetchForms
-  });
+  // const { data, error, isLoading, isError } = useQuery({
+  //   queryKey: ['forms'],
+  //   queryFn: fetchForms
+  // });
 
   const handleClick = (formId, event) => {
     console.log(formId)
@@ -33,14 +45,8 @@ const FormCard = ({ }) => {
   const handleEdit = (id) => {
     navigate(`/createform/${id}`)
   }
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (isError) {
-    return <p>Error: {error.message}</p>;
-  }
-
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error.message}</p>;
 
   return (
     <div className={style.formgrid}>
