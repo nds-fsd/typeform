@@ -31,8 +31,7 @@ const QuestionChoices = ({ register, control, index, isYesNo }) => {
                 </div>
             </div>
             }
-            
-            <div>
+            {!isYesNo && (<div>
             {fields.map((choice, choiceIndex) => (
                 <div className={styles.questionChoice} key={choice.id}>
                     <input
@@ -46,8 +45,10 @@ const QuestionChoices = ({ register, control, index, isYesNo }) => {
                     )}
                 </div>
             ))}
-            <button type="button" onClick={() => append({ label: 'New Choice' })}>Add Choice</button>
-        </div>
+            <button type="button" onClick={() => append({ label: 'new choice' })}>Add Choice</button>
+        </div>)}
+            
+            
         </>
     )
 }

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
-import { api } from '../../utils/api';
 
 const Workspace = () => {
   const navigate = useNavigate();

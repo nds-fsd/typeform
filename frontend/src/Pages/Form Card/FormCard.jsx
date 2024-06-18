@@ -1,28 +1,18 @@
 import React from 'react';
 import style from './FormCard.module.css';
-import { api } from '../../utils/api';
+import { api, fetchForms, handleDeleteForm } from '../../utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 // import { handleDeleteForm } from '../../utils/api';
 const FormCard = ({ }) => {
   const queryClient = useQueryClient();
-
-  const fetchForms = async () => {
-    const res = await api().get('/form');
-    return res.data;
-  };
   const navigate = useNavigate();
 
   // const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ['forms'],
     queryFn: fetchForms
-  })
-
-  const handleDeleteForm = async (formId) => {
-    const res = await api().delete(`/form/${formId}`);
-    return res.data;
-  };
+  });
 
   const handleClick = (formId, event) => {
     console.log(formId)

@@ -21,7 +21,6 @@ export const CreateForm = () => {
       title: 'My form',
       questions: [{
         text: '...',
-        description: 'optional description',
         type: 'TextQuestion'
       }]
     }
@@ -53,6 +52,7 @@ export const CreateForm = () => {
       api().patch(`/form/${id}`, formWithoutId).then((response) => {
         console.log(response.data);
         queryClient.invalidateQueries('forms');
+        alert('form was just saved')
         // navigate('/workspace');
       }).catch((error) => {
         console.error('Failed to update form:', error);
@@ -60,6 +60,7 @@ export const CreateForm = () => {
     } else {
       api().post('/form', data).then((response) => {
         queryClient.invalidateQueries('forms');
+        alert('form created')
         navigate('/workspace');
       }).catch((error) => {
         console.log('Failed to creat form:', error)

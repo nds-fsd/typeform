@@ -19,7 +19,8 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
     useEffect(() => {
         console.log('fields updated:', fields);
         console.log('watch:', watch());
-    }, [fields, watch]);
+
+    }, [fields]);
 
 
     const handleDragStart = (e, index) => {
@@ -38,7 +39,7 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
     };
 
     const handleAddQuestion = () => {
-        append({ text: '', description: '', type: 'TextQuestion' });
+        append({ text: '...', type: 'TextQuestion' });
         const formData = watch();
         handleSubmit(onSubmit)(formData);
     };
@@ -55,22 +56,20 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
             <aside className={styles.sidebar}>
                 <button type="button" onClick={handleAddQuestion}>+ add question</button>
                 <ul>{fields.map((question, index) => (
-                    <div className={styles.question} key={index}>
-                        <QuestionCard
-                            key={question.id}
-                            idQuestion={question._id}
-                            idForm={idForm}
-                            register={register}
-                            index={index}
-                            watch={watch}
-                            control={control}
-                            questionText={question.text}
-                            remove={() => remove(index)}
-                            onDragStart={(e) => handleDragStart(e, index)}
-                            onDrop={(e) => handleOnDrop(e, index)}
-                            onDragOver={(e) => handleDragOver(e)}
-                        />
-                    </div>
+                    <QuestionCard
+                        key={question.id}
+                        idQuestion={question._id}
+                        idForm={idForm}
+                        register={register}
+                        index={index}
+                        watch={watch}
+                        control={control}
+                        questionText={question.text}
+                        remove={() => remove(index)}
+                        onDragStart={(e) => handleDragStart(e, index)}
+                        onDrop={(e) => handleOnDrop(e, index)}
+                        onDragOver={(e) => handleDragOver(e)}
+                    />
                 ))}</ul>
 
             </aside>
