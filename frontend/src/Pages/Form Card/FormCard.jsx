@@ -1,10 +1,10 @@
 import React from 'react';
 import style from './FormCard.module.css';
-import { api } from '../../utils/api';
+import { api } from '../../Utils/api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 // import { handleDeleteForm } from '../../utils/api';
-const FormCard = ({ }) => {
+const FormCard = ({}) => {
   const queryClient = useQueryClient();
 
   const fetchForms = async () => {
@@ -16,8 +16,8 @@ const FormCard = ({ }) => {
   // const { data, error, isLoading, isError } = useQuery('forms', fetchForms);
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ['forms'],
-    queryFn: fetchForms
-  })
+    queryFn: fetchForms,
+  });
 
   const handleDeleteForm = async (formId) => {
     const res = await api().delete(`/form/${formId}`);
@@ -25,7 +25,7 @@ const FormCard = ({ }) => {
   };
 
   const handleClick = (formId, event) => {
-    console.log(formId)
+    console.log(formId);
     event.stopPropagation();
     deleteFormByIdMutation.mutate(formId);
   };
@@ -41,8 +41,8 @@ const FormCard = ({ }) => {
   });
 
   const handleEdit = (id) => {
-    navigate(`/createform/${id}`)
-  }
+    navigate(`/createform/${id}`);
+  };
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -50,7 +50,6 @@ const FormCard = ({ }) => {
   if (isError) {
     return <p>Error: {error.message}</p>;
   }
-
 
   return (
     <div className={style.formgrid}>

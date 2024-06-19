@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
-import { api } from '../../utils/api';
+import { api } from '../../Utils/api';
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Workspace = () => {
         </button>
         <FormCard className={style.formcard} />
       </div>
-    </div >
+    </div>
   );
 };
 
