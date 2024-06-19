@@ -3,7 +3,8 @@ const Form = require('../schemas/form.schema');
 // Obtiene todos los formularios
 const getAllForms = async (req, res) => {
     try {
-        const allForms = await Form.find().populate('questions');
+        const user = req.user;
+        const allForms = await Form.find({owner:user._id}).populate('questions');
         res.json(allForms)
     } catch (error) {
         console.error('Failed to get forms:', error);
@@ -30,11 +31,13 @@ const getForm = async (req, res) => {
 const createForm = async (req, res) => {
     try {
         const { body } = req;
+        const user = req.user;
         const newForm = await Form.create({
             title: body.title,
             status: body.status,
             questions: body.questions,
-            creationDateTime: new Date()
+            creationDateTime: new Date(),
+            owner: user._id
         });
         res.status(200).json(newForm);
 
