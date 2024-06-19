@@ -3,11 +3,10 @@ const { Schema } = require('mongoose');
 const QuestionSchema = new Schema({
     text: {
         type: String,
-        required: true
+        default: '...',
     },
     description: {
         type: String,
-        required: false
     },
     creationDateTime: {
         type: Date,
@@ -27,21 +26,42 @@ const TextQuestion = QuestionSchema.discriminator('TextQuestion',
     }));
 
 const QuestionChoice = new Schema({
-    label: {
-        type: String,
-        required: true
-    },
+    choices: [
+        {
+            label: {
+                type: String,
+                required: true
+            }
+        }
+    ]
 });
 
-const MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuestion', new Schema({
-    choices: [QuestionChoice]
-}));
+const MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuestion', QuestionChoice);
 
-const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', new Schema({
-    choices: [QuestionChoice]
-}));
+const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', QuestionChoice);
 
-const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
-console.log(Object.keys(QuestionSchema._applyDiscriminators)); // This should print discriminator keys
+const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', QuestionChoice);
 
 exports.QuestionSchema = QuestionSchema;
+
+// // quisiera entender porque eso no ha funcionado para crear automaticamente las opciones para YesNo type:
+// // ------VERSION 1
+// const YesNoQuestionSchema = new Schema({
+//     choices: [{
+//         label: {
+//             type: String,
+//             enum: ['Yes', 'No'],
+//             default: 'Yes',
+//         },
+//     }],
+// });
+
+// const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', YesNoQuestionSchema);
+
+// // ----------VERSION 2 - declarado irectamente
+// const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({
+//     choices: [
+//         { label: { type: String, default: 'Yes' } },
+//         { label: { type: String, default: 'No' } }
+//     ]
+// }));
