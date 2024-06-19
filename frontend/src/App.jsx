@@ -29,7 +29,7 @@ function App() {
       <Route path='/login' element={<Login />} />
       {token && (
         <>
-          <Route path='/responseform' element={<ResponseForm />} />
+          <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
           <Route path='/createforms' element={<CreateForms />} />
           <Route path='/createformjose' element={<CreateFormJose />} />
