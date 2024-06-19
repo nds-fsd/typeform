@@ -10,6 +10,7 @@ import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
 import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
 // import CreateFormLayout from './pages/CreateForm/CreateFormLayout.jsx';
 // import { useNavigate } from 'react-router-dom';
+import ResponseForm from './Components/ResponsePage/ResponseForm.jsx';
 
 function App() {
   // const navigate = useNavigate();
@@ -29,9 +30,10 @@ function App() {
       <Route path='/login' element={<Login />} />
       {token && (
         <>
+          <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
-          <Route path="/createform/:id?" element={<CreateForm />}>
-            <Route path=":idQuestion" element={<QuestionForm />} />
+          <Route path='/createform/:id?' element={<CreateForm />}>
+            <Route path=':idQuestion' element={<QuestionForm />} />
           </Route>
         </>
       )}
