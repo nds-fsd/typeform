@@ -13,37 +13,25 @@ const questionTypes = [
     { value: 'YesNoQuestion', label: 'Yes/No' }
 ];
 
-const QuestionForm = ({ }) => {
+const QuestionForm = ({ onSubmit }) => {
     const {
-        onEditForm,
-        setOnEditForm,
+        selectedQuestion,
+        setSelectedQuestion,
         allForms,
         setAllForms,
-        data,
-        error,
-        isLoading,
-        isError
+        fields,
+        register,
+        watch,
+        control,
+        handleSubmit
     } = useFormProvider();
 
-    const { idQuestion } = useParams();
-    const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
-    console.log(idQuestion)
-
-    //index of question: clean up unnecessary code and make calling the _id as
-    // direct as possible
-    //console.log('recebido:', fields, typeof fields)
-    const selectedQuestion = fields.find(question => question._id === idQuestion);
     const index = fields.indexOf(selectedQuestion)
-    const type = watch(`questions[${index}].type`);
+    const type = selectedQuestion ? selectedQuestion.type : '';
+    console.log(type, 'tipo');
+    console.log('all forms: ', allForms)
 
-    useEffect(() => {
-        console.log('selectedQuestion:', selectedQuestion);
-        console.log('index:', index);
-        // console.log('type:', type);
-        console.log(idQuestion);
-    }, [selectedQuestion, type, idQuestion]);
-
-    if (!selectedQuestion) return <div>Loading...</div>;
+    // if (!selectedQuestion) return <div>Loading...</div>;
 
     return (
         <div>
@@ -66,9 +54,9 @@ const QuestionForm = ({ }) => {
                         placeholder='write your question here'
                         {...register(`questions[${index}].text`)}
                     />
-                    <p>{selectedQuestion.text}</p>
-                    <h1>{onEditForm}</h1>
-                    <pre>{JSON.stringify(allForms, null, 2)}</pre>
+                    {/* <p>{selectedQuestion.text}</p>
+                    <h1>{selectedQuestion.type}</h1> */}
+                    {/* <pre>{JSON.stringify(allForms, null, 2)}</pre> */}
 
 
                     <input

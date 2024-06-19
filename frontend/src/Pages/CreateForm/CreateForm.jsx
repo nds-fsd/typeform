@@ -1,76 +1,89 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { api } from '../../utils/api.js';
-import { useQuery, useQueryClient } from 'react-query';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import FormForm from './FormForm.jsx';
+import { useFormProvider } from '../../context/FormContext.jsx';
 
 export const CreateForm = () => {
   const { id } = useParams();
   const isEditMode = !!id;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const {
+    onEditForm,
+    setOnEditForm,
+    register,
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    setIsEditMode,
+    resetForm
 
-  const { data: formData } = useQuery(
-    ['form', id],
-    () => api().get(`/form/${id}`).then(res => res.data),
-    { enabled: isEditMode }
-  );
-  const { register, control, handleSubmit, watch, setValue } = useForm({
-    defaultValues: isEditMode ? {} : {
-      title: 'My form',
-      questions: [{
-        text: '...',
-        type: 'TextQuestion'
-      }]
-    }
-  });
+  } = useFormProvider();
+  console.log('edit mode?', isEditMode)
+
+  // // ----- descubrir como hacer defaultValues aunque se usen 
+  // // register, control etc desde FormProvider.
+  // const {
+  //   onEditForm,
+  //   setOnEditForm
+  // } = useFormProvider();
+
+  // const { register, control, handleSubmit, watch, setValue } = useForm({
+  //   defaultValues: isEditMode ? {} : {
+  //     title: 'My form',
+  //     questions: [{
+  //       text: '...',
+  //       type: 'TextQuestion'
+  //     }]
+  //   }
+  // });
+
+  // // ------
 
   useEffect(() => {
-    if (formData) {
-      console.log("formData:", formData);
-      setValue('title', formData.title || '');
-      setValue('questions', formData.questions.map((question) => ({
+    if (isEditMode && onEditForm) {
+      setValue('title', onEditForm.title || '');
+      setValue('questions', onEditForm.questions.map((question) => ({
         ...question,
         choices: question.choices || [],
       })) || []);
+    } else {
+      resetForm();  // Reset the form to default values when creating a new form
     }
-  }, [formData, setValue]);
+  }, [setValue]);
 
   const onSubmit = (data) => {
-    console.log('Original data:', data);
     if (isEditMode) {
       const processedData = {
         ...data,
         questions: data.questions.map(({ _id, ...rest }) => rest)
       };
 
-      const { _id, ...formWithoutId } = processedData;
-
-      console.log('Processed data (without _id):', formWithoutId);
-
-      api().patch(`/form/${id}`, formWithoutId).then((response) => {
-        console.log(response.data);
+      api().patch(`/form/${id}`, processedData).then((response) => {
         queryClient.invalidateQueries('forms');
-        alert('form was just saved')
-        // navigate('/workspace');
+        alert('Form was just saved');
+        navigate('/workspace');
       }).catch((error) => {
         console.error('Failed to update form:', error);
       });
     } else {
       api().post('/form', data).then((response) => {
         queryClient.invalidateQueries('forms');
-        alert('form created')
+        alert('Form created');
         navigate('/workspace');
       }).catch((error) => {
-        console.log('Failed to creat form:', error)
-      })
+        console.log('Failed to create form:', error);
+      });
     }
-  }
+  };
 
   return (
     <>
-      <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} idForm={id} />
+      <FormForm onSubmit={onSubmit} idForm={id} />
     </>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import styles from './FormForm.module.css';
 import QuestionForm from "./QuestionForm";
 import { Link, Outlet } from 'react-router-dom';
@@ -6,22 +6,32 @@ import { Link, Outlet } from 'react-router-dom';
 import Footer from "./Footer";
 import QuestionCard from "./QuestionCard";
 import { useState, useRef, useEffect } from "react";
+import { useFormProvider } from "../../context/FormContext";
 
-const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) => {
-    const { fields, append, remove, swap, move, insert } = useFieldArray({
+const FormForm = ({ onSubmit, idForm }) => {
+    const {
+        onEditForm,
+        setOnEditForm,
+        register,
         control,
-        name: "questions"
-    });
+        handleSubmit,
+        watch,
+        fields,
+        setValue,
+        append,
+        swap
+    } = useFormProvider();
 
+    // console.log('on edit dentro de FormForm:: ', onEditForm);
     const [draggedIndex, setDraggedIndex] = useState(null);
-    const [questions, setQuestions] = useState(fields);
+    const { formQuestions, setFormQuestions } = useFormProvider();
 
-    useEffect(() => {
-        console.log('fields updated:', fields);
-        console.log('watch:', watch());
-
-    }, [fields]);
-
+    // useEffect(() => {
+    //     // console.log('fields updated:', fields);
+    //     // console.log('watch:', watch());
+    //     setFormQuestions(fields);
+    // }, [fields]);
+    // console.log(formQuestions, 'funciona----')
 
     const handleDragStart = (e, index) => {
         setDraggedIndex(index)
@@ -43,7 +53,6 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
         const formData = watch();
         handleSubmit(onSubmit)(formData);
     };
-
     return (
         <div className={styles.wrapper}>
             <header className={styles.header}>
@@ -55,17 +64,11 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
             </header>
             <aside className={styles.sidebar}>
                 <button type="button" onClick={handleAddQuestion}>+ add question</button>
-                <ul>{fields.map((question, index) => (
+                <ul>{formQuestions.map((question, index) => (
                     <QuestionCard
+                        question={question}
                         key={question.id}
-                        idQuestion={question._id}
-                        idForm={idForm}
-                        register={register}
                         index={index}
-                        watch={watch}
-                        control={control}
-                        questionText={question.text}
-                        remove={() => remove(index)}
                         onDragStart={(e) => handleDragStart(e, index)}
                         onDrop={(e) => handleOnDrop(e, index)}
                         onDragOver={(e) => handleDragOver(e)}
@@ -74,7 +77,12 @@ const FormForm = ({ register, handleSubmit, onSubmit, watch, control, idForm }) 
 
             </aside>
             <main className={styles.content}>
-                <Outlet context={{ fields, register, watch, control, handleSubmit, onSubmit }} />
+
+                <QuestionForm
+                    onSubmit={onSubmit}
+                />
+
+
             </main>
             <Footer onSubmit={handleSubmit(onSubmit)} />
         </div >

@@ -1,12 +1,35 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { fetchForms } from "../utils/api";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import { useFieldArray, useForm } from "react-hook-form";
 
 export const FormContext = createContext(null);
 
 export const FormProvider = ({ children }) => {
-    const [onEditForm, setOnEditForm] = useState(123);
+    const [onEditForm, setOnEditForm] = useState();
     const [allForms, setAllForms] = useState({});
+    const [formQuestions, setFormQuestions] = useState([]);
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
+
+    const queryClient = useQueryClient();
+
+    const defaultValues = {
+        title: 'My Form',
+        questions: [{
+            text: '...',
+            type: 'TextQuestion'
+        }]
+    };
+
+    const {
+        register,
+        control,
+        handleSubmit,
+        watch,
+        setValue,
+        reset,
+        formState: { errors }
+    } = useForm({ defaultValues });
 
     const { data, error, isLoading, isError } = useQuery({
         queryKey: ['forms'],
@@ -16,16 +39,54 @@ export const FormProvider = ({ children }) => {
         }
     });
 
+    const { fields, append, remove: removeQuestion, swap } = useFieldArray({
+        control,
+        name: "questions"
+    });
+
+    // Função de remoção que atualiza formQuestions
+    const remove = (index) => {
+        removeQuestion(index);
+        // Atualiza as questões do formulário após remoção
+        setFormQuestions([...fields]);
+    };
+
+    const resetForm = () => {
+        reset(defaultValues);
+        setFormQuestions(defaultValues.questions);
+    };
+
+    useEffect(() => {
+        // console.log('fields updated:', fields);
+        // console.log('watch:', watch());
+        setFormQuestions(fields);
+    }, [fields]);
+
+    // console.log(formQuestions, 'funciona ----!')
+
     const value = {
+        register,
+        control,
+        handleSubmit,
+        watch,
+        setValue,
+        errors,
+        queryClient,
         onEditForm,
         setOnEditForm,
         allForms,
         setAllForms,
-        data,
-        error,
-        isLoading,
-        isError
+        formQuestions,
+        setFormQuestions,
+        selectedQuestion,
+        setSelectedQuestion,
+        fields,
+        append,
+        remove,
+        swap,
+        resetForm
     };
+
     return (
         <FormContext.Provider value={value}>
             {children}

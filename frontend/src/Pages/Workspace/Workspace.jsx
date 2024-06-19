@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormCard from '../Form Card/FormCard';
 import style from './Workspace.module.css';
@@ -6,29 +5,24 @@ import { useFormProvider } from '../../context/FormContext';
 
 const Workspace = () => {
   const navigate = useNavigate();
-  const {
-    onEditForm,
-    setOnEditForm,
-    allForms,
-    setAllForms,
-    data,
-    error,
-    isLoading,
-    isError
-  } = useFormProvider();
+  const { allForms } = useFormProvider();
 
+  console.log(allForms)
 
   return (
     <div className={style.viewport}>
       <h1>My Workspace</h1>
       <div className={style.frame}>
         <button className={style.btn} onClick={() => navigate('/createform')}>
-          Add New Form
+          create new form
         </button>
-        <FormCard className={style.formcard} />
-        {allForms.map((form) => (
-          <FormCard key={form._id} form={form} />
-        ))}
+        {allForms && allForms.length > 0 ? (
+          allForms.map((form) => (
+            <FormCard key={form._id} form={form} className={style.formcard} />
+          ))
+        ) : (
+          <p>No forms available</p>
+        )}
       </div>
     </div >
   );
