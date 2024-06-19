@@ -1,71 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import styles from './QuestionChoices.module.css';
+import { useFormProvider } from '../../context/FormContext';
 
-const QuestionChoices = ({ register, control, index, isYesNo }) => {
-    // console.log('yesno?:', isYesNo)
+const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
+    const {
+        selectedQuestion,
+        setValue,
+        register,
+        watch,
+        control,
+        handleSubmit } = useFormProvider();
     const { fields, append, remove } = useFieldArray({
         control,
         name: `questions[${index}].choices`,
     });
+    console.log('choices now:', watch(`questions[${index}].choices`));
+    console.log(fields, 'fields en choices');
+
+    useEffect(() => {
+        handleSubmit(onSubmit)
+    }, [fields]);
+    useEffect(() => {
+        // Reset choices if question type is YesNoQuestion
+        if (isYesNo) {
+            if (fields.length !== 2 || fields[0]?.label !== 'Yes' || fields[1]?.label !== 'No') {
+                // remove(); // Remove all existing choices
+                append({ label: 'Yes' });
+                append({ label: 'No' });
+            }
+        }
+    }, [isYesNo]);
 
     return (
         <>
-            {isYesNo &&
+            {isYesNo ? (
                 <div>
-                <div className={styles.questionChoice}>
-                    <input
-                        id={`questions[${index}].choices[0].label`}
-                        type="text"
-                        defaultValue="Yes"
-                        readOnly
-                    />
+                    {fields.map((choice, choiceIndex) => (
+                        <div className={styles.questionChoice} key={choice.id}>
+                            <input
+                                id={`questions[${index}].choices[${choiceIndex}].label`}
+                                type="text"
+                                defaultValue={choice.label}
+                                readOnly
+                            />
+                        </div>
+                    ))}
                 </div>
-                <div className={styles.questionChoice}>
-                    <input
-                        id={`questions[${index}].choices[1].label`}
-                        type="text"
-                        defaultValue="No"
-                        readOnly
-                    />
+            ) : (
+                <div>
+                    {fields.map((choice, choiceIndex) => (
+                        <div className={styles.questionChoice} key={choice.id}>
+                            <input
+                                id={styles.inputChoice}
+                                type="text"
+                                defaultValue={choice.label}
+                                {...register(`questions[${index}].choices[${choiceIndex}].label`)}
+                            // onBlur={
+                            //     () => setValue(
+                            //         `questions[${index}].choices[${choiceIndex}].label`,
+                            //         watch(`questions[${index}].choices[${choiceIndex}].label`)
+                            //     )}
+
+                            />
+                            <button type="button" onClick={() => remove(choiceIndex)}>x</button>
+                        </div>
+                    ))}
+                    <button type="button" onClick={() => append({ label: 'new choice' })}>Add Choice</button>
                 </div>
-            </div>
-            }
-            
-            <div>
-            {fields.map((choice, choiceIndex) => (
-                <div className={styles.questionChoice} key={choice.id}>
-                    <input
-                        id={styles.inputChoice}
-                        type="text"
-                        defaultValue={choice.label}
-                        {...register(`questions[${index}].choices[${choiceIndex}].label`)}
-                    />
-                    {choice.label !== 'Yes' && choice.label !== 'No' && (
-                        <button type="button" onClick={() => remove(choiceIndex)}>x</button>
-                    )}
-                </div>
-            ))}
-            <button type="button" onClick={() => append({ label: 'New Choice' })}>Add Choice</button>
-        </div>
+            )}
         </>
-    )
-}
+    );
+};
 
 export default QuestionChoices;
-
-// console.log('yesno?:', isYesNo)
-// const { fields, append, remove } = useFieldArray({
-//     control,
-//     name: `questions[${index}].choices`,
-// });
-
-// return (
-//     <>
-//         {isYesNo &&
-//             <QuestionChoicesYesNo register={register} control={control} index={index} />
-//         }
-        
-//         <QuestionChoicesNormal register={register} control={control} index={index} fields={fields} />
-//     </>
-// )

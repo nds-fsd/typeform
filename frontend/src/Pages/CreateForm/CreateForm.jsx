@@ -1,58 +1,42 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { api } from '../../utils/api.js';
-import { useQuery, useQueryClient } from 'react-query';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import FormForm from './FormForm.jsx';
+import { useFormProvider } from '../../context/FormContext.jsx';
 
 export const CreateForm = () => {
   const { id } = useParams();
-  const isEditMode = !!id;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { currentForm, setValue, resetForm } = useFormProvider();
 
-  const { data: formData } = useQuery(
-    ['form', id],
-    () => api().get(`/form/${id}`).then(res => res.data),
-    { enabled: isEditMode }
-  );
-  const { register, control, handleSubmit, watch, setValue } = useForm({
-    defaultValues: isEditMode ? {} : {
-      title: 'My form',
-      questions: [{
-        text: '...',
-        description: 'optional description',
-        type: 'TextQuestion'
-      }]
-    }
-  });
+  const isEditMode = !!id;
+  console.log('edit mode?', isEditMode)
 
   useEffect(() => {
-    if (formData) {
-      console.log("formData:", formData);
-      setValue('title', formData.title || '');
-      setValue('questions', formData.questions.map((question) => ({
+    if (isEditMode && currentForm) {
+      setValue('title', currentForm.title || '');
+      setValue('questions', currentForm.questions.map((question) => ({
         ...question,
         choices: question.choices || [],
       })) || []);
+    } else {
+      resetForm();
     }
-  }, [formData, setValue]);
+  }, [setValue, currentForm]);
 
   const onSubmit = (data) => {
-    console.log('Original data:', data);
     if (isEditMode) {
       const processedData = {
         ...data,
         questions: data.questions.map(({ _id, ...rest }) => rest)
       };
 
-      const { _id, ...formWithoutId } = processedData;
-
-      console.log('Processed data (without _id):', formWithoutId);
-
-      api().patch(`/form/${id}`, formWithoutId).then((response) => {
-        console.log(response.data);
+      api().patch(`/form/${id}`, processedData).then((response) => {
         queryClient.invalidateQueries('forms');
+        // alert('Form was just saved');
         // navigate('/workspace');
       }).catch((error) => {
         console.error('Failed to update form:', error);
@@ -60,16 +44,17 @@ export const CreateForm = () => {
     } else {
       api().post('/form', data).then((response) => {
         queryClient.invalidateQueries('forms');
+        alert('Form created');
         navigate('/workspace');
       }).catch((error) => {
-        console.log('Failed to creat form:', error)
-      })
+        console.log('Failed to create form:', error);
+      });
     }
-  }
+  };
 
   return (
     <>
-      <FormForm register={register} control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} watch={watch} idForm={id} />
+      <FormForm onSubmit={onSubmit} />
     </>
-  )
-}
+  );
+};

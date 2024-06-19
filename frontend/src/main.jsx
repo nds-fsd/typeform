@@ -5,17 +5,18 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { UserProvider } from './context/UserProvider';
+import { FormProvider } from './context/FormContext';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <UserProvider>
+      <FormProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </UserProvider>
+      </FormProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

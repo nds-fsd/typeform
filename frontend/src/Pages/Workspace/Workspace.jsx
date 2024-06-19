@@ -1,20 +1,33 @@
-import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import FormCard from '../Form Card/FormCard';
+import { useNavigate } from 'react-router-dom';
+import FormCard from '../CreateForm/FormCard';
 import style from './Workspace.module.css';
-import { api } from '../../utils/api';
+import { useFormProvider } from '../../context/FormContext';
 
 const Workspace = () => {
   const navigate = useNavigate();
+  const { allForms, setSelectedQuestion, setCurrentForm } = useFormProvider();
+  // console.log(allForms)
+
+  const handleCreate = () => {
+    setCurrentForm(undefined)
+    setSelectedQuestion(undefined);
+    navigate('/createform')
+  };
 
   return (
     <div className={style.viewport}>
       <h1>My Workspace</h1>
       <div className={style.frame}>
-        <button className={style.btn} onClick={() => navigate('/createform')}>
-          Add New Form
+        <button className={style.btn} onClick={() => handleCreate()}>
+          create new form
         </button>
-        <FormCard className={style.formcard} />
+        {allForms && allForms.length > 0 ? (
+          allForms.map((form) => (
+            <FormCard key={form._id} form={form} className={style.formcard} />
+          ))
+        ) : (
+          <p>No forms available</p>
+        )}
       </div>
     </div >
   );

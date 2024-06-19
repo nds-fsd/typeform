@@ -1,29 +1,45 @@
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import styles from './QuestionCard.module.css';
+import { useFormProvider } from '../../context/FormContext';
+import { useEffect } from 'react';
 
 const QuestionCard = (props) => {
-    const { register, index, watch, control, swap, questionText, remove, onDragStart, onDragOver, onDrop, idForm, idQuestion } = props;
-    const { id } = useParams(); // Obtém o idForm da URL
+    const { setSelectedQuestion, currentForm, remove } = useFormProvider();
+    const navigate = useNavigate();
+    const { question, index, onDragStart, onDragOver, onDrop, title } = props;
 
-    // const indexNumber = watch(`questions[${index + 1}]`);
+    useEffect(() => {
+        // Sincronize o valor do título com o question.text
+        question.text = title;
+    }, [title]);
+
+    const handleSelectQuestion = () => {
+        setSelectedQuestion(question);
+        navigate(`/createform/${currentForm._id}/${question._id}`)
+    };
+    // console.log(selectedQuestion, 'selected question was just updated');
+
+    const handleDeleteQuestion = () => {
+        setSelectedQuestion(undefined);
+        remove(index)
+    }
 
     return (
         <>
-            <NavLink to={`/createform/${idForm}/${idQuestion}`}>
-                <li
-                    className={styles.questionCard}
-                    draggable
-                    onDragStart={onDragStart}
-                    onDrop={onDrop}
-                    onDragOver={onDragOver}
-                >
-                    <p id={styles.indexNumber}>{index + 1}</p>
-                    <p>{questionText}</p>
-                    <button type="button" onClick={remove}>x</button>
-                </li>
-            </NavLink>
-
+            <li
+                className={styles.questionCard}
+                draggable
+                onDragStart={onDragStart}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                onClick={handleSelectQuestion}
+            >
+                <p id={styles.indexNumber}>{index + 1}</p>
+                <p>{question.text}</p>
+                <button type="button" onClick={handleDeleteQuestion}>x</button>
+            </li>
         </>
     )
 }
+
 export default QuestionCard;
