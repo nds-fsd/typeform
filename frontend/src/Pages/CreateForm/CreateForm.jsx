@@ -54,7 +54,7 @@ export const CreateForm = () => {
     } else {
       resetForm();  // Reset the form to default values when creating a new form
     }
-  }, [setValue]);
+  }, [setValue, onEditForm]);
 
   const onSubmit = (data) => {
     if (isEditMode) {

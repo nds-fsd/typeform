@@ -8,7 +8,7 @@ const QuestionChoices = ({ register, control, index, isYesNo }) => {
         control,
         name: `questions[${index}].choices`,
     });
-
+console.log(isYesNo);
     return (
         <>
             {isYesNo &&

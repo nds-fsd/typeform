@@ -118,7 +118,7 @@ const QuestionForm = ({ onSubmit }) => {
     // direct as possible
     //console.log('recebido:', fields, typeof fields)
     // const selectedQuestion = fields.find(question => question._id === idQuestion);
-    const index = fields.indexOf(selectedQuestion)
+    const index = fields.indexOf(selectedQuestion);
     const type = selectedQuestion && selectedQuestion.type;
     console.log(type, index, 'tipo e index');
     console.log('all forms: ', allForms)
@@ -138,7 +138,7 @@ const QuestionForm = ({ onSubmit }) => {
         <div>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                onBlur={handleSubmit(onSubmit)}
+                // onBlur={handleSubmit(onSubmit)}
                 className={styles.form}
             >
                 <div>
@@ -155,7 +155,8 @@ const QuestionForm = ({ onSubmit }) => {
                         placeholder='write your question here'
                         {...register(`questions[${index}].text`)}
                     />
-                    <p>{selectedQuestion.text}</p>
+                    <h1>{selectedQuestion.text}</h1>
+
 
                     <input
                         id={styles.inputQuestionDescription}
@@ -165,6 +166,8 @@ const QuestionForm = ({ onSubmit }) => {
                     />
                     {type !== 'TextQuestion' && (
                         <QuestionChoices
+                            register={register}
+                            control={control}
                             index={index}
                             isYesNo={type === 'YesNoQuestion'}
                         />
