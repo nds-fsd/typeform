@@ -1,33 +1,23 @@
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import styles from './QuestionCard.module.css';
 import { useFormProvider } from '../../context/FormContext';
+import { useEffect } from 'react';
 
 const QuestionCard = (props) => {
-    const {
-        formQuestions,
-        setSelectedQuestion,
-        selectedQuestion,
-        currentForm,
-        setCurrentForm,
-        register,
-        control,
-        handleSubmit,
-        watch,
-        remove,
-        setValue
-    } = useFormProvider();
+    const { setSelectedQuestion, currentForm, remove } = useFormProvider();
     const navigate = useNavigate();
-    const { question, index, onDragStart, onDragOver, onDrop } = props;
+    const { question, index, onDragStart, onDragOver, onDrop, title } = props;
 
-    // console.log('trying id form by context: ', currentForm._id);
-    // console.log('trying id form Q text by context: ', question.text);
-    // const indexNumber = watch(`questions[${index + 1}]`);
+    useEffect(() => {
+        // Sincronize o valor do título com o question.text
+        question.text = title;
+    }, [title]);
 
     const handleSelectQuestion = () => {
         setSelectedQuestion(question);
         navigate(`/createform/${currentForm._id}/${question._id}`)
     };
-    // console.log(selectedQuestion, 'atualizada');
+    // console.log(selectedQuestion, 'selected question was just updated');
 
     const handleDeleteQuestion = () => {
         setSelectedQuestion(undefined);
@@ -48,7 +38,6 @@ const QuestionCard = (props) => {
                 <p>{question.text}</p>
                 <button type="button" onClick={handleDeleteQuestion}>x</button>
             </li>
-
         </>
     )
 }

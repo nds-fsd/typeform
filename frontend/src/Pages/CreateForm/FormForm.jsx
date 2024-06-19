@@ -11,7 +11,6 @@ import { useFormProvider } from "../../context/FormContext";
 const FormForm = ({ onSubmit }) => {
     const {
         currentForm,
-        setCurrentForm,
         selectedQuestion,
         register,
         control,
@@ -67,7 +66,7 @@ const FormForm = ({ onSubmit }) => {
             </header>
             <aside className={styles.sidebar}>
                 <button type="button" onClick={handleAddQuestion}>+ add question</button>
-                <ul>{formQuestions.map((question, index) => (
+                <ul>{fields.map((question, index) => (
                     <QuestionCard
                         question={question}
                         key={question.id}
@@ -75,6 +74,7 @@ const FormForm = ({ onSubmit }) => {
                         onDragStart={(e) => handleDragStart(e, index)}
                         onDrop={(e) => handleOnDrop(e, index)}
                         onDragOver={(e) => handleDragOver(e)}
+                        title={watch(`questions[${index}].text`)}
                     />
                 ))}</ul>
 

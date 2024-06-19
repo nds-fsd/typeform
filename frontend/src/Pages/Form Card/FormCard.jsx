@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
 import style from './FormCard.module.css';
-import { api, handleDeleteForm } from '../../utils/api';
+import { handleDeleteForm } from '../../utils/api';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useFormProvider } from '../../context/FormContext';
@@ -33,7 +32,8 @@ const FormCard = ({ form }) => {
   };
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  // // cual debe ser/de donde viene el elemento error a referenciar aqui?
+  if (isError) return <p>error: {error.message}</p>;
 
   return (
     <div className={style.formgrid}>

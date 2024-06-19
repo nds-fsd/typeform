@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import styles from './FormForm.module.css';
-import { useOutletContext, useParams } from 'react-router-dom';
-import Footer from './Footer';
 import QuestionChoices from './QuestionChoices';
-import { api } from '../../utils/api';
-import { FormContext, useFormProvider } from '../../context/FormContext';
+import { useFormProvider } from '../../context/FormContext';
 
 const questionTypes = [
     { value: 'TextQuestion', label: 'Text' },
@@ -15,6 +12,7 @@ const questionTypes = [
 
 const QuestionForm = ({ onSubmit }) => {
     const {
+        formQuestions,
         selectedQuestion,
         setValue,
         fields,
@@ -26,6 +24,7 @@ const QuestionForm = ({ onSubmit }) => {
     const index = selectedQuestion && fields.indexOf(selectedQuestion)
     const type = watch(`questions[${index}].type`);
     console.log(watch(`questions[${index}].text`));
+    console.log(formQuestions);
 
     useEffect(() => {
         if (selectedQuestion) {
@@ -33,11 +32,6 @@ const QuestionForm = ({ onSubmit }) => {
             setValue(`questions[${index}].text`, selectedQuestion.text);
             setValue(`questions[${index}].description`, selectedQuestion.description || '');
             setValue(`questions[${index}].choices`, selectedQuestion.choices);
-
-            // // Ensure we only set choices once to avoid duplicates
-            // if (selectedQuestion.choices) {
-            //     setValue(`questions[${index}].choices`, selectedQuestion.choices);
-            // }
         }
     }, [selectedQuestion]);
 
@@ -64,7 +58,7 @@ const QuestionForm = ({ onSubmit }) => {
                         placeholder='write your question here'
                         {...register(`questions[${index}].text`)}
                     />
-                    <h1>{watch(`questions[${index}].text`)}</h1>
+                    {/* <h1>{watch(`questions[${index}].text`)}</h1> */}
                     <input
                         id={styles.inputQuestionDescription}
                         type="text"

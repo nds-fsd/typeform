@@ -16,6 +16,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
         name: `questions[${index}].choices`,
     });
     console.log('choices now:', watch(`questions[${index}].choices`));
+    console.log(fields, 'fields en choices');
 
     useEffect(() => {
         handleSubmit(onSubmit)
@@ -24,7 +25,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
         // Reset choices if question type is YesNoQuestion
         if (isYesNo) {
             if (fields.length !== 2 || fields[0]?.label !== 'Yes' || fields[1]?.label !== 'No') {
-                remove(); // Remove all existing choices
+                // remove(); // Remove all existing choices
                 append({ label: 'Yes' });
                 append({ label: 'No' });
             }
@@ -55,11 +56,11 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
                                 type="text"
                                 defaultValue={choice.label}
                                 {...register(`questions[${index}].choices[${choiceIndex}].label`)}
-                                onBlur={
-                                    () => setValue(
-                                        `questions[${index}].choices[${choiceIndex}].label`,
-                                        watch(`questions[${index}].choices[${choiceIndex}].label`)
-                                    )}
+                            // onBlur={
+                            //     () => setValue(
+                            //         `questions[${index}].choices[${choiceIndex}].label`,
+                            //         watch(`questions[${index}].choices[${choiceIndex}].label`)
+                            //     )}
 
                             />
                             <button type="button" onClick={() => remove(choiceIndex)}>x</button>
