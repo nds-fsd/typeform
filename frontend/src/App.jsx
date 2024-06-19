@@ -7,17 +7,17 @@ import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
 import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
 import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
-import ResponseForm from './Components/ResponsePage/ResponseForm.jsx';
+import ResponseForm from './components/ResponsePage/ResponseForm.jsx';
 
 function App() {
   const navigate = useNavigate();
   const token = getUserToken();
 
-  useEffect (() => {
-    if(!token) {
+  useEffect(() => {
+    if (!token) {
       navigate('/login')
     }
-  },[token, navigate])
+  }, [token, navigate])
 
   return (
     <Routes>

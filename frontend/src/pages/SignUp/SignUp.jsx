@@ -4,7 +4,7 @@ import { api } from '../../utils/api';
 import { useMutation } from 'react-query';
 import { setUserSession } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../../Components/Buttons/LargeButton.jsx';
+import { LargeButton } from '../../components/Buttons/LargeButton.jsx';
 
 const SignUp = () => {
   const [error, setError] = useState();
@@ -46,7 +46,7 @@ const SignUp = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
       <div className="bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 font-rubik">Register to Flow!</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 font-rubik">Register to Flow!</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
 
           <div className="w-full">
@@ -86,11 +86,11 @@ const SignUp = () => {
             {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
           </div>
 
-            {/* <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
+          {/* <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
             {error && <p style={{ color: 'red' }}>{error}</p>} */}
-            <LargeButton submit={handleSubmit(onSubmit)} text={"SIGN UP"} />
-            <p className="w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
-            onClick={() => {navigate('/login');}} >You have an account? Login!</p>
+          <LargeButton submit={handleSubmit(onSubmit)} text={"SIGN UP"} />
+          <p className="w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
+            onClick={() => { navigate('/login'); }} >You have an account? Login!</p>
 
         </form>
       </div>
