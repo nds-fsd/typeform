@@ -8,10 +8,11 @@ import QuestionCard from "./QuestionCard";
 import { useState, useRef, useEffect } from "react";
 import { useFormProvider } from "../../context/FormContext";
 
-const FormForm = ({ onSubmit, idForm }) => {
+const FormForm = ({ onSubmit }) => {
     const {
-        onEditForm,
-        setOnEditForm,
+        currentForm,
+        setCurrentForm,
+        selectedQuestion,
         register,
         control,
         handleSubmit,
@@ -22,17 +23,18 @@ const FormForm = ({ onSubmit, idForm }) => {
         swap
     } = useFormProvider();
 
-    // console.log('on edit dentro de FormForm:: ', onEditForm);
+    // console.log('on edit dentro de FormForm:: ', currentForm);
     const [draggedIndex, setDraggedIndex] = useState(null);
     const { formQuestions, setFormQuestions } = useFormProvider();
-    console.log(onEditForm, 'on edit now...')
+    console.log(currentForm, 'is the currentForm')
 
-    // useEffect(() => {
-    //     // console.log('fields updated:', fields);
-    //     // console.log('watch:', watch());
-    //     setFormQuestions(fields);
-    // }, [fields]);
-    // console.log(formQuestions, 'funciona----')
+    useEffect(() => {
+        console.log('fields updated:', fields);
+        console.log(selectedQuestion, 'triggered useEffect')
+        // console.log('watch:', watch());
+        setFormQuestions(fields);
+    }, [fields, onSubmit, register]);
+    // console.log(formQuestions, register)
 
     const handleDragStart = (e, index) => {
         setDraggedIndex(index)

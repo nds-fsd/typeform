@@ -8,53 +8,24 @@ import { useFormProvider } from '../../context/FormContext.jsx';
 
 export const CreateForm = () => {
   const { id } = useParams();
-  const isEditMode = !!id;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const {
-    onEditForm,
-    setOnEditForm,
-    register,
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    setIsEditMode,
-    resetForm
+  const { currentForm, setValue, resetForm } = useFormProvider();
 
-  } = useFormProvider();
+  const isEditMode = !!id;
   console.log('edit mode?', isEditMode)
 
-  // // ----- descubrir como hacer defaultValues aunque se usen 
-  // // register, control etc desde FormProvider.
-  // const {
-  //   onEditForm,
-  //   setOnEditForm
-  // } = useFormProvider();
-
-  // const { register, control, handleSubmit, watch, setValue } = useForm({
-  //   defaultValues: isEditMode ? {} : {
-  //     title: 'My form',
-  //     questions: [{
-  //       text: '...',
-  //       type: 'TextQuestion'
-  //     }]
-  //   }
-  // });
-
-  // // ------
-
   useEffect(() => {
-    if (isEditMode) {
-      setValue('title', onEditForm.title || '');
-      setValue('questions', onEditForm.questions.map((question) => ({
+    if (isEditMode && currentForm) {
+      setValue('title', currentForm.title || '');
+      setValue('questions', currentForm.questions.map((question) => ({
         ...question,
         choices: question.choices || [],
       })) || []);
     } else {
       resetForm();
     }
-  }, [setValue, onEditForm]);
+  }, [setValue, currentForm]);
 
   const onSubmit = (data) => {
     if (isEditMode) {
@@ -66,7 +37,7 @@ export const CreateForm = () => {
       api().patch(`/form/${id}`, processedData).then((response) => {
         queryClient.invalidateQueries('forms');
         // alert('Form was just saved');
-        navigate('/workspace');
+        // navigate('/workspace');
       }).catch((error) => {
         console.error('Failed to update form:', error);
       });
@@ -83,7 +54,7 @@ export const CreateForm = () => {
 
   return (
     <>
-      <FormForm onSubmit={onSubmit} idForm={id} />
+      <FormForm onSubmit={onSubmit} />
     </>
   );
 };

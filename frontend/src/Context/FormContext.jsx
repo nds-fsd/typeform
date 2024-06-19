@@ -6,7 +6,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 export const FormContext = createContext(null);
 
 export const FormProvider = ({ children }) => {
-    const [onEditForm, setOnEditForm] = useState();
+    const [currentForm, setCurrentForm] = useState();
     const [allForms, setAllForms] = useState({});
     const [formQuestions, setFormQuestions] = useState([]);
     const [selectedQuestion, setSelectedQuestion] = useState(null);
@@ -28,8 +28,8 @@ export const FormProvider = ({ children }) => {
         handleSubmit,
         watch,
         setValue,
-        reset,
-        formState: { errors }
+        reset
+        // formState: { errors }
     } = useForm({ defaultValues });
 
     const { data, error, isLoading, isError } = useQuery({
@@ -71,10 +71,14 @@ export const FormProvider = ({ children }) => {
         handleSubmit,
         watch,
         setValue,
-        errors,
+        resetForm,
+        data,
+        error,
+        isLoading,
+        isError,
         queryClient,
-        onEditForm,
-        setOnEditForm,
+        currentForm,
+        setCurrentForm,
         allForms,
         setAllForms,
         formQuestions,
@@ -85,7 +89,6 @@ export const FormProvider = ({ children }) => {
         append,
         remove,
         swap,
-        resetForm
     };
 
     return (

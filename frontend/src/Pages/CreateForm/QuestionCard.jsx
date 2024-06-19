@@ -7,8 +7,8 @@ const QuestionCard = (props) => {
         formQuestions,
         setSelectedQuestion,
         selectedQuestion,
-        onEditForm,
-        setOnEditForm,
+        currentForm,
+        setCurrentForm,
         register,
         control,
         handleSubmit,
@@ -19,17 +19,15 @@ const QuestionCard = (props) => {
     const navigate = useNavigate();
     const { question, index, onDragStart, onDragOver, onDrop } = props;
 
-    // console.log('trying id form by context: ', onEditForm._id);
-    // console.log('trying id form Q by context: ', question.text);
-    // console.log('trying id form Q by context: ', formQuestions.length);
-
+    // console.log('trying id form by context: ', currentForm._id);
+    // console.log('trying id form Q text by context: ', question.text);
     // const indexNumber = watch(`questions[${index + 1}]`);
 
     const handleClick = () => {
         setSelectedQuestion(question);
-        navigate(`/createform/${onEditForm._id}/${question._id}`)
+        navigate(`/createform/${currentForm._id}/${question._id}`)
     };
-    // console.log(selectedQuestion, 'atualizada');
+    console.log(selectedQuestion, 'atualizada');
 
     return (
         <>

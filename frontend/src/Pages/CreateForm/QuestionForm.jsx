@@ -14,7 +14,7 @@ const questionTypes = [
 ];
 
 const QuestionForm = ({ fields, register, watch, control, handleSubmit, onSubmit }) => {
-    const { selectedQuestion, onEditForm, setValue } = useFormProvider();
+    const { selectedQuestion, currentForm, setValue } = useFormProvider();
 
     const index = selectedQuestion && fields.indexOf(selectedQuestion)
     const type = watch(`questions[${index}].type`);
@@ -29,7 +29,7 @@ const QuestionForm = ({ fields, register, watch, control, handleSubmit, onSubmit
                 setValue(`questions[${index}].choices`, selectedQuestion.choices);
             }
         }
-    }, [selectedQuestion, index, setValue]);
+    }, [selectedQuestion]);
 
     if (!selectedQuestion) return <div>no question selected</div>;
 

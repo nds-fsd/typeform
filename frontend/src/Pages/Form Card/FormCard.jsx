@@ -8,11 +8,9 @@ import { useFormProvider } from '../../context/FormContext';
 const FormCard = ({ form }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { setOnEditForm, isLoading, isError } = useFormProvider();
-  // console.log(form, 'recebido de workspace')
+  const { setCurrentForm, setSelectedQuestion, isLoading, isError } = useFormProvider();
 
-  const handleClick = (formId, event) => {
-    console.log(formId)
+  const handleDelete = (formId, event) => {
     event.stopPropagation();
     deleteFormByIdMutation.mutate(formId);
   };
@@ -28,7 +26,9 @@ const FormCard = ({ form }) => {
   });
 
   const handleEdit = (id) => {
-    setOnEditForm(form);
+    // console.log(form, 'recebido de workspace')
+    setCurrentForm(form);
+    setSelectedQuestion(undefined);
     navigate(`/createform/${id}`)
   };
 
@@ -39,7 +39,7 @@ const FormCard = ({ form }) => {
     <div className={style.formgrid}>
       <div className={style.formcard} onClick={() => handleEdit(form._id)}>
         <p>{form.title}</p> {/* Verifique se aqui não está tentando renderizar um objeto */}
-        <button className={style.deleteButton} onClick={(event) => handleClick(form._id, event)}>
+        <button className={style.deleteButton} onClick={(event) => handleDelete(form._id, event)}>
           X
         </button>
       </div>
