@@ -3,11 +3,10 @@ const { Schema } = require('mongoose');
 const QuestionSchema = new Schema({
     text: {
         type: String,
-        required: true
+        default: '...',
     },
     description: {
         type: String,
-        required: false
     },
     creationDateTime: {
         type: Date,

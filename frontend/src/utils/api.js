@@ -12,6 +12,12 @@ export const api = () => {
   });
 };
 
+
+export const fetchForms = async () => {
+  const res = await api().get('/form');
+  return res.data;
+};
+
 export const fetchForm = async (formId) => {
   try {
     const res = await api().get(`/form/${formId}`);

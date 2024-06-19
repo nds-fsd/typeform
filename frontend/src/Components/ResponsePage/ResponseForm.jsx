@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { api } from '../../Utils/api.js';
+import { api } from '../../utils/api.js';
 import style from './ResponseForm.module.css';
 import RenderQuestion from './RenderQuestion';
 import { useParams } from 'react-router-dom';

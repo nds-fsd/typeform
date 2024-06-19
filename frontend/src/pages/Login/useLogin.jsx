@@ -1,8 +1,8 @@
 // src/components/Login/useLogin.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../../Utils/api';
-import { setUserSession } from '../../Utils/localStorage';
+import { api } from '../../utils/api';
+import { setUserSession } from '../../utils/localStorage';
 
 const useLogin = () => {
   const [error, setError] = useState('');
