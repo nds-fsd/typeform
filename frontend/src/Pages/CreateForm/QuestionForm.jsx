@@ -81,7 +81,6 @@
 // };
 
 // export default QuestionForm;
-
 import React, { useEffect, useRef, useContext } from 'react';
 import styles from './FormForm.module.css';
 import { useOutletContext, useParams } from 'react-router-dom';
@@ -97,42 +96,27 @@ const questionTypes = [
     { value: 'YesNoQuestion', label: 'Yes/No' }
 ];
 
-const QuestionForm = ({ onSubmit }) => {
-    const {
-        selectedQuestion,
-        setSelectedQuestion,
-        allForms,
-        setAllForms,
-        fields,
-        register,
-        watch,
-        control,
-        handleSubmit,
-        onEditForm
-    } = useFormProvider();
+const QuestionForm = ({ fields, register, watch, control, handleSubmit, onSubmit }) => {
+    const { selectedQuestion, onEditForm } = useFormProvider();
 
-    const { idQuestion } = useParams();
-    console.log(idQuestion)
+    // const { selectedQuestion._id } = useParams();
+    // const selectedQuestion = fields.find(question => question._id === selectedQuestion._id);
+    // const index = fields.indexOf(selectedQuestion)
+    const index = selectedQuestion && fields.indexOf(selectedQuestion)
 
-    //index of question: clean up unnecessary code and make calling the _id as
-    // direct as possible
-    //console.log('recebido:', fields, typeof fields)
-    // const selectedQuestion = fields.find(question => question._id === idQuestion);
-    const index = fields.indexOf(selectedQuestion);
-    const type = selectedQuestion && selectedQuestion.type;
-    console.log(type, index, 'tipo e index');
-    console.log('all forms: ', allForms)
+    const type = watch(`questions[${index}].type`);
 
-    // if (!selectedQuestion) return <div>Loading...</div>;
+    console.log(onEditForm, 'on edit now on QuestionForm...')
+    console.log('selectedQuestion:', selectedQuestion);
 
     useEffect(() => {
         console.log('selectedQuestion:', selectedQuestion);
         console.log('index:', index);
         // console.log('type:', type);
-        console.log(idQuestion);
-    }, [selectedQuestion, type, idQuestion]);
+        // console.log(selectedQuestion._id);
+    }, [selectedQuestion, type]);
 
-    if (!selectedQuestion) return <div>Loading...</div>;
+    if (!selectedQuestion) return <div>no question selected</div>;
 
     return (
         <div>
@@ -155,8 +139,9 @@ const QuestionForm = ({ onSubmit }) => {
                         placeholder='write your question here'
                         {...register(`questions[${index}].text`)}
                     />
-                    <h1>{selectedQuestion.text}</h1>
-
+                    <p>{selectedQuestion.text}</p>
+                    <h1>{selectedQuestion.type}</h1>
+                    {/* <pre>{JSON.stringify(allForms, null, 2)}</pre> */}
 
                     <input
                         id={styles.inputQuestionDescription}

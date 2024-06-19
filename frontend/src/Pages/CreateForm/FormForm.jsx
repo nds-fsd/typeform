@@ -25,6 +25,7 @@ const FormForm = ({ onSubmit, idForm }) => {
     // console.log('on edit dentro de FormForm:: ', onEditForm);
     const [draggedIndex, setDraggedIndex] = useState(null);
     const { formQuestions, setFormQuestions } = useFormProvider();
+    console.log(onEditForm, 'on edit now...')
 
     // useEffect(() => {
     //     // console.log('fields updated:', fields);
@@ -77,8 +78,12 @@ const FormForm = ({ onSubmit, idForm }) => {
 
             </aside>
             <main className={styles.content}>
-
                 <QuestionForm
+                    fields={fields}
+                    register={register}
+                    control={control}
+                    watch={watch}
+                    handleSubmit={handleSubmit}
                     onSubmit={onSubmit}
                 />
 

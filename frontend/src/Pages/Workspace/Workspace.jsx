@@ -5,15 +5,22 @@ import { useFormProvider } from '../../context/FormContext';
 
 const Workspace = () => {
   const navigate = useNavigate();
-  const { allForms } = useFormProvider();
+  const { allForms, setSelectedQuestion, setOnEditForm } = useFormProvider();
 
   console.log(allForms)
+
+  const handleCreate = () => {
+    setOnEditForm(undefined)
+    setSelectedQuestion(undefined);
+    navigate('/createform')
+  };
+
 
   return (
     <div className={style.viewport}>
       <h1>My Workspace</h1>
       <div className={style.frame}>
-        <button className={style.btn} onClick={() => navigate('/createform')}>
+        <button className={style.btn} onClick={() => handleCreate()}>
           create new form
         </button>
         {allForms && allForms.length > 0 ? (

@@ -27,7 +27,7 @@ const QuestionCard = (props) => {
 
     const handleClick = () => {
         setSelectedQuestion(question);
-        // navigate(`/createform/${onEditForm._id}/${question._id}`)
+        navigate(`/createform/${onEditForm._id}/${question._id}`)
     };
     // console.log(selectedQuestion, 'atualizada');
 
