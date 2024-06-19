@@ -44,36 +44,33 @@ const QuestionForm = ({ onSubmit }) => {
                 // onBlur={handleSubmit(onSubmit)}
                 className={styles.form}
             >
-                <div>
-                    <select {...register(`questions[${index}].type`)}>
-                        {questionTypes.map((questionType, index) => (
-                            <option value={questionType.value} key={questionType.id}>
-                                {questionType.label}
-                            </option>
-                        ))}
-                    </select>
-                    <input
-                        id={styles.inputQuestionText}
-                        type="text"
-                        placeholder='write your question here'
-                        {...register(`questions[${index}].text`)}
+                <select {...register(`questions[${index}].type`)}>
+                    {questionTypes.map((questionType, index) => (
+                        <option value={questionType.value} key={questionType.id}>
+                            {questionType.label}
+                        </option>
+                    ))}
+                </select>
+                <input
+                    id={styles.inputQuestionText}
+                    type="text"
+                    placeholder='write your question here'
+                    {...register(`questions[${index}].text`)}
+                />
+                {/* <h1>{watch(`questions[${index}].text`)}</h1> */}
+                <input
+                    id={styles.inputQuestionDescription}
+                    type="text"
+                    placeholder='optional description'
+                    {...register(`questions[${index}].description`)}
+                />
+                {type !== 'TextQuestion' && (
+                    <QuestionChoices
+                        index={index}
+                        isYesNo={type === 'YesNoQuestion'}
+                        onSubmit={onSubmit}
                     />
-                    {/* <h1>{watch(`questions[${index}].text`)}</h1> */}
-                    <input
-                        id={styles.inputQuestionDescription}
-                        type="text"
-                        placeholder='optional description'
-                        {...register(`questions[${index}].description`)}
-                    />
-                    {type !== 'TextQuestion' && (
-                        <QuestionChoices
-                            index={index}
-                            isYesNo={type === 'YesNoQuestion'}
-                            onSubmit={onSubmit}
-                        />
-                    )}
-
-                </div>
+                )}
             </form>
         </div>
     );
