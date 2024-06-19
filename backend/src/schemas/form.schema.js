@@ -18,7 +18,7 @@ const FormSchema = new Schema({
         type: Date,
     },
     questions: [
-        QuestionSchema,
+        QuestionSchema
     ]
 });
 

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import Home from './Components/Home/Home.jsx';
-import Workspace from './Components/Workspace/Workspace.jsx';
-import CreateForms from './Components/CreateForms/CreateForms.jsx';
-import SignUp from './Components/SignUp/SignUp.jsx';
-import Auth from './Components/Auth/Auth.jsx';
-import { getUserToken } from './Utils/localStorage.js';
-import Login from './Components/Login/Login.jsx';
-import { CreateFormJose, EditForm } from './Components/CreateFormJose/createFormJose.jsx';
-import ResponseForm from './Components/ResponsePage/ResponseForm.jsx';
+import Home from './pages/Home/Home.jsx';
+import Workspace from './pages/Workspace/Workspace.jsx';
+import SignUp from './pages/SignUp/SignUp.jsx';
+import Auth from './pages/Auth/Auth.jsx';
+import { getUserToken } from './utils/localStorage.js';
+import Login from './pages/Login/Login.jsx';
+import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
+import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
+// import CreateFormLayout from './pages/CreateForm/CreateFormLayout.jsx';
 // import { useNavigate } from 'react-router-dom';
+import ResponseForm from './Components/ResponsePage/ResponseForm.jsx';
 
 function App() {
   // const navigate = useNavigate();
@@ -31,9 +32,9 @@ function App() {
         <>
           <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/createforms' element={<CreateForms />} />
-          <Route path='/createformjose' element={<CreateFormJose />} />
-          <Route path='/editform/:id' element={<EditForm />} />
+          <Route path='/createform/:id?' element={<CreateForm />}>
+            <Route path=':idQuestion' element={<QuestionForm />} />
+          </Route>
         </>
       )}
     </Routes>
