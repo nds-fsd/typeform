@@ -26,9 +26,9 @@ const QuestionForm = ({ onSubmit }) => {
         handleSubmit
     } = useFormProvider();
 
-    const index = fields.indexOf(selectedQuestion)
-    const type = selectedQuestion ? selectedQuestion.type : '';
-    console.log(type, 'tipo');
+    const index = selectedQuestion && fields.indexOf(selectedQuestion)
+    const type = selectedQuestion && selectedQuestion.type;
+    console.log(type, index, 'tipo e index');
     console.log('all forms: ', allForms)
 
     // if (!selectedQuestion) return <div>Loading...</div>;
@@ -41,7 +41,7 @@ const QuestionForm = ({ onSubmit }) => {
                 className={styles.form}
             >
                 <div>
-                    <select {...register(`questions[${index}].type`)}>
+                    <select {...register(`allForms[${index}].type`)}>
                         {questionTypes.map((questionType, index) => (
                             <option value={questionType.value} key={questionType.id}>
                                 {questionType.label}
@@ -54,8 +54,8 @@ const QuestionForm = ({ onSubmit }) => {
                         placeholder='write your question here'
                         {...register(`questions[${index}].text`)}
                     />
-                    {/* <p>{selectedQuestion.text}</p>
-                    <h1>{selectedQuestion.type}</h1> */}
+                    <p>{selectedQuestion.text}</p>
+                    <h1>{selectedQuestion.type}</h1>
                     {/* <pre>{JSON.stringify(allForms, null, 2)}</pre> */}
 
 

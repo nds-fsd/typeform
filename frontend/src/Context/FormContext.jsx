@@ -17,6 +17,7 @@ export const FormProvider = ({ children }) => {
         title: 'My Form',
         questions: [{
             text: '...',
+            description: ' ',
             type: 'TextQuestion'
         }]
     };

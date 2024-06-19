@@ -45,7 +45,7 @@ export const CreateForm = () => {
   // // ------
 
   useEffect(() => {
-    if (isEditMode && onEditForm) {
+    if (isEditMode) {
       setValue('title', onEditForm.title || '');
       setValue('questions', onEditForm.questions.map((question) => ({
         ...question,
