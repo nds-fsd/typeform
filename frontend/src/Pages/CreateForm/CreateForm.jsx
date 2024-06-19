@@ -65,7 +65,7 @@ export const CreateForm = () => {
 
       api().patch(`/form/${id}`, processedData).then((response) => {
         queryClient.invalidateQueries('forms');
-        alert('Form was just saved');
+        // alert('Form was just saved');
         navigate('/workspace');
       }).catch((error) => {
         console.error('Failed to update form:', error);
