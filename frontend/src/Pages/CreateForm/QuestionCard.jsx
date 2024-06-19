@@ -23,11 +23,16 @@ const QuestionCard = (props) => {
     // console.log('trying id form Q text by context: ', question.text);
     // const indexNumber = watch(`questions[${index + 1}]`);
 
-    const handleClick = () => {
+    const handleSelectQuestion = () => {
         setSelectedQuestion(question);
         navigate(`/createform/${currentForm._id}/${question._id}`)
     };
-    console.log(selectedQuestion, 'atualizada');
+    // console.log(selectedQuestion, 'atualizada');
+
+    const handleDeleteQuestion = () => {
+        setSelectedQuestion(undefined);
+        remove(index)
+    }
 
     return (
         <>
@@ -37,11 +42,11 @@ const QuestionCard = (props) => {
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 onDragOver={onDragOver}
-                onClick={handleClick}
+                onClick={handleSelectQuestion}
             >
                 <p id={styles.indexNumber}>{index + 1}</p>
                 <p>{question.text}</p>
-                <button type="button" onClick={() => remove(index)}>x</button>
+                <button type="button" onClick={handleDeleteQuestion}>x</button>
             </li>
 
         </>

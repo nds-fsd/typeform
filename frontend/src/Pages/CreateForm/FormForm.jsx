@@ -29,11 +29,11 @@ const FormForm = ({ onSubmit }) => {
     console.log(currentForm, 'is the currentForm')
 
     useEffect(() => {
-        console.log('fields updated:', fields);
-        console.log(selectedQuestion, 'triggered useEffect')
+        // console.log('fields updated:', fields);
+        // console.log(selectedQuestion, 'triggered useEffect')
         // console.log('watch:', watch());
         setFormQuestions(fields);
-    }, [fields, onSubmit, register]);
+    }, [fields, onSubmit, register, formQuestions]);
     // console.log(formQuestions, register)
 
     const handleDragStart = (e, index) => {
@@ -81,15 +81,8 @@ const FormForm = ({ onSubmit }) => {
             </aside>
             <main className={styles.content}>
                 <QuestionForm
-                    fields={fields}
-                    register={register}
-                    control={control}
-                    watch={watch}
-                    handleSubmit={handleSubmit}
                     onSubmit={onSubmit}
                 />
-
-
             </main>
             <Footer onSubmit={handleSubmit(onSubmit)} />
         </div >

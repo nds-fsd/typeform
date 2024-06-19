@@ -1,13 +1,25 @@
 import React, { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import styles from './QuestionChoices.module.css';
+import { useFormProvider } from '../../context/FormContext';
 
-const QuestionChoices = ({ register, control, index, isYesNo }) => {
+const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
+    const {
+        selectedQuestion,
+        setValue,
+        register,
+        watch,
+        control,
+        handleSubmit } = useFormProvider();
     const { fields, append, remove } = useFieldArray({
         control,
         name: `questions[${index}].choices`,
     });
+    console.log('choices now:', watch(`questions[${index}].choices`));
 
+    useEffect(() => {
+        handleSubmit(onSubmit)
+    }, [fields]);
     useEffect(() => {
         // Reset choices if question type is YesNoQuestion
         if (isYesNo) {
@@ -43,6 +55,12 @@ const QuestionChoices = ({ register, control, index, isYesNo }) => {
                                 type="text"
                                 defaultValue={choice.label}
                                 {...register(`questions[${index}].choices[${choiceIndex}].label`)}
+                                onBlur={
+                                    () => setValue(
+                                        `questions[${index}].choices[${choiceIndex}].label`,
+                                        watch(`questions[${index}].choices[${choiceIndex}].label`)
+                                    )}
+
                             />
                             <button type="button" onClick={() => remove(choiceIndex)}>x</button>
                         </div>
