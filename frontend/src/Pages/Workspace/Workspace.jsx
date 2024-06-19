@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import FormCard from '../Form Card/FormCard';
+import FormCard from '../CreateForm/FormCard';
 import style from './Workspace.module.css';
 import { useFormProvider } from '../../context/FormContext';
 
