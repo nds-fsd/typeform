@@ -9,7 +9,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
         watch,
         control,
         handleSubmit } = useFormProvider();
-    const { fields: choices, append, remove } = useFieldArray({
+    const { fields: choicesFields, append, remove } = useFieldArray({
         control,
         name: `questions[${index}].choices`,
     });
@@ -19,7 +19,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
     useEffect(() => {
         // Reset choices if question type is YesNoQuestion
         if (isYesNo) {
-            if (choices.length !== 2 || choices[0]?.label !== 'Yes' || choices[1]?.label !== 'No') {
+            if (choicesFields.length !== 2 || choicesFields[0]?.label !== 'Yes' || choicesFields[1]?.label !== 'No') {
                 // remove(); // Remove all existing choices
                 append({ label: 'Yes' });
                 append({ label: 'No' });
@@ -28,14 +28,14 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
     }, [isYesNo]);
 
     useEffect(() => {
-        console.log('Choices for question index', index, ':', choices);
-    }, [choices, index]);
+        console.log('Choices for question index', index, ':', choicesFields);
+    }, [choicesFields, index]);
 
     return (
         <>
             {isYesNo ? (
                 <div>
-                    {choices.map((choice, choiceIndex) => (
+                    {choicesFields.map((choice, choiceIndex) => (
                         <div className={styles.questionChoice} key={choice.id}>
                             <input
                                 id={`questions[${index}].choices[${choiceIndex}].label`}
@@ -48,7 +48,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
                 </div>
             ) : (
                 <div>
-                    {choices.map((choice, choiceIndex) => (
+                    {choicesFields.map((choice, choiceIndex) => (
                         <div className={styles.questionChoice} key={choice.id}>
                             <input
                                 id={styles.inputChoice}
@@ -73,3 +73,25 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
 };
 
 export default QuestionChoices;
+
+// // functional version (from TYP-30):
+// const QuestionChoices = ({ register, control, index }) => {
+//     const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+//         control,
+//         name: `questions[${index}].choices`
+//     });
+
+//     return (
+//         <div>
+//             {fields.map((choice, choiceIndex) => (
+//                 <div className={styles.questionChoice} key={choice.id} >
+//                     <input id={styles.inputChoice} type="text" {...register(`questions[${index}].choices[${choiceIndex}].label`)} />
+//                     <button type="button" onClick={() => remove(choiceIndex)}>x</button>
+//                 </div>
+//             ))
+//             }
+//             <button type="button" onClick={() => append({})}>Add Choice</button>
+//         </div >
+//     )
+// }
+
