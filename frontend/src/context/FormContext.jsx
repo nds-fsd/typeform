@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { fetchForms } from "../utils/api";
+import { fetchForm, fetchForms } from "../utils/api";
 import { useQuery, useQueryClient } from "react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 
@@ -32,12 +32,22 @@ export const FormProvider = ({ children }) => {
         // formState: { errors }
     } = useForm({ defaultValues });
 
+    // GET all forms
     const { data, error, isLoading, isError } = useQuery({
         queryKey: ['forms'],
         queryFn: fetchForms,
         onSuccess: (data) => {
             setAllForms(data);
         }
+    });
+
+    // GET form by id (used in CreateForm and its children), previously:
+    // const { formData } = useQuery('form', () => api().get(`/form/${id}`).then(res => res.data));
+    // como insertar error, isLoading y isError aqui, para que quede consistente,
+    // sin que haya conflicto con los del useQUery anterior (allForms)?
+    const { formData } = useQuery({
+        queryKey: ['form'],
+        queryFn: fetchForm
     });
 
     const { fields, append, remove: removeQuestion, swap } = useFieldArray({
@@ -73,6 +83,7 @@ export const FormProvider = ({ children }) => {
         setValue,
         resetForm,
         data,
+        formData,
         error,
         isLoading,
         isError,
