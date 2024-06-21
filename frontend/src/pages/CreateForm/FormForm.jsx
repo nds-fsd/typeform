@@ -16,7 +16,7 @@ const FormForm = ({ onSubmit }) => {
         control,
         handleSubmit,
         watch,
-        fields,
+        questionsFields,
         setValue,
         append,
         swap
@@ -28,11 +28,11 @@ const FormForm = ({ onSubmit }) => {
     console.log(currentForm, 'is the currentForm')
 
     useEffect(() => {
-        // console.log('fields updated:', fields);
+        // console.log('questionsFields updated:', questionsFields);
         // console.log(selectedQuestion, 'triggered useEffect')
         // console.log('watch:', watch());
-        setFormQuestions(fields);
-    }, [fields, onSubmit, register, formQuestions]);
+        setFormQuestions(questionsFields);
+    }, [questionsFields, onSubmit, register, formQuestions]);
     // console.log(formQuestions, register)
 
     const handleDragStart = (e, index) => {
@@ -66,7 +66,7 @@ const FormForm = ({ onSubmit }) => {
             </header>
             <aside className={styles.sidebar}>
                 <button type="button" onClick={handleAddQuestion}>+ add question</button>
-                <ul>{fields.map((question, index) => (
+                <ul>{questionsFields.map((question, index) => (
                     <QuestionCard
                         question={question}
                         key={question.id}

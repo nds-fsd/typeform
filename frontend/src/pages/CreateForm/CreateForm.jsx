@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { api } from '../../utils/api.js';
-import { useQueryClient } from 'react-query';
+import { api, fetchForm } from '../../utils/api.js';
+import { useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import FormForm from './FormForm.jsx';
 import { useFormProvider } from '../../context/FormContext.jsx';
@@ -10,10 +10,22 @@ export const CreateForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { formData, currentForm, setValue, resetForm } = useFormProvider();
+  const { currentForm, setValue, resetForm } = useFormProvider();
 
   const isEditMode = !!id;
   console.log('edit mode?', isEditMode)
+
+  // GET form by id (used in CreateForm and its children), previously:
+  // const { formData } = useQuery('form', () => api().get(`/form/${id}`).then(res => res.data));
+  // como insertar error, isLoading y isError aqui, para que quede consistente,
+  // sin que haya conflicto con los del useQUery anterior (allForms)?
+  const { data: formData } = useQuery({
+    queryKey: ['form'],
+    queryFn: () => api().get(`/form/${id}`).then(res => res.data)
+  });
+
+  console.log("formdata ok", formData);
+
   // version funcional de TYP-30:   
   // useEffect(() => {
   //   if (data) {

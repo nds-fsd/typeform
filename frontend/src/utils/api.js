@@ -12,10 +12,14 @@ export const api = () => {
   });
 };
 
-
 export const fetchForms = async () => {
-  const res = await api().get('/form');
-  return res.data;
+  try {
+    const res = await api().get('/form');
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching forms', error);
+    throw new Error('Error fetching forms');
+  }
 };
 
 export const fetchForm = async (formId) => {

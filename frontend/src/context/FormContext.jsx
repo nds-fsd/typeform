@@ -12,26 +12,6 @@ export const FormProvider = ({ children }) => {
     const [selectedQuestion, setSelectedQuestion] = useState(null);
 
     const queryClient = useQueryClient();
-
-    const defaultValues = {
-        title: 'My Form',
-        questions: [{
-            text: '...',
-            description: ' ',
-            type: 'TextQuestion'
-        }]
-    };
-
-    const {
-        register,
-        control,
-        handleSubmit,
-        watch,
-        setValue,
-        reset
-        // formState: { errors }
-    } = useForm({ defaultValues });
-
     // GET all forms
     const { data, error, isLoading, isError } = useQuery({
         queryKey: ['forms'],
@@ -41,39 +21,59 @@ export const FormProvider = ({ children }) => {
         }
     });
 
-    // GET form by id (used in CreateForm and its children), previously:
-    // const { formData } = useQuery('form', () => api().get(`/form/${id}`).then(res => res.data));
-    // como insertar error, isLoading y isError aqui, para que quede consistente,
-    // sin que haya conflicto con los del useQUery anterior (allForms)?
-    const { formData } = useQuery({
+    // const defaultValues = {
+    //     title: 'My Form',
+    //     questions: [{
+    //         text: '...',
+    //         description: ' ',
+    //         type: 'TextQuestion'
+    //     }]
+    // };
+    const { data: formData } = useQuery({
         queryKey: ['form'],
-        queryFn: fetchForm
+        queryFn: () => api().get(`/form/${id}`).then(res => res.data)
     });
 
-    const { fields, append, remove: removeQuestion, swap } = useFieldArray({
+    console.log("formdata ok", formData);
+    const { register, control, handleSubmit, watch, setValue, reset: resetForm } = useForm({
+        defaultValues: formData ?? {
+            title: 'My form',
+            questions: [{
+                text: '...',
+                description: ' ',
+                type: 'TextQuestion'
+            }]
+        }
+    });
+    // const {
+    //     register,
+    //     control,
+    //     handleSubmit,
+    //     watch,
+    //     setValue,
+    //     reset
+    //     // formState: { errors }
+    // } = useForm({ defaultValues });
+    const { fields: questionsFields, append, remove, swap } = useFieldArray({
         control,
         name: "questions"
     });
+    // // Função de remoção que atualiza formQuestions
+    // const remove = (index) => {
+    //     removeQuestion(index);
+    //     // Atualiza as questões do formulário após remoção
+    //     setFormQuestions([...fields]);
+    // };
 
-    // Função de remoção que atualiza formQuestions
-    const remove = (index) => {
-        removeQuestion(index);
-        // Atualiza as questões do formulário após remoção
-        setFormQuestions([...fields]);
-    };
-
-    const resetForm = () => {
-        reset(defaultValues);
-        setFormQuestions(defaultValues.questions);
-    };
+    // const resetForm = () => {
+    //     reset();
+    // setFormQuestions(defaultValues.questions);
 
     useEffect(() => {
         // console.log('fields updated:', fields);
         // console.log('watch:', watch());
-        setFormQuestions(fields);
-    }, [fields]);
-
-    // console.log(formQuestions, 'funciona ----!')
+        setFormQuestions(questionsFields);
+    }, [questionsFields]);
 
     const value = {
         register,
@@ -83,7 +83,6 @@ export const FormProvider = ({ children }) => {
         setValue,
         resetForm,
         data,
-        formData,
         error,
         isLoading,
         isError,
@@ -96,7 +95,7 @@ export const FormProvider = ({ children }) => {
         setFormQuestions,
         selectedQuestion,
         setSelectedQuestion,
-        fields,
+        questionsFields,
         append,
         remove,
         swap,
@@ -107,7 +106,7 @@ export const FormProvider = ({ children }) => {
             {children}
         </FormContext.Provider>
     );
-}
+};
 
 export const useFormProvider = () => useContext(FormContext);
 

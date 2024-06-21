@@ -14,7 +14,7 @@ const QuestionForm = ({ onSubmit }) => {
     const {
         selectedQuestion,
         setValue,
-        fields,
+        questionsFields,
         register,
         watch,
         control,
@@ -22,7 +22,7 @@ const QuestionForm = ({ onSubmit }) => {
     } = useFormProvider();
 
     const questionId = selectedQuestion?._id;
-    const questionIndex = fields.findIndex(q => q._id === questionId);
+    const questionIndex = questionsFields.findIndex(q => q._id === questionId);
 
     useEffect(() => {
         if (selectedQuestion) {
