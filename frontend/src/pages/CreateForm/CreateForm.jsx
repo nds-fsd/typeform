@@ -10,22 +10,45 @@ export const CreateForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { currentForm, setValue, resetForm } = useFormProvider();
+  const { formData, currentForm, setValue, resetForm } = useFormProvider();
 
   const isEditMode = !!id;
   console.log('edit mode?', isEditMode)
+  // version funcional de TYP-30:   
+  // useEffect(() => {
+  //   if (data) {
+  //     console.log("data", data);
+  //     setValue('title', data.title || '');
+  //     setValue('questions', data.questions.map((question) => ({
+  //       ...question,
+  //       choices: question.choices || [],
+  //     })) || []);
+  //   }
+  // }, [data, setValue]);
+
+  // useEffect(() => {
+  //   if (isEditMode && currentForm) {
+  //     setValue('title', currentForm.title || '');
+  //     setValue('questions', currentForm.questions.map((question) => ({
+  //       ...question,
+  //       choices: question.choices || [],
+  //     })) || []);
+  //   } else {
+  //     resetForm();
+  //   }
+  // }, [setValue, currentForm]);
 
   useEffect(() => {
-    if (isEditMode && currentForm) {
-      setValue('title', currentForm.title || '');
-      setValue('questions', currentForm.questions.map((question) => ({
+    if (isEditMode && formData) {
+      setValue('title', formData.title || '');
+      setValue('questions', formData.questions.map((question) => ({
         ...question,
         choices: question.choices || [],
       })) || []);
     } else {
       resetForm();
     }
-  }, [setValue, currentForm]);
+  }, [setValue, formData]);
 
   const onSubmit = (data) => {
     if (isEditMode) {
