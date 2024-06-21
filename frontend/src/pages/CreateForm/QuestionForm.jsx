@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect } from 'react';
+import { useFieldArray } from 'react-hook-form';
 import styles from './FormForm.module.css';
-import QuestionChoices from './QuestionChoices';
 import { useFormProvider } from '../../context/FormContext';
 
 const questionTypes = [
@@ -12,41 +12,59 @@ const questionTypes = [
 
 const QuestionForm = ({ onSubmit }) => {
     const {
-        formQuestions,
         selectedQuestion,
         setValue,
         fields,
         register,
         watch,
         control,
-        handleSubmit } = useFormProvider();
+        handleSubmit
+    } = useFormProvider();
 
-    const index = selectedQuestion && fields.indexOf(selectedQuestion)
-    const type = watch(`questions[${index}].type`);
-    console.log(watch(`questions[${index}].text`));
-    console.log(formQuestions);
+    const questionId = selectedQuestion?._id;
+    const questionIndex = fields.findIndex(q => q._id === questionId);
 
     useEffect(() => {
         if (selectedQuestion) {
-            setValue(`questions[${index}].type`, selectedQuestion.type);
-            setValue(`questions[${index}].text`, selectedQuestion.text);
-            setValue(`questions[${index}].description`, selectedQuestion.description || '');
-            setValue(`questions[${index}].choices`, selectedQuestion.choices);
+            setValue(`questions[${questionIndex}].type`, selectedQuestion.type);
+            setValue(`questions[${questionIndex}].text`, selectedQuestion.text);
+            setValue(`questions[${questionIndex}].description`, selectedQuestion.description || '');
+            setValue(`questions[${questionIndex}].choices`, selectedQuestion.choices || []);
         }
-    }, [selectedQuestion]);
+    }, [selectedQuestion, questionIndex, setValue]);
 
-    if (!selectedQuestion) return <div>no question selected</div>;
+    const { fields: choices, append, remove } = useFieldArray({
+        control,
+        name: `questions[${questionIndex}].choices`,
+    });
+
+    const type = watch(`questions[${questionIndex}].type`);
+
+    useEffect(() => {
+        if (type === 'YesNoQuestion' && choices.length !== 2) {
+            remove(); // Remove all existing choices
+            append({ label: 'Yes' });
+            append({ label: 'No' });
+        }
+    }, [type, choices, append, remove]);
+
+    if (!selectedQuestion) return <div>No question selected</div>;
+    const handleSaveChoice = () => {
+        console.log(choices, 'saved choices!!');
+        console.log(watch(`questions[${questionIndex}].choices`));
+        append({ label: '.' })
+    }
 
     return (
         <div>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                // onBlur={handleSubmit(onSubmit)}
+                onBlur={handleSubmit(onSubmit)}
                 className={styles.form}
             >
                 <div>
-                    <select {...register(`questions[${index}].type`)}>
-                        {questionTypes.map((questionType, index) => (
+                    <select {...register(`questions[${questionIndex}].type`)}>
+                        {questionTypes.map((questionType) => (
                             <option value={questionType.value} key={questionType.id}>
                                 {questionType.label}
                             </option>
@@ -55,24 +73,48 @@ const QuestionForm = ({ onSubmit }) => {
                     <input
                         id={styles.inputQuestionText}
                         type="text"
-                        placeholder='write your question here'
-                        {...register(`questions[${index}].text`)}
+                        placeholder='Write your question here'
+                        {...register(`questions[${questionIndex}].text`)}
                     />
-                    {/* <h1>{watch(`questions[${index}].text`)}</h1> */}
                     <input
                         id={styles.inputQuestionDescription}
                         type="text"
-                        placeholder='optional description'
-                        {...register(`questions[${index}].description`)}
+                        placeholder='Optional description'
+                        {...register(`questions[${questionIndex}].description`)}
                     />
                     {type !== 'TextQuestion' && (
-                        <QuestionChoices
-                            index={index}
-                            isYesNo={type === 'YesNoQuestion'}
-                            onSubmit={onSubmit}
-                        />
+                        <div>
+                            {type === 'YesNoQuestion' ? (
+                                <div>
+                                    {choices.map((choice, choiceIndex) => (
+                                        <div className={styles.questionChoice} key={choice.id}>
+                                            <input
+                                                id={`questions[${questionIndex}].choices[${choiceIndex}].label`}
+                                                type="text"
+                                                defaultValue={choice.label}
+                                                readOnly
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div>
+                                    {choices.map((choice, choiceIndex) => (
+                                        <div className={styles.questionChoice} key={choice.id}>
+                                            <input
+                                                id={styles.inputChoice}
+                                                type="text"
+                                                defaultValue={choice.label}
+                                                {...register(`questions[${questionIndex}].choices[${choiceIndex}].label`)}
+                                            />
+                                            <button type="button" onClick={() => remove(choiceIndex)}>x</button>
+                                        </div>
+                                    ))}
+                                    <button type="button" onClick={() => append({})}>Add Choice</button>
+                                </div>
+                            )}
+                        </div>
                     )}
-
                 </div>
             </form>
         </div>
@@ -80,99 +122,3 @@ const QuestionForm = ({ onSubmit }) => {
 };
 
 export default QuestionForm;
-
-// import React, { useEffect, useRef, useContext } from 'react';
-// import styles from './FormForm.module.css';
-// import { useOutletContext, useParams } from 'react-router-dom';
-// import Footer from './Footer';
-// import QuestionChoices from './QuestionChoices';
-// import { api } from '../../utils/api';
-// import { FormContext, useFormProvider } from '../../context/FormContext';
-
-// const questionTypes = [
-//     { value: 'TextQuestion', label: 'Text' },
-//     { value: 'MultipleChoiceQuestion', label: 'Multiple Choice' },
-//     { value: 'SingleChoiceQuestion', label: 'Single Choice' },
-//     { value: 'YesNoQuestion', label: 'Yes/No' }
-// ];
-
-// const QuestionForm = ({ }) => {
-//     const {
-//         onEditForm,
-//         setOnEditForm,
-//         allForms,
-//         setAllForms,
-//         data,
-//         error,
-//         isLoading,
-//         isError
-//     } = useFormProvider();
-
-//     const { idQuestion } = useParams();
-//     const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
-//     console.log(idQuestion)
-
-//     //index of question: clean up unnecessary code and make calling the _id as
-//     // direct as possible
-//     //console.log('recebido:', fields, typeof fields)
-//     const selectedQuestion = fields.find(question => question._id === idQuestion);
-//     const index = fields.indexOf(selectedQuestion)
-//     const type = watch(`questions[${index}].type`);
-
-//     useEffect(() => {
-//         console.log('selectedQuestion:', selectedQuestion);
-//         console.log('index:', index);
-//         // console.log('type:', type);
-//         console.log(idQuestion);
-//     }, [selectedQuestion, type, idQuestion]);
-
-//     if (!selectedQuestion) return <div>Loading...</div>;
-
-//     return (
-//         <div>
-//             <form
-//                 onSubmit={handleSubmit(onSubmit)}
-//                 onBlur={handleSubmit(onSubmit)}
-//                 className={styles.form}
-//             >
-//                 <div>
-//                     <select {...register(`questions[${index}].type`)}>
-//                         {questionTypes.map((questionType, index) => (
-//                             <option value={questionType.value} key={questionType.id}>
-//                                 {questionType.label}
-//                             </option>
-//                         ))}
-//                     </select>
-//                     <input
-//                         id={styles.inputQuestionText}
-//                         type="text"
-//                         placeholder='write your question here'
-//                         {...register(`questions[${index}].text`)}
-//                     />
-//                     <p>{selectedQuestion.text}</p>
-//                     <h1>{onEditForm}</h1>
-//                     <pre>{JSON.stringify(allForms, null, 2)}</pre>
-
-
-//                     <input
-//                         id={styles.inputQuestionDescription}
-//                         type="text"
-//                         placeholder='optional description'
-//                         {...register(`questions[${index}].description`)}
-//                     />
-//                     {type !== 'TextQuestion' && (
-//                         <QuestionChoices
-//                             register={register}
-//                             control={control}
-//                             index={index}
-//                             isYesNo={type === 'YesNoQuestion'}
-//                         />
-//                     )}
-
-//                 </div>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default QuestionForm;

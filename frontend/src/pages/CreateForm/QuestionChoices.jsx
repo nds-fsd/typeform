@@ -5,26 +5,21 @@ import { useFormProvider } from '../../context/FormContext';
 
 const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
     const {
-        selectedQuestion,
-        setValue,
         register,
         watch,
         control,
         handleSubmit } = useFormProvider();
-    const { fields, append, remove } = useFieldArray({
+    const { fields: choices, append, remove } = useFieldArray({
         control,
         name: `questions[${index}].choices`,
     });
-    console.log('choices now:', watch(`questions[${index}].choices`));
-    console.log(fields, 'fields en choices');
+    // console.log('choices now:', watch(`questions[${index}].choices`));
+    // console.log(choices, 'fields en choices');
 
-    useEffect(() => {
-        handleSubmit(onSubmit)
-    }, [fields]);
     useEffect(() => {
         // Reset choices if question type is YesNoQuestion
         if (isYesNo) {
-            if (fields.length !== 2 || fields[0]?.label !== 'Yes' || fields[1]?.label !== 'No') {
+            if (choices.length !== 2 || choices[0]?.label !== 'Yes' || choices[1]?.label !== 'No') {
                 // remove(); // Remove all existing choices
                 append({ label: 'Yes' });
                 append({ label: 'No' });
@@ -32,11 +27,15 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
         }
     }, [isYesNo]);
 
+    useEffect(() => {
+        console.log('Choices for question index', index, ':', choices);
+    }, [choices, index]);
+
     return (
         <>
             {isYesNo ? (
                 <div>
-                    {fields.map((choice, choiceIndex) => (
+                    {choices.map((choice, choiceIndex) => (
                         <div className={styles.questionChoice} key={choice.id}>
                             <input
                                 id={`questions[${index}].choices[${choiceIndex}].label`}
@@ -49,7 +48,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
                 </div>
             ) : (
                 <div>
-                    {fields.map((choice, choiceIndex) => (
+                    {choices.map((choice, choiceIndex) => (
                         <div className={styles.questionChoice} key={choice.id}>
                             <input
                                 id={styles.inputChoice}
@@ -66,7 +65,7 @@ const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
                             <button type="button" onClick={() => remove(choiceIndex)}>x</button>
                         </div>
                     ))}
-                    <button type="button" onClick={() => append({ label: 'new choice' })}>Add Choice</button>
+                    <button type="button" onClick={() => append({})}>Add Choice</button>
                 </div>
             )}
         </>
