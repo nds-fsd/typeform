@@ -10,7 +10,7 @@ const questionTypes = [
     { value: 'YesNoQuestion', label: 'Yes/No' }
 ];
 
-const QuestionForm = ({ onSubmit }) => {
+const QuestionForm = ({ question, index, onSubmit }) => {
     const {
         selectedQuestion,
         setValue,
@@ -18,27 +18,28 @@ const QuestionForm = ({ onSubmit }) => {
         register,
         watch,
         control,
-        handleSubmit
+        handleSubmit,
+        currentForm
     } = useFormProvider();
 
-    const questionId = selectedQuestion?._id;
-    const questionIndex = questionsFields.findIndex(q => q._id === questionId);
-
+    // const questionId = selectedQuestion?._id;
+    console.log(index, 'current index')
+    console.log(question.id, 'current quest')
     useEffect(() => {
         if (selectedQuestion) {
-            setValue(`questions[${questionIndex}].type`, selectedQuestion.type);
-            setValue(`questions[${questionIndex}].text`, selectedQuestion.text);
-            setValue(`questions[${questionIndex}].description`, selectedQuestion.description || '');
-            setValue(`questions[${questionIndex}].choices`, selectedQuestion.choices || []);
+            setValue(`questions[${index}].type`, selectedQuestion1.type);
+            setValue(`questions[${index}].text`, selectedQuestion.text);
+            setValue(`questions[${index}].description`, selectedQuestion.description || '');
+            setValue(`questions[${index}].choices`, selectedQuestion.choices || []);
         }
-    }, [selectedQuestion, questionIndex, setValue]);
+    }, [selectedQuestion, index, setValue]);
 
     const { fields: choices, append, remove } = useFieldArray({
         control,
-        name: `questions[${questionIndex}].choices`,
+        name: `questions[${index}].choices`,
     });
 
-    const type = watch(`questions[${questionIndex}].type`);
+    const type = watch(`questions[${index}].type`);
 
     useEffect(() => {
         if (type === 'YesNoQuestion' && choices.length !== 2) {
@@ -51,7 +52,7 @@ const QuestionForm = ({ onSubmit }) => {
     if (!selectedQuestion) return <div>No question selected</div>;
     const handleSaveChoice = () => {
         console.log(choices, 'saved choices!!');
-        console.log(watch(`questions[${questionIndex}].choices`));
+        console.log(watch(`questions[${index}].choices`));
         append({ label: '.' })
     }
 
@@ -63,7 +64,7 @@ const QuestionForm = ({ onSubmit }) => {
                 className={styles.form}
             >
                 <div>
-                    <select {...register(`questions[${questionIndex}].type`)}>
+                    <select {...register(`questions[${index}].type`)}>
                         {questionTypes.map((questionType) => (
                             <option value={questionType.value} key={questionType.id}>
                                 {questionType.label}
@@ -74,13 +75,13 @@ const QuestionForm = ({ onSubmit }) => {
                         id={styles.inputQuestionText}
                         type="text"
                         placeholder='Write your question here'
-                        {...register(`questions[${questionIndex}].text`)}
+                        {...register(`questions[${index}].text`)}
                     />
                     <input
                         id={styles.inputQuestionDescription}
                         type="text"
                         placeholder='Optional description'
-                        {...register(`questions[${questionIndex}].description`)}
+                        {...register(`questions[${index}].description`)}
                     />
                     {type !== 'TextQuestion' && (
                         <div>
@@ -89,7 +90,7 @@ const QuestionForm = ({ onSubmit }) => {
                                     {choices.map((choice, choiceIndex) => (
                                         <div className={styles.questionChoice} key={choice.id}>
                                             <input
-                                                id={`questions[${questionIndex}].choices[${choiceIndex}].label`}
+                                                id={`questions[${index}].choices[${choiceIndex}].label`}
                                                 type="text"
                                                 defaultValue={choice.label}
                                                 readOnly
@@ -105,7 +106,7 @@ const QuestionForm = ({ onSubmit }) => {
                                                 id={styles.inputChoice}
                                                 type="text"
                                                 defaultValue={choice.label}
-                                                {...register(`questions[${questionIndex}].choices[${choiceIndex}].label`)}
+                                                {...register(`questions[${index}].choices[${choiceIndex}].label`)}
                                             />
                                             <button type="button" onClick={() => remove(choiceIndex)}>x</button>
                                         </div>
@@ -122,3 +123,24 @@ const QuestionForm = ({ onSubmit }) => {
 };
 
 export default QuestionForm;
+// // de TYP-30
+// import styles from './FormForm.module.css';
+
+// const QuestionForm = ({ register, index, watch, control }) => {
+//     const type = watch(`questions[${index}].type`);
+
+//     return (
+//         <div>
+//             <select {...register(`questions[${index}].type`)}>
+//                 {questionTypes.map((questionType, index) => <option value={questionType.value} key={index}>{questionType.label}</option>)}
+//             </select>
+//             <input id={styles.inputQuestionText} type="text" {...register(`questions[${index}].text`)} />
+//             <input id={styles.inputQuestionDescription} type="text" {...register(`questions[${index}].description`)} />
+//             {type !== "TextQuestion" && (
+//                 <QuestionChoices register={register} control={control} index={index} />
+//             )}
+//         </div>
+//     )
+// };
+
+// export default QuestionForm;

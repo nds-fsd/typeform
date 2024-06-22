@@ -34,7 +34,7 @@ export const FormProvider = ({ children }) => {
         queryFn: () => api().get(`/form/${id}`).then(res => res.data)
     });
 
-    console.log("formdata ok", formData);
+    console.log("formdata ok desde el context", formData);
     const { register, control, handleSubmit, watch, setValue, reset: resetForm } = useForm({
         defaultValues: formData ?? {
             title: 'My form',

@@ -80,9 +80,16 @@ const FormForm = ({ onSubmit }) => {
 
             </aside>
             <main className={styles.content}>
-                <QuestionForm
-                    onSubmit={onSubmit}
-                />
+                {questionsFields.map((question, index) => (
+                    <QuestionForm
+                        question={question}
+                        register={register}
+                        watch={watch}
+                        control={control}
+                        index={index}
+                        onSubmit={onSubmit}
+                    />
+                ))}
             </main>
             <Footer onSubmit={handleSubmit(onSubmit)} />
         </div >

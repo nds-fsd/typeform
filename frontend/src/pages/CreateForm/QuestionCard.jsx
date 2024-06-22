@@ -4,10 +4,10 @@ import { useFormProvider } from '../../context/FormContext';
 import { useEffect } from 'react';
 
 const QuestionCard = (props) => {
-    const { setSelectedQuestion, currentForm, remove } = useFormProvider();
+    const { setSelectedQuestion, currentForm, remove, selectedQuestion } = useFormProvider();
     const navigate = useNavigate();
     const { question, index, onDragStart, onDragOver, onDrop, title } = props;
-
+    console.log(currentForm, 'çurretn formmm vs', selectedQuestion)
     useEffect(() => {
         // Sincronize o valor do título com o question.text
         question.text = title;
