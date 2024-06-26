@@ -1,104 +1,78 @@
-import { createContext, useState, useContext, useEffect } from "react";
-import { fetchForms } from "../utils/api";
-import { useQuery, useQueryClient } from "react-query";
-import { useFieldArray, useForm } from "react-hook-form";
+import { createContext, useCallback, useContext } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 
 export const FormContext = createContext(null);
+const defaultValues = {
+  title: 'My Form',
+  questions: [
+    {
+      text: 'Hello what is your name?',
+      description: '',
+      type: 'TextQuestion',
+    },
+  ],
+  active: 0,
+};
+export const CustomFormProvider = ({ children }) => {
+  const { register, control, watch, setValue, getValues, handleSubmit } = useForm({ defaultValues });
 
-export const FormProvider = ({ children }) => {
-    const [currentForm, setCurrentForm] = useState();
-    const [allForms, setAllForms] = useState({});
-    const [formQuestions, setFormQuestions] = useState([]);
-    const [selectedQuestion, setSelectedQuestion] = useState(null);
-
-    const queryClient = useQueryClient();
-
-    const defaultValues = {
-        title: 'My Form',
-        questions: [{
-            text: '...',
-            description: ' ',
-            type: 'TextQuestion'
-        }]
+  const {
+    fields,
+    remove: removeQuestion,
+    swap: swapQuestion,
+    append: addQuestion,
+  } = useFieldArray({
+    control,
+    name: 'questions',
+  });
+  const watchFieldArray = watch('questions');
+  const questions = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
     };
+  });
 
-    const {
-        register,
-        control,
-        handleSubmit,
-        watch,
-        setValue,
-        reset
-        // formState: { errors }
-    } = useForm({ defaultValues });
+  const activeQuestion = watch('active');
+  const setActiveQuestion = (index) => {
+    setValue('active', index);
+  };
 
-    const { data, error, isLoading, isError } = useQuery({
-        queryKey: ['forms'],
-        queryFn: fetchForms,
-        onSuccess: (data) => {
-            setAllForms(data);
-        }
-    });
+  const handleRemoveQuestion = useCallback(
+    (index) => {
+      if (activeQuestion === index) {
+        setActiveQuestion(activeQuestion - 1);
+      }
+      removeQuestion(index);
+    },
+    [activeQuestion],
+  );
 
-    const { fields, append, remove: removeQuestion, swap } = useFieldArray({
-        control,
-        name: "questions"
-    });
+  const value = {
+    activeQuestion,
+    setActiveQuestion,
+    register,
+    control,
+    questions,
+    addQuestion,
+    removeQuestion: handleRemoveQuestion,
+    swapQuestion,
+    setValue,
+    getValues,
+    watch,
+    handleSubmit,
+  };
 
-    // Função de remoção que atualiza formQuestions
-    const remove = (index) => {
-        removeQuestion(index);
-        // Atualiza as questões do formulário após remoção
-        setFormQuestions([...fields]);
-    };
+  return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
+};
 
-    const resetForm = () => {
-        reset(defaultValues);
-        setFormQuestions(defaultValues.questions);
-    };
+export const useCustomFormProvider = () => useContext(FormContext);
 
-    useEffect(() => {
-        // console.log('fields updated:', fields);
-        // console.log('watch:', watch());
-        setFormQuestions(fields);
-    }, [fields]);
-
-    // console.log(formQuestions, 'funciona ----!')
-
-    const value = {
-        register,
-        control,
-        handleSubmit,
-        watch,
-        setValue,
-        resetForm,
-        data,
-        error,
-        isLoading,
-        isError,
-        queryClient,
-        currentForm,
-        setCurrentForm,
-        allForms,
-        setAllForms,
-        formQuestions,
-        setFormQuestions,
-        selectedQuestion,
-        setSelectedQuestion,
-        fields,
-        append,
-        remove,
-        swap,
-    };
-
-    return (
-        <FormContext.Provider value={value}>
-            {children}
-        </FormContext.Provider>
-    );
-}
-
-export const useFormProvider = () => useContext(FormContext);
+export const withCustomFormProvider = (Component) => (props) => (
+  <CustomFormProvider>
+    <Component {...props} />
+  </CustomFormProvider>
+);
 
 // const { data: formData } = useQuery(
 //     ['form', id],
