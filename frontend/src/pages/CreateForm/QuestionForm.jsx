@@ -15,14 +15,14 @@ const QuestionForm = () => {
         <main className='flex flex-col gap-1 flex-1 h-full items-center justify-center '>
             <div className='bg-white p-20 rounded-3xl shadow-md min-h-[400px] w-2/3 flex flex-col justify-center items-center gap-2'>
                 <TextareaAutoSize
-                    className='w-full text-2xl outline-none resize-none'
+                    className='w-full text-2xl outline-none resize-none hover:bg-neutral-50'
                     placeholder='Your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     onChange={(e) => setValue(`questions.${activeQuestion}.text`, e.target.value)}
                 />
 
                 <TextareaAutoSize
-                    className='w-full text-xl outline-none resize-none'
+                    className='w-full text-xl outline-none resize-none hover:bg-neutral-50'
                     placeholder='Description (optional)'
                     value={watch(`questions.${activeQuestion}.description`)}
                     onChange={(e) => setValue(`questions.${activeQuestion}.description`, e.target.value)}
