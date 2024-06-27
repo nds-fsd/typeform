@@ -28,7 +28,7 @@ const QuestionForm = () => {
                     onChange={(e) => setValue(`questions.${activeQuestion}.description`, e.target.value)}
                 />
                 {type === 'TextQuestion' && (
-                    <div className='mt-2 text-2xl w-full text-gray-300 border-b-2 border-gray-300'>Type your anwser here...</div>
+                    <div className='mt-2 text-2xl w-full text-gray-300 border-b-2 border-gray-300'>Type your answer here</div>
                 )}
                 {hasChoices && <QuestionChoices />}
                 {type === 'YesNoQuestion' && <YesNoChoices />}
