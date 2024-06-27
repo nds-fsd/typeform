@@ -1,178 +1,40 @@
 import React, { useEffect, useRef, useContext } from 'react';
-import styles from './FormForm.module.css';
 import QuestionChoices from './QuestionChoices';
-import { useFormProvider } from '../../context/FormContext';
+import { useCustomFormProvider } from '../../context/FormContext';
+import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import TextareaAutoSize from 'react-textarea-autosize';
+import YesNoChoices from './YesNoChoices.jsx';
 
-const questionTypes = [
-    { value: 'TextQuestion', label: 'Text' },
-    { value: 'MultipleChoiceQuestion', label: 'Multiple Choice' },
-    { value: 'SingleChoiceQuestion', label: 'Single Choice' },
-    { value: 'YesNoQuestion', label: 'Yes/No' }
-];
+const QuestionForm = () => {
+    const { activeQuestion, watch, setValue } = useCustomFormProvider();
 
-const QuestionForm = ({ onSubmit }) => {
-    const {
-        formQuestions,
-        selectedQuestion,
-        setValue,
-        fields,
-        register,
-        watch,
-        control,
-        handleSubmit } = useFormProvider();
+    const type = watch(`questions.${activeQuestion}.type`);
 
-    const index = selectedQuestion && fields.indexOf(selectedQuestion)
-    const type = watch(`questions[${index}].type`);
-    console.log(watch(`questions[${index}].text`));
-    console.log(formQuestions);
-
-    useEffect(() => {
-        if (selectedQuestion) {
-            setValue(`questions[${index}].type`, selectedQuestion.type);
-            setValue(`questions[${index}].text`, selectedQuestion.text);
-            setValue(`questions[${index}].description`, selectedQuestion.description || '');
-            setValue(`questions[${index}].choices`, selectedQuestion.choices);
-        }
-    }, [selectedQuestion]);
-
-    if (!selectedQuestion) return <div>no question selected</div>;
-
+    const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
     return (
-        <div>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                // onBlur={handleSubmit(onSubmit)}
-                className={styles.form}
-            >
-                <div>
-                    <select {...register(`questions[${index}].type`)}>
-                        {questionTypes.map((questionType, index) => (
-                            <option value={questionType.value} key={questionType.id}>
-                                {questionType.label}
-                            </option>
-                        ))}
-                    </select>
-                    <input
-                        id={styles.inputQuestionText}
-                        type="text"
-                        placeholder='write your question here'
-                        {...register(`questions[${index}].text`)}
-                    />
-                    {/* <h1>{watch(`questions[${index}].text`)}</h1> */}
-                    <input
-                        id={styles.inputQuestionDescription}
-                        type="text"
-                        placeholder='optional description'
-                        {...register(`questions[${index}].description`)}
-                    />
-                    {type !== 'TextQuestion' && (
-                        <QuestionChoices
-                            index={index}
-                            isYesNo={type === 'YesNoQuestion'}
-                            onSubmit={onSubmit}
-                        />
-                    )}
+        <main className='flex flex-col gap-1 flex-1 h-full items-center justify-center '>
+            <div className='bg-white p-20 rounded-3xl shadow-md min-h-[400px] w-2/3 flex flex-col justify-center items-center gap-2'>
+                <TextareaAutoSize
+                    className='w-full text-2xl outline-none resize-none hover:bg-neutral-50 rounded-md p-2'
+                    placeholder='Your question here'
+                    value={watch(`questions.${activeQuestion}.text`)}
+                    onChange={(e) => setValue(`questions.${activeQuestion}.text`, e.target.value)}
+                />
 
-                </div>
-            </form>
-        </div>
+                <TextareaAutoSize
+                    className='w-full text-xl outline-none resize-none hover:bg-neutral-50 rounded-md p-2'
+                    placeholder='Description (optional)'
+                    value={watch(`questions.${activeQuestion}.description`)}
+                    onChange={(e) => setValue(`questions.${activeQuestion}.description`, e.target.value)}
+                />
+                {type === 'TextQuestion' && (
+                    <div className='mt-2 text-2xl w-full text-gray-300 border-b-2 border-gray-300'>Type your answer here</div>
+                )}
+                {hasChoices && <QuestionChoices />}
+                {type === 'YesNoQuestion' && <YesNoChoices />}
+            </div>
+        </main>
     );
 };
 
 export default QuestionForm;
-
-// import React, { useEffect, useRef, useContext } from 'react';
-// import styles from './FormForm.module.css';
-// import { useOutletContext, useParams } from 'react-router-dom';
-// import Footer from './Footer';
-// import QuestionChoices from './QuestionChoices';
-// import { api } from '../../utils/api';
-// import { FormContext, useFormProvider } from '../../context/FormContext';
-
-// const questionTypes = [
-//     { value: 'TextQuestion', label: 'Text' },
-//     { value: 'MultipleChoiceQuestion', label: 'Multiple Choice' },
-//     { value: 'SingleChoiceQuestion', label: 'Single Choice' },
-//     { value: 'YesNoQuestion', label: 'Yes/No' }
-// ];
-
-// const QuestionForm = ({ }) => {
-//     const {
-//         onEditForm,
-//         setOnEditForm,
-//         allForms,
-//         setAllForms,
-//         data,
-//         error,
-//         isLoading,
-//         isError
-//     } = useFormProvider();
-
-//     const { idQuestion } = useParams();
-//     const { fields, register, watch, control, handleSubmit, onSubmit } = useOutletContext();
-//     console.log(idQuestion)
-
-//     //index of question: clean up unnecessary code and make calling the _id as
-//     // direct as possible
-//     //console.log('recebido:', fields, typeof fields)
-//     const selectedQuestion = fields.find(question => question._id === idQuestion);
-//     const index = fields.indexOf(selectedQuestion)
-//     const type = watch(`questions[${index}].type`);
-
-//     useEffect(() => {
-//         console.log('selectedQuestion:', selectedQuestion);
-//         console.log('index:', index);
-//         // console.log('type:', type);
-//         console.log(idQuestion);
-//     }, [selectedQuestion, type, idQuestion]);
-
-//     if (!selectedQuestion) return <div>Loading...</div>;
-
-//     return (
-//         <div>
-//             <form
-//                 onSubmit={handleSubmit(onSubmit)}
-//                 onBlur={handleSubmit(onSubmit)}
-//                 className={styles.form}
-//             >
-//                 <div>
-//                     <select {...register(`questions[${index}].type`)}>
-//                         {questionTypes.map((questionType, index) => (
-//                             <option value={questionType.value} key={questionType.id}>
-//                                 {questionType.label}
-//                             </option>
-//                         ))}
-//                     </select>
-//                     <input
-//                         id={styles.inputQuestionText}
-//                         type="text"
-//                         placeholder='write your question here'
-//                         {...register(`questions[${index}].text`)}
-//                     />
-//                     <p>{selectedQuestion.text}</p>
-//                     <h1>{onEditForm}</h1>
-//                     <pre>{JSON.stringify(allForms, null, 2)}</pre>
-
-
-//                     <input
-//                         id={styles.inputQuestionDescription}
-//                         type="text"
-//                         placeholder='optional description'
-//                         {...register(`questions[${index}].description`)}
-//                     />
-//                     {type !== 'TextQuestion' && (
-//                         <QuestionChoices
-//                             register={register}
-//                             control={control}
-//                             index={index}
-//                             isYesNo={type === 'YesNoQuestion'}
-//                         />
-//                     )}
-
-//                 </div>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default QuestionForm;
