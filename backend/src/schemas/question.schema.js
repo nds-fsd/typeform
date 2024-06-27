@@ -1,46 +1,47 @@
 const { Schema } = require('mongoose');
 
-const QuestionSchema = new Schema({
+const QuestionSchema = new Schema(
+  {
     text: {
-        type: String,
-        default: '...',
+      type: String,
+      default: '...',
     },
     description: {
-        type: String,
+      type: String,
     },
     creationDateTime: {
-        type: Date,
-        default: new Date(),
-        immutable: true
+      type: Date,
+      default: new Date(),
+      immutable: true,
     },
     updateDateTime: {
-        type: Date,
-        default: new Date(),
+      type: Date,
+      default: new Date(),
     },
-}, {
-    discriminatorKey: 'type'
-});
+  },
+  {
+    discriminatorKey: 'type',
+  },
+);
 
-const TextQuestion = QuestionSchema.discriminator('TextQuestion',
-    new Schema({
-    }));
+const TextQuestion = QuestionSchema.discriminator('TextQuestion', new Schema({}));
 
 const QuestionChoice = new Schema({
-    choices: [
-        {
-            label: {
-                type: String,
-                required: true
-            }
-        }
-    ]
+  choices: [
+    {
+      label: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 const MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuestion', QuestionChoice);
 
 const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', QuestionChoice);
 
-const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', QuestionChoice);
+const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
 
 exports.QuestionSchema = QuestionSchema;
 
