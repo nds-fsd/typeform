@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './pages/Home/Home.jsx';
 import Workspace from './pages/Workspace/Workspace.jsx';
 import SignUp from './pages/SignUp/SignUp.jsx';
@@ -13,12 +13,6 @@ function App() {
   const navigate = useNavigate();
   const token = getUserToken();
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/login')
-    }
-  }, [token, navigate])
-
   return (
     <Routes>
       <Route path='/home' element={<Home />} />
@@ -28,11 +22,10 @@ function App() {
         <>
           <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/createform/:id?' element={<CreateForm />}>
-            <Route path=':idQuestion' element={<QuestionForm />} />
-          </Route>
+          <Route path='/createform/:id?' element={<CreateForm />}/>
         </>
       )}
+      <Route path="/" element={<Navigate to={token ? '/workspace' : '/home'} replace={true} />}/>
     </Routes>
   );
 }

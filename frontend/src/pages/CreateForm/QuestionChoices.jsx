@@ -1,75 +1,79 @@
 import React, { useEffect } from 'react';
-import { useFieldArray } from 'react-hook-form';
-import styles from './QuestionChoices.module.css';
-import { useFormProvider } from '../../context/FormContext';
+import { useCustomFormProvider } from '../../context/FormContext';
+import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
-const QuestionChoices = ({ index, isYesNo, onSubmit }) => {
-    const {
-        register,
-        watch,
-        control,
-        handleSubmit } = useFormProvider();
-    const { fields: choicesFields, append, remove } = useFieldArray({
-        control,
-        name: `questions[${index}].choices`,
-    });
-    // console.log('choices now:', watch(`questions[${index}].choices`));
-    // console.log(choices, 'fields en choices');
+const QuestionChoices = ({ index }) => {
+  const { activeQuestion, watch, setValue, getValues } = useCustomFormProvider();
 
-    useEffect(() => {
-        // Reset choices if question type is YesNoQuestion
-        if (isYesNo) {
-            if (choicesFields.length !== 2 || choicesFields[0]?.label !== 'Yes' || choicesFields[1]?.label !== 'No') {
-                // remove(); // Remove all existing choices
-                append({ label: 'Yes' });
-                append({ label: 'No' });
-            }
-        }
-    }, [isYesNo]);
+  const choices = watch(`questions.${activeQuestion}.choices`);
 
-    useEffect(() => {
-        console.log('Choices for question index', index, ':', choicesFields);
-    }, [choicesFields, index]);
+  const questionType = watch(`questions.${activeQuestion}.type`);
 
-    return (
-        <>
-            {isYesNo ? (
-                <div>
-                    {choicesFields.map((choice, choiceIndex) => (
-                        <div className={styles.questionChoice} key={choice.id}>
-                            <input
-                                id={`questions[${index}].choices[${choiceIndex}].label`}
-                                type="text"
-                                defaultValue={choice.label}
-                                readOnly
-                            />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div>
-                    {choicesFields.map((choice, choiceIndex) => (
-                        <div className={styles.questionChoice} key={choice.id}>
-                            <input
-                                id={styles.inputChoice}
-                                type="text"
-                                defaultValue={choice.label}
-                                {...register(`questions[${index}].choices[${choiceIndex}].label`)}
-                            // onBlur={
-                            //     () => setValue(
-                            //         `questions[${index}].choices[${choiceIndex}].label`,
-                            //         watch(`questions[${index}].choices[${choiceIndex}].label`)
-                            //     )}
+  useEffect(() => {
+    if (!choices) {
+      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }]);
+    }
+  }, [choices]);
 
-                            />
-                            <button type="button" onClick={() => remove(choiceIndex)}>x</button>
-                        </div>
-                    ))}
-                    <button type="button" onClick={() => append({})}>Add Choice</button>
-                </div>
+  const addChoice = () => {
+    const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
+    setValue(`questions.${activeQuestion}.choices`, [...currentQuestions, { label: '' }]);
+  };
+
+  const removeChoice = (index) => {
+    const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
+    const newQuestions = currentQuestions.filter((_, i) => i !== index);
+    setValue(`questions.${activeQuestion}.choices`, newQuestions);
+  };
+
+  const isSingleChoice = questionType === 'SingleChoiceQuestion';
+
+  const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
+
+  return (
+    <>
+      {choices?.map((choice, index) => (
+        <div className='relative'>
+          <div
+            key={index}
+            className={classNames(
+              `border px-2 py-1 rounded-lg flex items-center`,
+              isSingleChoice ? 'bg-purple-100 border-purple-300' : 'bg-yellow-100 border-yellow-300',
             )}
-        </>
-    );
+          >
+            <span
+              className={classNames(
+                `border  w-6 h-6 flex items-center justify-center`,
+                isSingleChoice ? 'border-purple-300' : 'border-yellow-300',
+              )}
+            >
+              {toLetterAbbr(index + 1)}
+            </span>
+            <input
+              type='text'
+              className='outline-none bg-transparent pl-2'
+              value={choice.label}
+              onChange={(e) => {
+                setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
+              }}
+            />
+          </div>
+          {index > 0 && (
+            <button
+              type='button'
+              className='btn btn-square btn-sm absolute right-[-40px] top-[1px]'
+              onClick={() => removeChoice(index)}
+            >
+              X
+            </button>
+          )}
+        </div>
+      ))}
+      <button type='button' className='btn btn-primary btn-sm' onClick={addChoice}>
+        Add Choice
+      </button>
+    </>
+  );
 };
 
 export default QuestionChoices;

@@ -1,45 +1,45 @@
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import styles from './QuestionCard.module.css';
-import { useFormProvider } from '../../context/FormContext';
-import { useEffect } from 'react';
+import { useCustomFormProvider } from '../../context/FormContext';
+import { cloneElement, useCallback } from 'react';
+import { questionTypes } from '../../constants/questionTypes.jsx';
+import { classNames } from '../../utils/utils.js';
 
-const QuestionCard = (props) => {
-    const { setSelectedQuestion, currentForm, remove, selectedQuestion } = useFormProvider();
-    const navigate = useNavigate();
-    const { question, index, onDragStart, onDragOver, onDrop, title } = props;
-    console.log(currentForm, 'çurretn formmm vs', selectedQuestion)
-    useEffect(() => {
-        // Sincronize o valor do título com o question.text
-        question.text = title;
-    }, [title]);
+const QuestionCard = ({ question, index, onDragStart, onDragOver, onDrop }) => {
+  const { setActiveQuestion, activeQuestion, removeQuestion } = useCustomFormProvider();
+  const handleSelectQuestion = useCallback(() => {
+    setActiveQuestion(index);
+  }, [index, setActiveQuestion]);
 
-    const handleSelectQuestion = () => {
-        setSelectedQuestion(question);
-        navigate(`/createform/${currentForm._id}/${question._id}`)
-    };
-    // console.log(selectedQuestion, 'selected question was just updated');
+  const isSelected = activeQuestion === index;
 
-    const handleDeleteQuestion = () => {
-        setSelectedQuestion(undefined);
-        remove(index)
-    }
+  const icon = questionTypes.find((questionType) => questionType.value === question.type).icon;
 
-    return (
-        <>
-            <li
-                className={styles.questionCard}
-                draggable
-                onDragStart={onDragStart}
-                onDrop={onDrop}
-                onDragOver={onDragOver}
-                onClick={handleSelectQuestion}
-            >
-                <p id={styles.indexNumber}>{index + 1}</p>
-                <p>{question.text}</p>
-                <button type="button" onClick={handleDeleteQuestion}>x</button>
-            </li>
-        </>
-    )
-}
+  return (
+    <div className='relative'>
+      <li
+        className={classNames(
+          'flex border border-1 border-blue-100 p-2 rounded-md gap-2 w-full items-center',
+          isSelected ? 'border-blue-500 font-semibold text-blue-700' : '',
+        )}
+        draggable
+        onDragStart={onDragStart}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+        onClick={handleSelectQuestion}
+      >
+        {cloneElement(icon, { number: index + 1 })}
+        <p className='truncate'>{question.text}</p>
+      </li>
+      {index > 0 && (
+        <button
+          type='button'
+          className='btn btn-square btn-sm absolute right-[-40px] top-[4px]'
+          onClick={() => removeQuestion(index)}
+        >
+          X
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default QuestionCard;

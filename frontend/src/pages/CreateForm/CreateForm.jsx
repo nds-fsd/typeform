@@ -1,16 +1,21 @@
-import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { api } from '../../utils/api.js';
 import { api, fetchForm } from '../../utils/api.js';
 import { useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import FormForm from './FormForm.jsx';
-import { useFormProvider } from '../../context/FormContext.jsx';
+import { QuestionList } from './QuestionList.jsx';
+import QuestionForm from './QuestionForm.jsx';
+import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
+import QuestionOptions from './QuestionOptions.jsx';
+import { useForms } from '../../hooks/useForms.js';
+import { useQueryClient } from 'react-query';
 
-export const CreateForm = () => {
+export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { currentForm, setValue, resetForm } = useFormProvider();
+  const { handleSubmit, setValue } = useCustomFormProvider();
+  const currentForm = forms?.find((form) => form._id === id);
 
   const isEditMode = !!id;
   console.log('edit mode?', isEditMode)
@@ -51,45 +56,53 @@ export const CreateForm = () => {
   // }, [setValue, currentForm]);
 
   useEffect(() => {
-    if (isEditMode && formData) {
-      setValue('title', formData.title || '');
-      setValue('questions', formData.questions.map((question) => ({
-        ...question,
-        choices: question.choices || [],
-      })) || []);
-    } else {
-      resetForm();
-    }
-  }, [setValue, formData]);
-
-  const onSubmit = (data) => {
     if (isEditMode) {
-      const processedData = {
-        ...data,
-        questions: data.questions.map(({ _id, ...rest }) => rest)
-      };
+      setValue('title', currentForm.title || '');
+      setValue(
+        'questions',
+        currentForm.questions.map((question) => ({
+          ...question,
+          choices: question.choices || [],
+        })) || [],
+      );
+      if (isEditMode && formData) {
+        setValue('title', formData.title || '');
+        setValue('questions', formData.questions.map((question) => ({
+          ...question,
+          choices: question.choices || [],
+        })) || []);
+      } else {
+        resetForm();
+      }
+    }, [isEditMode]);
+}, [setValue, formData]);
 
-      api().patch(`/form/${id}`, processedData).then((response) => {
-        queryClient.invalidateQueries('forms');
-        // alert('Form was just saved');
-        // navigate('/workspace');
-      }).catch((error) => {
-        console.error('Failed to update form:', error);
+const onSubmit = (data) => {
+  if (isEditMode) {
+    api()
+      .patch(`/form/${id}`, data)
+      .then((response) => {
+        queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
       });
-    } else {
-      api().post('/form', data).then((response) => {
-        queryClient.invalidateQueries('forms');
-        alert('Form created');
-        navigate('/workspace');
-      }).catch((error) => {
-        console.log('Failed to create form:', error);
+  } else {
+    api()
+      .post('/form', data)
+      .then((response) => {
+        queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
       });
-    }
-  };
-
-  return (
-    <>
-      <FormForm onSubmit={onSubmit} />
-    </>
-  );
+  }
 };
+return (
+  <div className='bg-custom-gradient p-2 box-border h-screen'>
+    {!isLoading && (
+      <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex h-full'>
+          <QuestionList />
+          <QuestionForm />
+          <QuestionOptions />
+        </div>
+      </form>
+    )}
+  </div>
+);
+});

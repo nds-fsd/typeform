@@ -3,3 +3,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+body {
+    min-height: 100vh;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+#root {
+    @apply h-full;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+

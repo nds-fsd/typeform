@@ -1,17 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import FormCard from '../CreateForm/FormCard';
 import style from './Workspace.module.css';
-import { useFormProvider } from '../../context/FormContext';
+import { useForms } from '../../hooks/useForms.js';
 
 const Workspace = () => {
   const navigate = useNavigate();
-  const { allForms, setSelectedQuestion, setCurrentForm } = useFormProvider();
-  // console.log(allForms)
 
+  const { forms } = useForms();
   const handleCreate = () => {
-    setCurrentForm(undefined)
-    setSelectedQuestion(undefined);
-    navigate('/createform')
+    navigate('/createform');
   };
 
   return (
@@ -21,15 +18,13 @@ const Workspace = () => {
         <button className={style.btn} onClick={() => handleCreate()}>
           create new form
         </button>
-        {allForms && allForms.length > 0 ? (
-          allForms.map((form) => (
-            <FormCard key={form._id} form={form} className={style.formcard} />
-          ))
+        {forms && forms.length > 0 ? (
+          forms.map((form) => <FormCard key={form._id} form={form} className={style.formcard} />)
         ) : (
           <p>No forms available</p>
         )}
       </div>
-    </div >
+    </div>
   );
 };
 
