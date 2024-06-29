@@ -14,6 +14,9 @@ describe('Auth controller TEST', () => {
 
     describe('POST /register', () => {
         it('should allow user to register', async () => {
+            const res = await fakeRequest.post('/signup').send(userData);
+            expect(response.body.user._id).toBeDefined();
+
 
         })
 
