@@ -12,7 +12,7 @@ const connectDB = async () => {
     let dbUrl = process.env.MONGO_URL;
     if (process.env.NODE_ENV === 'test') {
       memoryMongo = await MongoMemoryServer.create();
-      dbUrl = memoryMongo.getUri();  // Certifique-se de que memoryMongo está inicializado
+      dbUrl = memoryMongo.getUri();
       console.log(dbUrl);
     }
 
