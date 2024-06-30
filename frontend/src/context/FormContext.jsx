@@ -27,8 +27,6 @@ export const CustomFormProvider = ({ children }) => {
     control,
     name: 'questions',
   });
-<<<<<<< Updated upstream
-=======
   // const watchFieldArray = watch('questions');
   // const questions = fields.map((field, index) => {
   //   return {
@@ -36,7 +34,6 @@ export const CustomFormProvider = ({ children }) => {
   //     ...watchFieldArray[index],
   //   };
   // });
->>>>>>> Stashed changes
 
   const activeQuestion = watch('active');
 
@@ -59,10 +56,7 @@ export const CustomFormProvider = ({ children }) => {
     setActiveQuestion,
     register,
     control,
-<<<<<<< Updated upstream
-=======
     // questions,
->>>>>>> Stashed changes
     addQuestion,
     removeQuestion: handleRemoveQuestion,
     swapQuestion,
