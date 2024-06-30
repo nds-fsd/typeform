@@ -12,6 +12,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",
+    "ci-info": "^4.0.0",
+    "co": "^4.6.0",
     "dotenv-cli": "^7.4.2",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",

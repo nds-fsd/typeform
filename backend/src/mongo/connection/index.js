@@ -5,15 +5,14 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 let memoryMongo = null;
-let mongodb;
 
-exports.connectDB = async () => {
+const connectDB = async () => {
   mongoose.set('strictQuery', false);
   try {
     let dbUrl = process.env.MONGO_URL;
     if (process.env.NODE_ENV === 'test') {
-      mongodb = await MongoMemoryServer.create();
-      dbUrl = memoryMongo.getUri();
+      memoryMongo = await MongoMemoryServer.create();
+      dbUrl = memoryMongo.getUri();  // Certifique-se de que memoryMongo está inicializado
       console.log(dbUrl);
     }
 
