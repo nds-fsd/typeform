@@ -25,7 +25,7 @@ const FormCard = ({ form }) => {
   return (
     <div className={style.formgrid}>
       <div className={style.formcard} onClick={() => navigate(`/createform/${form._id}`)}>
-        <p>{form.title}</p> {/* Verifique se aqui não está tentando renderizar um objeto */}
+        <p>{form.title}</p>
         <button className={style.deleteButton} onClick={(event) => handleDelete(form._id, event)}>
           X
         </button>

@@ -2,17 +2,19 @@ import { createContext, useCallback, useContext } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 export const FormContext = createContext(null);
+
 const defaultValues = {
   title: 'My Form',
   questions: [
     {
-      text: 'Hello what is your name?',
+      text: '...',
       description: '',
       type: 'TextQuestion',
     },
   ],
   active: 0,
 };
+
 export const CustomFormProvider = ({ children }) => {
   const { register, control, watch, setValue, getValues, handleSubmit } = useForm({ defaultValues });
 
@@ -25,15 +27,16 @@ export const CustomFormProvider = ({ children }) => {
     control,
     name: 'questions',
   });
-  const watchFieldArray = watch('questions');
-  const questions = fields.map((field, index) => {
-    return {
-      ...field,
-      ...watchFieldArray[index],
-    };
-  });
+  // const watchFieldArray = watch('questions');
+  // const questions = fields.map((field, index) => {
+  //   return {
+  //     ...field,
+  //     ...watchFieldArray[index],
+  //   };
+  // });
 
   const activeQuestion = watch('active');
+
   const setActiveQuestion = (index) => {
     setValue('active', index);
   };
@@ -53,7 +56,7 @@ export const CustomFormProvider = ({ children }) => {
     setActiveQuestion,
     register,
     control,
-    questions,
+    // questions,
     addQuestion,
     removeQuestion: handleRemoveQuestion,
     swapQuestion,
@@ -61,6 +64,8 @@ export const CustomFormProvider = ({ children }) => {
     getValues,
     watch,
     handleSubmit,
+    fields
+    // watchFieldArray
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

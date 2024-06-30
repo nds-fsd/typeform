@@ -7,7 +7,15 @@ import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 
 export const QuestionList = () => {
-  const { swapQuestion, addQuestion, questions, register } = useCustomFormProvider();
+  const { swapQuestion, addQuestion, register, fields, watch } = useCustomFormProvider();
+  const watchFieldArray = watch('questions');
+
+  const questions = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    };
+  });
 
   const [draggedIndex, setDraggedIndex] = useState(null);
   const handleDragStart = (e, index) => {
@@ -40,7 +48,7 @@ export const QuestionList = () => {
       </header>
       <aside className='flex flex-col gap-2 items-center pt-2'>
         <ul className='w-full flex flex-col gap-1'>
-          {questions.map((question, index) => (
+          {questionsFromGetValues.map((question, index) => (
             <QuestionCard
               question={question}
               key={question.id}

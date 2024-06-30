@@ -21,13 +21,14 @@ const Select = ({ options, onChange, value, label }) => {
           {options.map((option) => (
             <ListboxOption
               key={option.value}
-              className={({ focus }) =>
-                classNames(
-                  focus ? 'bg-indigo-600 text-white' : '',
-                  !focus ? 'text-gray-900' : '',
-                  'relative cursor-default select-none py-2 pl-3 pr-9',
-                )
-              }
+              className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-indigo-600 focus:text-white hover:bg-neutral-100'
+              // className={({ focus }) =>
+              //   classNames(
+              //     focus ? 'bg-indigo-600 text-white' : '',
+              //     !focus ? 'text-gray-900' : '',
+              //     'relative cursor-default select-none py-2 pl-3 pr-9',
+              //   )
+              // }
               value={option.value}
             >
               <>
@@ -50,7 +51,7 @@ const Select = ({ options, onChange, value, label }) => {
           ))}
         </ListboxOptions>
       </div>
-    </Listbox>
+    </Listbox >
   );
 };
 
