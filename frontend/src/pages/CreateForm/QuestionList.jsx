@@ -7,11 +7,6 @@ import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 
 export const QuestionList = () => {
-<<<<<<< Updated upstream
-  const { swapQuestion, addQuestion, register, getValues } = useCustomFormProvider();
-
-  const questionsFromGetValues = getValues('questions');
-=======
   const { swapQuestion, addQuestion, register, fields, watch } = useCustomFormProvider();
   const watchFieldArray = watch('questions');
 
@@ -21,7 +16,6 @@ export const QuestionList = () => {
       ...watchFieldArray[index],
     };
   });
->>>>>>> Stashed changes
 
   const [draggedIndex, setDraggedIndex] = useState(null);
   const handleDragStart = (e, index) => {
