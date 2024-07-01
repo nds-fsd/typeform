@@ -57,7 +57,7 @@ const Login = () => {
             />
             {error && <p className="text-red-600 text-sm">{error.password}</p>}
           </div>
-          <LargeButton submit={handleSubmit(onSubmit)} text={"LOGIN"} />
+          <LargeButton id="login_button" submit={handleSubmit(onSubmit)} text={"LOGIN"} />
           <a className="flex flex-row text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
             onClick={() => { navigate('/signup') }}>Not registered? Sign Up!</a>
         </form>
