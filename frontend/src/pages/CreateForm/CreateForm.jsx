@@ -29,7 +29,7 @@ export const CreateForm = withCustomFormProvider(() => {
         })) || [],
       );
     }
-  }, [isEditMode]);
+  }, [isEditMode, currentForm]);
 
   const onSubmit = (data) => {
     if (isEditMode) {
