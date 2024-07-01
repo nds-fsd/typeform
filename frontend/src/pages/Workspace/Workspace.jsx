@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import FormCard from '../CreateForm/FormCard';
 import style from './Workspace.module.css';
-import { useForms } from '../../hooks/useForms.js';
+import { useForms } from '../../hooks/useForms.js'
+import { emptyWorkspaceMessage } from '../../utils/utils.js';
+
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Workspace = () => {
         {forms && forms.length > 0 ? (
           forms.map((form) => <FormCard key={form._id} form={form} className={style.formcard} />)
         ) : (
-          <p>No forms available</p>
+          <p>{emptyWorkspaceMessage}</p>
         )}
       </div>
     </div>

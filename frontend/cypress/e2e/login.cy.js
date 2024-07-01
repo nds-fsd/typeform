@@ -5,7 +5,7 @@ describe('Login flow', () => {
         cy.get('[name="email"]').as("emailInput");
         cy.get('[name="password"]').as("passwordInput")
     })
-    const email = 'maria@gmail.com';
+    const existingEmail = 'maria@gmail.com';
     const unregisteredEmail = 'wrong@email.com';
     const password = 'password';
 
@@ -15,7 +15,7 @@ describe('Login flow', () => {
     });
 
     it('upon login, registered user is redirected to their own workspace', () => {
-        cy.get("@emailInput").type(email);
+        cy.get("@emailInput").type(existingEmail);
         cy.get("@passwordInput").type(password);
         // cy.get('[id="login_button"]').as("loginButton").click();
         cy.get('button').contains('LOGIN').click(); //alternative way to identify the button
