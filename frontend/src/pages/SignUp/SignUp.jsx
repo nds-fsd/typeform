@@ -86,7 +86,7 @@ const SignUp = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>} */}
           <LargeButton submit={handleSubmit(onSubmit)} text={"SIGN UP"} />
           <p className="w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
-            onClick={() => { navigate('/login'); }} >You have an account? Login!</p>
+            onClick={() => { navigate('/login'); }} >I already have an account</p>
 
         </form>
       </div>

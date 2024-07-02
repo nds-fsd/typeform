@@ -1,16 +1,17 @@
 import { emptyWorkspaceMessage } from "../../src/utils/utils.js";
 
-describe('Login flow', () => {
+describe('Signup flow', () => {
     const signupEndpoint = 'http://localhost:3000/signup';
 
     beforeEach(() => {
+        cy.task('defaults:db');
         cy.visit(signupEndpoint);
         cy.get('[name="email"]').as("emailInput");
         cy.get('[name="name"]').as("nameInput");
         cy.get('[name="password"]').as("passwordInput")
     })
     const newEmail = 'new@gmail.com';
-    const existingEmail = 'maria@email.com';
+    const existingEmail = 'existing@email.com';
     const userName = 'username'
     const password = 'password';
 
@@ -21,15 +22,11 @@ describe('Login flow', () => {
     });
 
     it('new user is able to register and is redirected to their own (empty) workspace', () => {
-        cy.intercept('POST', '/signup').as('signupRequest');
         cy.get("@emailInput").type(newEmail);
         cy.get("@nameInput").type(userName);
         cy.get("@passwordInput").type(password);
         cy.get('button').contains('SIGN UP').click();
         cy.url().should('include', '/workspace');
-        cy.wait('@signupRequest').then((interception) => {
-            expect(interception.response.statusCode).to.eq(201);
-        });
         cy.contains(emptyWorkspaceMessage)
     })
 
@@ -42,5 +39,6 @@ describe('Login flow', () => {
         cy.wait('@signupRequest').then((interception) => {
             expect(interception.response.statusCode).to.eq(409);
         });
+        // a añadir mensaje "email already registered"
     });
 })

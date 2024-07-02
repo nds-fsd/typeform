@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-const Input = forwardRef(({ error, label, ...rest }, ref) => {
+const Input = forwardRef(({ error, label, type, ...rest }, ref) => {
   return (
     <>
       {label && (

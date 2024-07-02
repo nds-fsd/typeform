@@ -10,7 +10,7 @@ const login = async (req, res) => {
    User.findOne({ email })
       .then((foundUser) => {
          if (!foundUser) {
-            return res.status(401).json({ error: { email: "Usuario no encontrado, por favor regístrese" } })
+            return res.status(404).json({ error: { email: "Usuario no encontrado, por favor regístrese" } })
          }
          if (!foundUser.comparePassword(password)) {
             return res.status(401).json({ error: { password: "Contraseña incorrecta" } })

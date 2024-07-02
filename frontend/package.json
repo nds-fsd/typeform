@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "cy:open": "cypress open"
+    "cy:open": "NODE_ENV=test cypress open"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.0",
