@@ -1,10 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserProvider } from '../../context/UserContext';
+import { removeUserSession } from '../../utils/localStorage';
 
-const ProfileIcon = ({ handleLogout }) => {
-  const { userId } = useUserProvider();
+const ProfileIcon = () => {
+  const navigate = useNavigate();
+  const { userId, userName } = useUserProvider();
   console.log(userId, 'id recebido do contexto')
+
+  const handleLogout = () => {
+    removeUserSession();
+    console.log(userName, 'logged out!')
+    navigate('/home')
+  }
 
   return (
     <div className="dropdown dropdown-end scale-150 absolute top-10 right-12">

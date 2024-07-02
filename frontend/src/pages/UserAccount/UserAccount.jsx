@@ -13,8 +13,8 @@ import { useUserProvider } from '../../context/UserContext.jsx';
 // importar user (name, email e picture) de un UserContext.
 
 const DeleteUserDialog = () => {
-    const { userName, userId } = useUserProvider();
-    console.log(userName, userId);
+    const { userName, userId, userEmail } = useUserProvider();
+    console.log(userName, userId, userEmail);
     let [isOpen, setIsOpen] = useState(false);
     let [isDeleted, setIsDeleted] = useState(false);
     const navigate = useNavigate();
@@ -67,11 +67,17 @@ const DeleteUserDialog = () => {
 };
 
 const UserAccount = () => {
+    const { userName, userId, userEmail } = useUserProvider();
+
     const navigate = useNavigate();
 
     return (
         <div>
-            <h1>Hi, *username here*!</h1>
+            <h1>Hi, {userName}!</h1>
+            <h2>{userEmail}</h2>
+            <SmallButton type='button' onClick={console.log('should allow user to change password')}>
+                change password
+            </SmallButton>
             <DeleteUserDialog />
             <div>
                 {/* <ProfileIcon /> */}
