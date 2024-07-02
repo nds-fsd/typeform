@@ -10,6 +10,7 @@ import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react
 import { useEffect, useState } from 'react';
 import { handleDeleteUser } from '../../utils/api.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
+import { removeUserSession } from '../../utils/localStorage.js';
 // importar user (name, email e picture) de un UserContext.
 
 const DeleteUserDialog = () => {
@@ -25,12 +26,17 @@ const DeleteUserDialog = () => {
         }
     }, [isDeleted]);
 
-    const handleConfirmDelete = () => {
-        setIsOpen(false);
-        setIsDeleted(true);
-        console.log(userId, 'user id recebido desde el context')
+    const handleConfirmDelete = async (userId) => {
+        try {
+            await handleDeleteUser(userId);
+            setIsDeleted(true);
+            navigate('/home');
+        } catch (error) {
+            console.error('Error deleting user', error);
+        }
         // console.log(isDeleted)
         // handleDeleteUser(userId);
+        // removeUserSession();
         // navigate('/home')
     }
 
@@ -47,7 +53,7 @@ const DeleteUserDialog = () => {
                         <p>are you sure you want to delete your account? All of your data will be permanently removed.</p>
                         <div className="flex gap-4">
                             <button onClick={() => setIsOpen(false)}>No, cancel</button>
-                            <button onClick={handleConfirmDelete}>Yes, delete it!</button>
+                            <button onClick={() => handleConfirmDelete(userId)}>Yes, delete it!</button>
                         </div>
                     </DialogPanel>
                 </div>

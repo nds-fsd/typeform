@@ -6,12 +6,12 @@ import { removeUserSession } from '../../utils/localStorage';
 const ProfileIcon = () => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();
-  console.log(userId, 'id recebido do contexto')
+  // console.log(userId, 'id recibido desde el contexto')
 
   const handleLogout = () => {
     removeUserSession();
     console.log(userName, 'logged out!')
-    navigate('/home')
+    navigate('/login')
   }
 
   return (
