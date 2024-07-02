@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import FormCard from '../CreateForm/FormCard';
 import style from './Workspace.module.css';
 import { useForms } from '../../hooks/useForms.js';
+import ProfileIcon from '../../components/Profile/Profile.jsx';
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Workspace = () => {
         ) : (
           <p>No forms available</p>
         )}
+        <ProfileIcon />
       </div>
     </div>
   );

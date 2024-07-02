@@ -1,6 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+import { useUserProvider } from '../../context/UserContext';
 
-const Profile = () => {
+const ProfileIcon = ({ handleLogout }) => {
+  const { userId } = useUserProvider();
+  console.log(userId, 'id recebido do contexto')
+
   return (
     <div className="dropdown dropdown-end scale-150 absolute top-10 right-12">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -9,17 +14,25 @@ const Profile = () => {
         </div>
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        <li>
-          <a className="justify-between">
+        {/* <li>
+          <Link to={'/profile'} className="justify-between">
             Profile
             <span className="badge">New</span>
-          </a>
+          </Link>
+        </li> */}
+        <li>
+          <Link to={`/user/${userId}/account`}>
+            Settings
+          </Link>
         </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li>
+          <button onClick={handleLogout}>
+            Logout
+          </button>
+        </li>
       </ul>
     </div>
   )
 }
 
-export default Profile;
+export default ProfileIcon;
