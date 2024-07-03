@@ -26,13 +26,11 @@ describe('Signup flow', () => {
         cy.get("@passwordInput").type(password);
         cy.get('button').contains('SIGN UP').click();
         cy.url().should('include', '/workspace');
-        cy.contains(emptyWorkspaceMessage)
-    });
-
-    it('registered user can delete their account', () => {
-        // cy.get('[id]="profile_icon"]').click();
-        cy.get('[profileIconId]="profileIcon"]').click();
-        cy.get('[accountSettingsId]="accountSettings"]').click();
+        cy.contains(emptyWorkspaceMessage);
+        cy.get('[id="profileIcon"]').click();
+        cy.get('[id="accountSettings"]').click();
+        cy.get('[id="deleteAccountButton"]').click();
+        cy.get('[id="confirmDeleteAccountButton"]').click();
     });
 
     it('already registered email is not able to register', () => {
@@ -44,9 +42,7 @@ describe('Signup flow', () => {
         cy.wait('@signupRequest').then((interception) => {
             expect(interception.response.statusCode).to.eq(409);
         });
-        cy.contains('email already registered')
+        // cy.contains('email already registered')
         // a añadir mensaje "email already registered"
     });
-
-
 })

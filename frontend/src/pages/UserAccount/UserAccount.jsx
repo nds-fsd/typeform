@@ -42,7 +42,7 @@ const DeleteUserDialog = () => {
 
     return (
         <>
-            <SmallButton type='button' onClick={() => setIsOpen(true)}>
+            <SmallButton id={'deleteAccountButton'} type='button' onClick={() => setIsOpen(true)}>
                 delete my account
             </SmallButton>
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
@@ -53,7 +53,7 @@ const DeleteUserDialog = () => {
                         <p>are you sure you want to delete your account? All of your data will be permanently removed.</p>
                         <div className="flex gap-4">
                             <button onClick={() => setIsOpen(false)}>No, cancel</button>
-                            <button onClick={() => handleConfirmDelete(userId)}>Yes, delete it!</button>
+                            <button id='confirmDeleteAccountButton' onClick={() => handleConfirmDelete(userId)}>Yes, delete it!</button>
                         </div>
                     </DialogPanel>
                 </div>

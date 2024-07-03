@@ -74,6 +74,7 @@ const SignUp = () => {
           <div className="w-full">
             <Input
               error={errors?.password?.message}
+              type='password'
               label="Password"
               placeholder='Password'
               {...register('password', {
