@@ -6,24 +6,26 @@ import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/Buttons/LargeButton';
 import Input from '../../components/ui/Input';
 import { sendError } from 'zod-express-middleware';
+import { useUserProvider } from '../../context/UserContext.jsx';
 
 
 const Login = () => {
-
   const [error, setError] = useState([]);
   const navigate = useNavigate();
+  const { setUserInContext } = useUserProvider();
 
   const onSubmit = (data) => {
     api().post('/login', data)
       .then((response) => {
         setUserSession(response.data);
+        setUserInContext();
         navigate('/workspace');
       })
       .catch((error) => {
         setError(error.response.data.error);
       });
-    console.log(error.email)
   };
+
   const {
     register,
     handleSubmit,

@@ -6,10 +6,12 @@ import { setUserSession } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/Buttons/LargeButton.jsx';
 import Input from '../../components/ui/Input.jsx';
+import { useUserProvider } from '../../context/UserContext.jsx';
 
 const SignUp = () => {
   const [error, setError] = useState();
   const navigate = useNavigate();
+  const { setUserInContext } = useUserProvider();
 
   const {
     register,
@@ -22,6 +24,7 @@ const SignUp = () => {
       const response = await api().post('/signup', data);
       if (response?.data.token) {
         setUserSession(response.data);
+        setUserInContext();
         navigate('/workspace');
       }
       return response.data;
@@ -33,6 +36,7 @@ const SignUp = () => {
   const mutation = useMutation(newUser, {
     onSuccess: () => {
       setError(null);
+      setUserInContext();
       navigate('/workspace');
     },
     onError: (error) => {

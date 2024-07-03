@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserProvider } from '../../context/UserContext';
-import { removeUserSession } from '../../utils/localStorage';
+import { getUserSession, removeUserSession } from '../../utils/localStorage';
 
 const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();
-  // console.log(userId, 'id recibido desde el contexto')
+
+  useEffect(() => {
+    console.log(getUserSession().email, 'email de getUsersession desde Profile');
+    console.log(userId, 'id recibido desde el contexto')
+
+  }, []);
 
   const handleLogout = () => {
     removeUserSession();

@@ -20,7 +20,7 @@ describe('Signup flow', () => {
         cy.get("@passwordInput").should('exist');
     });
 
-    it('new user is able to register and is redirected to their own (empty) workspace', () => {
+    it('new user can register, is redirected to their own (empty) workspace and can delete their account', () => {
         cy.get("@emailInput").type(newEmail);
         cy.get("@nameInput").type(userName);
         cy.get("@passwordInput").type(password);
@@ -31,6 +31,7 @@ describe('Signup flow', () => {
         cy.get('[id="accountSettings"]').click();
         cy.get('[id="deleteAccountButton"]').click();
         cy.get('[id="confirmDeleteAccountButton"]').click();
+        cy.url().should('include', '/home');
     });
 
     it('already registered email is not able to register', () => {

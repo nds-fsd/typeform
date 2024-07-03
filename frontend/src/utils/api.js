@@ -19,8 +19,8 @@ export const handleDeleteForm = async (formId) => {
 
 export const handleDeleteUser = async (userId) => {
   try {
+    console.log(userId)
     const res = await api().delete(`/user/${userId}`);
-    removeUserSession();
     return res.data;
   } catch (error) {
     console.error('Error deleting user', error);

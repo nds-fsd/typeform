@@ -4,31 +4,30 @@
 3. change password button
 4. delete account OK
 */
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { handleDeleteUser } from '../../utils/api.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
-import { removeUserSession } from '../../utils/localStorage.js';
+import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 // importar user (name, email e picture) de un UserContext.
 
 const DeleteUserDialog = () => {
-    const { userName, userId, userEmail } = useUserProvider();
-    console.log(userName, userId, userEmail);
+    const { id } = useParams();
+    const { userName, userEmail } = useUserProvider();
+    // console.log(userName, userId, userEmail);
     let [isOpen, setIsOpen] = useState(false);
     let [isDeleted, setIsDeleted] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isDeleted) {
-            console.log('User was successfully deleted');
-        }
-    }, [isDeleted]);
+    // console.log(id, 'íd', typeof id)
 
     const handleConfirmDelete = async (userId) => {
         try {
-            await handleDeleteUser(userId);
+            console.log(userId, 'íd', typeof userId)
+            await handleDeleteUser(id);
+            removeUserSession();
             setIsDeleted(true);
             navigate('/home');
         } catch (error) {
@@ -53,7 +52,7 @@ const DeleteUserDialog = () => {
                         <p>are you sure you want to delete your account? All of your data will be permanently removed.</p>
                         <div className="flex gap-4">
                             <button onClick={() => setIsOpen(false)}>No, cancel</button>
-                            <button id='confirmDeleteAccountButton' onClick={() => handleConfirmDelete(userId)}>Yes, delete it!</button>
+                            <button id='confirmDeleteAccountButton' onClick={() => handleConfirmDelete()}>Yes, delete it!</button>
                         </div>
                     </DialogPanel>
                 </div>
@@ -75,8 +74,11 @@ const DeleteUserDialog = () => {
 const UserAccount = () => {
     const { userName, userId, userEmail } = useUserProvider();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    // useEffect(() => {
+    //     console.log(getUserSession().email)
 
+    // }, [])
     return (
         <div>
             <h1>Hi, {userName}!</h1>
