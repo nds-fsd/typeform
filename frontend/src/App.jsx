@@ -7,7 +7,8 @@ import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
 import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
 import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
-import ResponseForm from './components/ResponsePage/ResponseForm.jsx';
+import ResponseForm from './pages/ResponsePage/ResponseForm.jsx';
+import FormAnswers from './pages/FormAnswers/FormAnswers.jsx';
 
 function App() {
   const navigate = useNavigate();
@@ -15,9 +16,9 @@ function App() {
 
   useEffect(() => {
     if (!token) {
-      navigate('/login')
+      navigate('/login');
     }
-  }, [token, navigate])
+  }, [token, navigate]);
 
   return (
     <Routes>
@@ -26,6 +27,7 @@ function App() {
       <Route path='/login' element={<Login />} />
       {token && (
         <>
+          <Route path='/formAnswers' element={<FormAnswers />} />
           <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
           <Route path='/createform/:id?' element={<CreateForm />}>
