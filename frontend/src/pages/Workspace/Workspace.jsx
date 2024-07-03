@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import FormCard from '../CreateForm/FormCard';
 import style from './Workspace.module.css';
-import { useForms } from '../../hooks/useForms.js'
+import { useForms } from '../../hooks/useForms.js';
+import ProfileIcon from '../../components/Profile/Profile.jsx';
 import { emptyWorkspaceMessage } from '../../utils/utils.js';
 
 
@@ -25,6 +26,7 @@ const Workspace = () => {
         ) : (
           <p>{emptyWorkspaceMessage}</p>
         )}
+        <ProfileIcon />
       </div>
     </div>
   );
