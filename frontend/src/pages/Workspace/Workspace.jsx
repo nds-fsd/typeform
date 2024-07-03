@@ -26,7 +26,7 @@ const Workspace = () => {
         ) : (
           <p>{emptyWorkspaceMessage}</p>
         )}
-        <ProfileIcon />
+        <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
       </div>
     </div>
   );

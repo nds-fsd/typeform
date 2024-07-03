@@ -4,7 +4,6 @@ describe('Signup flow', () => {
     const signupEndpoint = 'http://localhost:3000/signup';
 
     beforeEach(() => {
-        cy.task('defaults:db');
         cy.visit(signupEndpoint);
         cy.get('[name="email"]').as("emailInput");
         cy.get('[name="name"]').as("nameInput");
@@ -28,7 +27,13 @@ describe('Signup flow', () => {
         cy.get('button').contains('SIGN UP').click();
         cy.url().should('include', '/workspace');
         cy.contains(emptyWorkspaceMessage)
-    })
+    });
+
+    it('registered user can delete their account', () => {
+        // cy.get('[id]="profile_icon"]').click();
+        cy.get('[profileIconId]="profileIcon"]').click();
+        cy.get('[accountSettingsId]="accountSettings"]').click();
+    });
 
     it('already registered email is not able to register', () => {
         cy.intercept('POST', '/signup').as('signupRequest');
@@ -39,6 +44,9 @@ describe('Signup flow', () => {
         cy.wait('@signupRequest').then((interception) => {
             expect(interception.response.statusCode).to.eq(409);
         });
+        cy.contains('email already registered')
         // a añadir mensaje "email already registered"
     });
+
+
 })
