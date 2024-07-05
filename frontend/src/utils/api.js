@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserToken } from './localStorage';
+import { getUserToken, removeUserSession } from './localStorage';
 
 export const api = () => {
   const token = getUserToken();
@@ -18,8 +18,8 @@ export const handleDeleteForm = async (formId) => {
 };
 
 export const handleDeleteUser = async (userId) => {
-  console.log('delete user from api')
   try {
+    console.log(userId)
     const res = await api().delete(`/user/${userId}`);
     return res.data;
   } catch (error) {

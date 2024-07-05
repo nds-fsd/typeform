@@ -4,6 +4,7 @@ import { getUserToken } from '../../utils/localStorage.js';
 
 const Home = () => {
   const token = getUserToken();
+  console.log(getUserToken());
   return (
     <div className='bg-custom-gradient min-h-screen flex items-center justify-center p-2'>
       <div className='bg-white p-10 rounded-3xl shadow-md flex flex-col items-center w-full h-[90vh] mx-4'>

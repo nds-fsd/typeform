@@ -1,24 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserProvider } from '../../context/UserContext';
-import { removeUserSession } from '../../utils/localStorage';
+import { getUserSession, removeUserSession } from '../../utils/localStorage';
 
-const ProfileIcon = () => {
+const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();
-  console.log(userId, 'id recebido do contexto')
+
+  useEffect(() => {
+    console.log(getUserSession().email, 'email de getUsersession desde Profile');
+    console.log(userId, 'id recibido desde el contexto')
+
+  }, []);
 
   const handleLogout = () => {
     removeUserSession();
     console.log(userName, 'logged out!')
-    navigate('/home')
+    navigate('/login')
   }
 
   return (
     <div className="dropdown dropdown-end scale-150 absolute top-10 right-12">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          <img id={profileIconId} alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
         </div>
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -29,7 +34,7 @@ const ProfileIcon = () => {
           </Link>
         </li> */}
         <li>
-          <Link to={`/user/${userId}/account`}>
+          <Link to={`/user/${userId}/account`} id={accountSettingsId}>
             Settings
           </Link>
         </li>
