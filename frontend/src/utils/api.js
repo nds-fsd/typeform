@@ -12,27 +12,18 @@ export const api = () => {
   });
 };
 
-export const fetchForms = async () => {
-  try {
-    const res = await api().get('/form');
-    return res.data;
-  } catch (error) {
-    console.error('Error fetching forms', error);
-    throw new Error('Error fetching forms');
-  }
-};
-
-export const fetchForm = async (formId) => {
-  try {
-    const res = await api().get(`/form/${formId}`);
-    return res.data;
-  } catch (error) {
-    console.error('Error fetching form', error);
-    throw new Error('Error fetching form');
-  }
-};
-
 export const handleDeleteForm = async (formId) => {
   const res = await api().delete(`/form/${formId}`);
   return res.data;
+};
+
+export const handleDeleteUser = async (userId) => {
+  console.log('delete user from api')
+  try {
+    const res = await api().delete(`/user/${userId}`);
+    return res.data;
+  } catch (error) {
+    console.error('Error deleting user', error);
+    throw new Error('Error deleting user');
+  }
 };
