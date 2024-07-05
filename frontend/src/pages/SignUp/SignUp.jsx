@@ -5,10 +5,13 @@ import { useMutation } from 'react-query';
 import { setUserSession } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/Buttons/LargeButton.jsx';
+import Input from '../../components/ui/Input.jsx';
+import { useUserProvider } from '../../context/UserContext.jsx';
 
 const SignUp = () => {
   const [error, setError] = useState();
   const navigate = useNavigate();
+  const { setUserInContext } = useUserProvider();
 
   const {
     register,
@@ -21,6 +24,7 @@ const SignUp = () => {
       const response = await api().post('/signup', data);
       if (response?.data.token) {
         setUserSession(response.data);
+        setUserInContext();
         navigate('/workspace');
       }
       return response.data;
@@ -32,6 +36,7 @@ const SignUp = () => {
   const mutation = useMutation(newUser, {
     onSuccess: () => {
       setError(null);
+      setUserInContext();
       navigate('/workspace');
     },
     onError: (error) => {
@@ -50,47 +55,43 @@ const SignUp = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
 
           <div className="w-full">
-            <label htmlFor='email' className="block text-sm font-medium text-gray-900 font-space mono">Email</label>
-            <input className=" font-space mono mt-1 block w-full px-3 py-2 bg-white border border-gray-300
-            rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            <Input
+              error={errors?.email?.message}
+              label="Email"
+              placeholder='Email'
               {...register('email', {
                 required: { value: true, message: '*email is required' },
                 pattern: { value: /^\S+@\S+$/i, message: '*Invalid email format' },
               })}
-              placeholder='Email'
-            ></input>
-            {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
+            />
           </div>
 
           <div className="w-full">
-            <label htmlFor='name' className="block text-sm font-medium text-gray-900 font-space mono">Name</label>
-            <input className=" font-space mono mt-1 block w-full px-3 py-2 bg-white border border-gray-300
-            rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              {...register('name', { required: { value: true, message: '*name is required' } })}
+            <Input
+              error={errors?.name?.message}
+              label="Name"
               placeholder='Name'
-            ></input>
-            {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+              {...register('name', { required: { value: true, message: '*name is required' } })}
+            />
           </div>
 
           <div className="w-full">
-            <label htmlFor='password' className="block text-sm font-medium text-gray-900 font-space mono">Password</label>
-            <input className=" font-space mono mt-1 block w-full px-3 py-2 bg-white border border-gray-300
-            rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            <Input
+              error={errors?.password?.message}
               type='password'
+              label="Password"
+              placeholder='Password'
               {...register('password', {
                 required: { value: true, message: '*password is required' },
                 minLength: { value: 6, message: '*password needs at least 6 characters' },
               })}
-              placeholder='Password'
-            ></input>
-            {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
+            />
           </div>
-
           {/* <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
             {error && <p style={{ color: 'red' }}>{error}</p>} */}
           <LargeButton submit={handleSubmit(onSubmit)} text={"SIGN UP"} />
           <p className="w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
-            onClick={() => { navigate('/login'); }} >You have an account? Login!</p>
+            onClick={() => { navigate('/login'); }} >I already have an account</p>
 
         </form>
       </div>
