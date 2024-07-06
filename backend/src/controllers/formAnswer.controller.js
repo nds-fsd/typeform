@@ -1,4 +1,10 @@
 const FormSubmission = require('../schemas/formSubmission.schema');
+const {
+  TextQuestion,
+  MultipleChoiceQuestion,
+  SingleChoiceQuestion,
+  YesNoQuestion,
+} = require('../schemas/question.schema');
 
 const postAnswer = async (req, res) => {
   const body = req.body;
@@ -18,7 +24,28 @@ const postAnswer = async (req, res) => {
 const getAnswers = async (req, res) => {
   try {
     const { form } = req.query;
-    const allAnswers = await FormSubmission.find({ form });
+    const allAnswers = await FormSubmission.find({ form }).populate({
+      path: 'answers',
+      populate: {
+        path: 'question',
+        type: function (doc) {
+          // Choose the appropriate discriminator model based on the value of the discriminator key
+          switch (doc.payload.type) {
+            case 'TextQuestion':
+              return TextQuestion;
+            case 'MultipleChoiceQuestion':
+              return MultipleChoiceQuestion;
+            case 'SingleChoiceQuestion':
+              return SingleChoiceQuestion._id;
+            case 'YesNoQuestion':
+              return YesNoQuestion;
+            default:
+              throw new Error('Invalid discriminator value');
+          }
+        },
+      },
+    }); // Populating the discriminator key
+
     if (!allAnswers) {
       return res.status(404).json({ error: 'Form not found' });
     }
