@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import FormCard from '../CreateForm/FormCard';
+import FormCard from '../CreateForm/FormCard.jsx';
 import style from './Workspace.module.css';
 import { useForms } from '../../hooks/useForms.js';
 import ProfileIcon from '../../components/Profile/Profile.jsx';

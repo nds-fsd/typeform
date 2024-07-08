@@ -4,13 +4,14 @@
 3. change password button
 4. delete account OK
 */
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { handleDeleteUser } from '../../utils/api.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
 import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
+import UserGreeting from '../../components/ui/UserGreeting.jsx';
 // importar user (name, email e picture) de un UserContext.
 
 const DeleteUserDialog = () => {
@@ -20,8 +21,6 @@ const DeleteUserDialog = () => {
     let [isOpen, setIsOpen] = useState(false);
     let [isDeleted, setIsDeleted] = useState(false);
     const navigate = useNavigate();
-
-    // console.log(id, 'íd', typeof id)
 
     const handleConfirmDelete = async (userId) => {
         try {
@@ -72,7 +71,7 @@ const DeleteUserDialog = () => {
 };
 
 const UserAccount = () => {
-    const { userName, userId, userEmail } = useUserProvider();
+    const { userId, userEmail } = useUserProvider();
 
     // const navigate = useNavigate();
     // useEffect(() => {
@@ -81,10 +80,16 @@ const UserAccount = () => {
     // }, [])
     return (
         <div>
-            <h1>Hi, {userName}!</h1>
+            <UserGreeting />
             <h2>{userEmail}</h2>
-            <SmallButton type='button' onClick={console.log('should allow user to change password')}>
+            <Link className='btn btn-ghost text-xl' to={'/workspace'}>
+                My workspace
+            </Link>
+            <SmallButton type='button' onClick={() => console.log('should allow user to change password')}>
                 change password
+            </SmallButton>
+            <SmallButton type='button' onClick={() => console.log('should allow user to change username')}>
+                change username
             </SmallButton>
             <DeleteUserDialog />
             <div>

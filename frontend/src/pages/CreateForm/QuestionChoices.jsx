@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useCustomFormProvider } from '../../context/FormContext';
+import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ index }) => {
