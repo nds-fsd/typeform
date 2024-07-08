@@ -17,8 +17,13 @@ const FormSchema = new Schema({
     updateDateTime: {
         type: Date,
     },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     questions: [
-        QuestionSchema,
+        QuestionSchema
     ]
 });
 

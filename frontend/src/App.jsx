@@ -1,39 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import Home from './Components/Home/Home.jsx';
-import Workspace from './Components/Workspace/Workspace.jsx';
-import CreateForms from './Components/CreateForms/CreateForms.jsx';
-import SignUp from './Components/SignUp/SignUp.jsx';
-import Auth from './Components/Auth/Auth.jsx';
-import { getUserToken } from './Utils/localStorage.js';
-import Login from './Components/Login/Login.jsx';
-import { CreateFormJose, EditForm } from './Components/CreateFormJose/createFormJose.jsx';
-// import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import Home from './pages/Home/Home.jsx';
+import Workspace from './pages/Workspace/Workspace.jsx';
+import SignUp from './pages/SignUp/SignUp.jsx';
+import { getUserToken } from './utils/localStorage.js';
+import Login from './pages/Login/Login.jsx';
+import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
+import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
+import ResponseForm from './pages/ResponsePage/ResponseForm.jsx';
+import FormAnswers from './pages/FormAnswers/FormAnswers.jsx';
+import UserAccount from './pages/UserAccount/UserAccount.jsx';
+
 
 function App() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const token = getUserToken();
-
-  // useEffect (() => {
-  //   if(!token) {
-  //     navigate('/home')
-  //   }
-  // },[token, navigate])
 
   return (
     <Routes>
       <Route path='/home' element={<Home />} />
-      <Route path='/auth' element={<Auth />} />
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
       {token && (
         <>
+          <Route path='/formAnswers' element={<FormAnswers />} />
+          <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/createforms' element={<CreateForms />} />
-          <Route path='/createformjose' element={<CreateFormJose />} />
-          <Route path='/editform/:id' element={<EditForm />} />
+          <Route path='/createform/:id?' element={<CreateForm />} />
+          <Route path='/user/:id/account' element={<UserAccount />} />
         </>
       )}
+      <Route path="/" element={<Navigate to={token ? '/workspace' : '/home'} replace={true} />} />
     </Routes>
   );
 }

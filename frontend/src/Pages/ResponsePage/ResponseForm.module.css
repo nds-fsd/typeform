@@ -1,0 +1,48 @@
+.choices {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.question {
+  margin: 0;
+  padding: 0;
+}
+
+.questionContainer {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100vw;
+  height: 30vw;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding: 20px;
+  flex-wrap: wrap;
+  width: 100vw;
+}
+
+.body {
+  width: 100vw;
+  height: 100vw;
+}
+
+h2 {
+}
+
+.navButton {
+  border: 1px black solid;
+  margin: 5px;
+  padding: 10px;
+}
+
+.submitButton {
+  margin: 0px;
+  padding: 20px;
+}
