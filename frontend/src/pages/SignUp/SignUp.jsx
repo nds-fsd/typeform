@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import { setUserSession } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { LargeButton } from '../../components/Buttons/LargeButton.jsx';
-import Input from '../../components/ui/Input.jsx';
+import Input from '../../components/Form/Input.jsx';
 import { useUserProvider } from '../../context/UserContext.jsx';
 
 const SignUp = () => {

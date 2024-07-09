@@ -1,7 +1,7 @@
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { questionTypes } from '../../constants/questionTypes.jsx';
 import { useMemo } from 'react';
-import Select from '../../components/ui/Select.jsx';
+import Select from '../../components/Form/Select.jsx';
 
 const QuestionOptions = () => {
   const { setValue, activeQuestion, watch } = useCustomFormProvider();

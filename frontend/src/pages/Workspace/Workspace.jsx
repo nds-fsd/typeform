@@ -7,6 +7,9 @@ import { emptyWorkspaceMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { getUserSession } from '../../utils/localStorage.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
+import UserGreeting from '../../components/Header/UserGreeting.jsx';
+import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
+import TitleLink from '../../components/Header/TitleLink.jsx';
 
 
 const Workspace = () => {
@@ -24,12 +27,12 @@ const Workspace = () => {
 
   return (
     <div className={style.viewport}>
-      <h1>My Workspace</h1>
-      <h2>Hi, {userName}</h2>
+      <TitleLink to={'/workspace'} />
+      <UserGreeting />
       <div className={style.frame}>
-        <button className={style.btn} onClick={() => handleCreate()}>
+        <SmallButton className={style.btn} onClick={() => handleCreate()}>
           create new form
-        </button>
+        </SmallButton>
         {forms && forms.length > 0 ? (
           forms.map((form) => <FormCard key={form._id} form={form} className={style.formcard} />)
         ) : (
