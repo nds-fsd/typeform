@@ -11,16 +11,20 @@ import { useEffect, useState } from 'react';
 import { handleDeleteUser } from '../../utils/api.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
 import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
-import UserGreeting from '../../components/Header/UserGreeting.jsx';
+import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 // importar user (name, email e picture) de un UserContext.
 
-const DeleteUserDialog = () => {
+const DeleteUserDialog = ({ onClick }) => {
     const { id } = useParams();
     const { userName, userEmail } = useUserProvider();
     // console.log(userName, userId, userEmail);
     let [isOpen, setIsOpen] = useState(false);
     let [isDeleted, setIsDeleted] = useState(false);
     const navigate = useNavigate();
+
+    const onClick = () => {
+        setIsOpen(true);
+    };
 
     const handleConfirmDelete = async (userId) => {
         try {
@@ -80,17 +84,12 @@ const UserAccount = () => {
     // }, [])
     return (
         <div>
-            <UserGreeting />
+            <UserNavbar />
             <h2>{userEmail}</h2>
-            <Link className='btn btn-ghost text-xl' to={'/workspace'}>
-                My workspace
-            </Link>
-            <SmallButton type='button' onClick={() => console.log('should allow user to change password')}>
-                change password
-            </SmallButton>
-            <SmallButton type='button' onClick={() => console.log('should allow user to change username')}>
-                change username
-            </SmallButton>
+            <SmallButton text={'change password'} onClick={() => console.log('should allow user to change password')} />
+            <SmallButton text={'change username'} onClick={() => console.log('should allow user to change username')} />
+            <SmallButton text={'delete my account'} onClick={onClick} />
+
             <DeleteUserDialog />
             <div>
                 {/* <ProfileIcon /> */}

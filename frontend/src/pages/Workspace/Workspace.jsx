@@ -7,9 +7,10 @@ import { emptyWorkspaceMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { getUserSession } from '../../utils/localStorage.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
-import UserGreeting from '../../components/Header/UserGreeting.jsx';
+import UserGreeting from '../../components/UserNavbar/UserGreeting.jsx';
 import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
-import TitleLink from '../../components/Header/TitleLink.jsx';
+import TitleLink from '../../components/UserNavbar/TitleLink.jsx';
+import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 
 
 const Workspace = () => {
@@ -26,9 +27,8 @@ const Workspace = () => {
   }, [])
 
   return (
-    <div className={style.viewport}>
-      <TitleLink to={'/workspace'} />
-      <UserGreeting />
+    <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-custom-gradient">
+      <UserNavbar />
       <div className={style.frame}>
         <SmallButton className={style.btn} onClick={() => handleCreate()}>
           create new form

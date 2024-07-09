@@ -1,13 +1,13 @@
 import UserGreeting from './UserGreeting'
 import TitleLink from './TitleLink'
 
-const Header = () => {
+const UserNavbar = () => {
     return (
-        <div>
-            <UserGreeting />
+        <div className="flex items-baseline">
             <TitleLink />
+            <UserGreeting />
         </div>
     )
 }
 
-export default Header
+export default UserNavbar
