@@ -12,67 +12,8 @@ import { handleDeleteUser } from '../../utils/api.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
 import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
+import DeleteUser from './DeleteUser.jsx';
 // importar user (name, email e picture) de un UserContext.
-
-const DeleteUserDialog = ({ onClick }) => {
-    const { id } = useParams();
-    const { userName, userEmail } = useUserProvider();
-    // console.log(userName, userId, userEmail);
-    let [isOpen, setIsOpen] = useState(false);
-    let [isDeleted, setIsDeleted] = useState(false);
-    const navigate = useNavigate();
-
-    const onClick = () => {
-        setIsOpen(true);
-    };
-
-    const handleConfirmDelete = async (userId) => {
-        try {
-            console.log(userId, 'íd', typeof userId)
-            await handleDeleteUser(id);
-            removeUserSession();
-            setIsDeleted(true);
-            navigate('/home');
-        } catch (error) {
-            console.error('Error deleting user', error);
-        }
-        // console.log(isDeleted)
-        // handleDeleteUser(userId);
-        // removeUserSession();
-        // navigate('/home')
-    }
-
-    return (
-        <>
-            <SmallButton id={'deleteAccountButton'} type='button' onClick={() => setIsOpen(true)}>
-                delete my account
-            </SmallButton>
-            <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
-                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                    <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-                        <DialogTitle className="font-bold">delete my account</DialogTitle>
-                        <Description>caution! this will permanently delete your account</Description>
-                        <p>are you sure you want to delete your account? All of your data will be permanently removed.</p>
-                        <div className="flex gap-4">
-                            <button onClick={() => setIsOpen(false)}>No, cancel</button>
-                            <button id='confirmDeleteAccountButton' onClick={() => handleConfirmDelete()}>Yes, delete it!</button>
-                        </div>
-                    </DialogPanel>
-                </div>
-            </Dialog>
-            <Dialog open={isDeleted} onClose={() => navigate('/home')} className="relative z-50">
-                <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                    <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-                        <DialogTitle className="font-bold">your account was successfully deleted :( bye</DialogTitle>
-                        <div className="flex gap-4">
-                            <button onClick={() => navigate('/home')}>ok</button>
-                        </div>
-                    </DialogPanel>
-                </div>
-            </Dialog>
-        </>
-    )
-};
 
 const UserAccount = () => {
     const { userId, userEmail } = useUserProvider();
@@ -88,9 +29,7 @@ const UserAccount = () => {
             <h2>{userEmail}</h2>
             <SmallButton text={'change password'} onClick={() => console.log('should allow user to change password')} />
             <SmallButton text={'change username'} onClick={() => console.log('should allow user to change username')} />
-            <SmallButton text={'delete my account'} onClick={onClick} />
-
-            <DeleteUserDialog />
+            <DeleteUser />
             <div>
                 {/* <ProfileIcon /> */}
             </div>

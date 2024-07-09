@@ -1,4 +1,10 @@
-const DeleteUserDialog = () => {
+import { useNavigate, useParams } from "react-router-dom";
+import { useUserProvider } from "../../context/UserContext";
+import { useState } from "react";
+import { SmallButton } from "../../components/Buttons/SmallButton";
+import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+
+const DeleteUser = () => {
     const { id } = useParams();
     const { userName, userEmail } = useUserProvider();
     // console.log(userName, userId, userEmail);
@@ -24,9 +30,7 @@ const DeleteUserDialog = () => {
 
     return (
         <>
-            <SmallButton id={'deleteAccountButton'} type='button' onClick={() => setIsOpen(true)}>
-                delete my account
-            </SmallButton>
+            <SmallButton text={'delete account'} onClick={() => setIsOpen(true)} />
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
                     <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
@@ -54,4 +58,4 @@ const DeleteUserDialog = () => {
     )
 };
 
-export default DeleteUserDialog;
+export default DeleteUser;
