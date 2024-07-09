@@ -1,7 +1,7 @@
-import style from './FormCard.module.css';
 import { handleDeleteForm } from '../../utils/api';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { SmallButton } from '../../components/Buttons/SmallButton';
 
 const FormCard = ({ form }) => {
   const queryClient = useQueryClient();
@@ -23,13 +23,11 @@ const FormCard = ({ form }) => {
   });
 
   return (
-    <div className={style.formgrid}>
-      <div className={style.formcard} onClick={() => navigate(`/createform/${form._id}`)}>
-        <p>{form.title}</p>
-        <button className={style.deleteButton} onClick={(event) => handleDelete(form._id, event)}>
-          X
-        </button>
-      </div>
+    <div
+      className={'flex items-center justify-center shadow-lg h-40 rounded-3xl hover:shadow-glow transition-all duration-500 font-space-mono'}
+      onClick={() => navigate(`/createform/${form._id}`)}>
+      <p>{form.title}</p>
+      <SmallButton text={'X'} onClick={(event) => handleDelete(form._id, event)} />
     </div>
   );
 };

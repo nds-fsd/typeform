@@ -3,9 +3,9 @@ import React from 'react'
 export const SmallButton = ({ text, ...rest }) => {
   return (
     <>
-      <button className="w-40 h-10 shadow-md bg-azure hover:bg-white
-        hover:shadow-none hover:border hover:border-gray-600 rounded-4xl transition-all
-        duration-300" {...rest}>{text}</button>
+      <button className="w-fit h-fit m-8 shadow-md bg-azure/80 hover:bg-white
+        hover:shadow-none rounded-4xl transition-all
+        duration-300 font-space-mono p-5" {...rest}>{text}</button>
     </>
   )
 }

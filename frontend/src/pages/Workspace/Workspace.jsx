@@ -29,18 +29,18 @@ const Workspace = () => {
   return (
     <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-custom-gradient">
       <UserNavbar />
-      <div className={style.frame}>
-        <SmallButton className={style.btn} onClick={() => handleCreate()}>
-          create new form
-        </SmallButton>
-        {forms && forms.length > 0 ? (
-          forms.map((form) => <FormCard key={form._id} form={form} className={style.formcard} />)
-        ) : (
-          <p>{emptyWorkspaceMessage}</p>
-        )}
-        <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+      <div className='flex bg-neutral-100/25 m-8 rounded-2xl gap-4 h-max '>
+        <SmallButton text={'create new form'} onClick={() => handleCreate()} />
+        <div className='grid grid-cols-4 grid-flow-row gap-8'>
+          {forms && forms.length > 0 ? (
+            forms.map((form) => <FormCard key={form._id} form={form} className={style.formcard} />)
+          ) : (
+            <p>{emptyWorkspaceMessage}</p>
+          )}
+          <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+        </div>
       </div>
-    </div>
+    </div >
   );
 };
 
