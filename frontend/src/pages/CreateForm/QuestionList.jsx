@@ -41,7 +41,7 @@ export const QuestionList = () => {
         <Link className='btn btn-ghost text-xl' to={'/workspace'}>
           My workspace
         </Link>
-        <button onClick={() => dirtyFields.questions && alert('a')}>simulating click on my workspace without saving</button>
+        <button type='button' onClick={() => dirtyFields.questions && alert('a')}>simulating click on my workspace without saving</button>
         <Input type='text' placeholder='Form name' {...register('title')} />
         <h2 className='text-2xl'>Questions</h2>
       </header>
