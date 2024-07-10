@@ -7,6 +7,7 @@ import { useCustomFormProvider, withCustomFormProvider } from '../../context/For
 import QuestionOptions from './QuestionOptions.jsx';
 import { useForms } from '../../hooks/useForms.js';
 import { useQueryClient } from 'react-query';
+import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 
 export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
@@ -47,10 +48,14 @@ export const CreateForm = withCustomFormProvider(() => {
     }
   };
   return (
-    <div className='bg-custom-gradient p-2 box-border h-screen'>
+    // <div className='bg-custom-gradient p-2 box-border h-screen'>
+    <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
+
+
+      <UserNavbar />
       {!isLoading && (
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex h-full'>
+          <div className='flex h-full p-2'>
             <QuestionList />
             <QuestionForm />
             <QuestionOptions />

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserProvider } from "../../context/UserContext";
 import { useState } from "react";
-import { SmallButton } from "../../components/Buttons/SmallButton";
+import SmallButton from "../../components/Buttons/SmallButton";
 import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 const DeleteUser = () => {

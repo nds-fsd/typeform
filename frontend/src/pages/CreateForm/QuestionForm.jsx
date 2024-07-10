@@ -12,8 +12,8 @@ const QuestionForm = () => {
 
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
     return (
-        <main className='flex flex-col gap-1 flex-1 h-full items-center justify-center '>
-            <div className='bg-white p-20 rounded-3xl shadow-md min-h-[400px] w-2/3 flex flex-col justify-center items-center gap-2'>
+        <main className='flex flex-col gap-1 flex-1 items-center justify-center '>
+            <div className='bg-white/20 p-20 rounded-3xl shadow-md min-h-[300px] w-2/3 flex flex-col justify-center items-center gap-2'>
                 <TextareaAutoSize
                     className='w-full text-2xl outline-none resize-none hover:bg-neutral-50 rounded-md p-2'
                     placeholder='Your question here'

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const LargeButton = ({ submit, text, id }) => {
+const LargeButton = ({ submit, text, id }) => {
   return (
     <>
       <button id={id} onClick={submit} className="w-80 h-20 text-gray-900 shadow-md bg-azure hover:bg-white 
@@ -9,3 +9,5 @@ export const LargeButton = ({ submit, text, id }) => {
     </>
   )
 }
+
+export default LargeButton

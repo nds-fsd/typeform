@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import QuestionCard from './QuestionCard.jsx';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import Input from '../../components/Form/Input.jsx';
-import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
+import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
-import TitleLink from '../../components/UserNavbar/TitleLink.jsx';
+import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 
 export const QuestionList = () => {
   const { swapQuestion, addQuestion, register, getValues } = useCustomFormProvider();
@@ -33,10 +33,8 @@ export const QuestionList = () => {
   };
 
   return (
-    <div className='bg-white p-14 rounded-3xl w-1/5 shadow-md'>
+    <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
       <header className='flex flex-col gap-2'>
-        <TitleLink to={'/workspace'} />
-
         <Input type='text' placeholder='Form name' {...register('title')} />
         <h2 className='text-2xl'>Questions</h2>
       </header>

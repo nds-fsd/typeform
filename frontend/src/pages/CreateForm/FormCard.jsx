@@ -1,7 +1,7 @@
 import { handleDeleteForm } from '../../utils/api';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { SmallButton } from '../../components/Buttons/SmallButton';
+import SmallButton from '../../components/Buttons/SmallButton';
 
 const FormCard = ({ form }) => {
   const queryClient = useQueryClient();
@@ -24,7 +24,7 @@ const FormCard = ({ form }) => {
 
   return (
     <div
-      className={'flex items-center justify-center shadow-lg h-40 rounded-3xl hover:shadow-glow transition-all duration-500 font-space-mono'}
+      className={'w-60 h-40 flex items-center justify-center shadow-md border-2 border-neutral rounded-3xl hover:shadow-none transition-all duration-500 font-space-mono'}
       onClick={() => navigate(`/createform/${form._id}`)}>
       <p>{form.title}</p>
       <SmallButton text={'X'} onClick={(event) => handleDelete(form._id, event)} />
@@ -33,3 +33,7 @@ const FormCard = ({ form }) => {
 };
 
 export default FormCard;
+
+
+// // borda oscura/bien marcada
+// className={'w-60 h-40 flex items-center justify-center shadow-md border-2 border-neutral rounded-3xl hover:shadow-glow transition-all duration-500 font-space-mono'}

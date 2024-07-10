@@ -5,7 +5,7 @@
 4. delete account OK
 */
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
+import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { handleDeleteUser } from '../../utils/api.js';
