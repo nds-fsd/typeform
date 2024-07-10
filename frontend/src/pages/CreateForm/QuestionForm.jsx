@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import QuestionChoices from './QuestionChoices.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
-import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFieldArray, useFormContext, useFormState, useWatch } from 'react-hook-form';
 import TextareaAutoSize from 'react-textarea-autosize';
 import YesNoChoices from './YesNoChoices.jsx';
 
 const QuestionForm = () => {
     const { activeQuestion, watch, setValue } = useCustomFormProvider();
+    const { isDirty } = useFormState();
 
     const type = watch(`questions.${activeQuestion}.type`);
 
