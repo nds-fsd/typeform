@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import QuestionCard from './QuestionCard.jsx';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useFormState } from 'react-hook-form';
 import Input from '../../components/ui/Input.jsx';
 import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 
 export const QuestionList = () => {
-  const { swapQuestion, addQuestion, register, getValues } = useCustomFormProvider();
+  const { swapQuestion, addQuestion, register, getValues, control } = useCustomFormProvider();
+  const { dirtyFields, isDirty } = useFormState({
+    control
+  });
+  console.log(isDirty);
 
   const questionsFromGetValues = getValues('questions');
 
@@ -37,6 +41,7 @@ export const QuestionList = () => {
         <Link className='btn btn-ghost text-xl' to={'/workspace'}>
           My workspace
         </Link>
+        <button onClick={() => dirtyFields.questions && alert('a')}>simulating click on my workspace without saving</button>
         <Input type='text' placeholder='Form name' {...register('title')} />
         <h2 className='text-2xl'>Questions</h2>
       </header>
@@ -57,6 +62,6 @@ export const QuestionList = () => {
           + add question
         </SmallButton>
       </aside>
-    </div>
+    </div >
   );
 };
