@@ -14,6 +14,7 @@ const QuestionForm = () => {
     const type = watch(`questions.${activeQuestion}.type`);
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
 
+
     // console.log('Dirty Fields:', dirtyFields.questions?.length);
     // const [isDirty, setIsDirty] = useState(false);
 
