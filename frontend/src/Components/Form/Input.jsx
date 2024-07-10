@@ -10,8 +10,8 @@ const Input = forwardRef(({ error, label, type = 'text', ...rest }, ref) => {
       )}
       <input
         type={type}
-        className=' font-space mono mt-1 block w-full px-3 py-2 bg-white border border-gray-300
-            rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+        className='font-space mono mt-1 block w-full px-3 py-2 bg-transparent hover:bg-white/20 border border-transparent
+            rounded-md focus:outline-none focus:ring-blue-500 focus:border-gray-900 sm:text-sm'
         ref={ref}
         {...rest}
       />
