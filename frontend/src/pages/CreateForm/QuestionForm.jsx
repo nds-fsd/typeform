@@ -14,7 +14,7 @@ const QuestionForm = () => {
     const type = watch(`questions.${activeQuestion}.type`);
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
 
-    console.log('Dirty Fields:', dirtyFields.questions?.length);
+    // console.log('Dirty Fields:', dirtyFields.questions?.length);
     // const [isDirty, setIsDirty] = useState(false);
 
     // useEffect(() => {
@@ -27,18 +27,17 @@ const QuestionForm = () => {
     // }, [dirtyFields, activeQuestion]);
 
     return (
-        <main className='flex flex-col gap-1 flex-1 h-full items-center justify-center'>
-            <div className='bg-white p-20 rounded-3xl shadow-md min-h-[400px] w-2/3 flex flex-col justify-center items-center gap-2'>
+        <main className='flex flex-col gap-1 flex-1 items-center justify-center '>
+            <div className='bg-white/20 p-10 rounded-3xl shadow-md min-h-[200px] w-2/3 flex flex-col justify-center items-center gap-2'>
                 <TextareaAutoSize
-                    className='w-full text-2xl outline-none resize-none hover:bg-neutral-50 rounded-md p-2'
+                    className='w-full text-xl outline-none resize-none rounded-md p-2 font-space-mono bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
                     placeholder='Your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     {...register(`questions.${activeQuestion}.text`)}
                 />
-
                 <TextareaAutoSize
-                    className='w-full text-xl outline-none resize-none hover:bg-neutral-50 rounded-md p-2'
-                    placeholder='Description (optional)'
+                    className='w-full text-lg outline-none resize-none rounded-md p-2 font-space-mono bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
+                    placeholder='description (optional)'
                     value={watch(`questions.${activeQuestion}.description`)}
                     {...register(`questions.${activeQuestion}.description`)}
                 />
@@ -47,9 +46,12 @@ const QuestionForm = () => {
                 {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
 
                 {type === 'TextQuestion' && (
-                    <div className='mt-2 text-2xl w-full text-gray-300 border-b-2 border-gray-300'>Type your answer here</div>
+                    <div className='mt-2 p-2 pb-0 text-md w-full text-gray-900 border-b border-gray-900 font-space-mono'>your answer goes here</div>
                 )}
                 {hasChoices && <QuestionChoices />}
+                {/* {mensaje abajo es temporaria hasta que el aviso funcione} */}
+                {/* {hasChoices && <p>hey! this type of question needs at least two options</p>} */}
+
                 {type === 'YesNoQuestion' && <YesNoChoices />}
             </div>
         </main>

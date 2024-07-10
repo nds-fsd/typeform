@@ -11,7 +11,7 @@ const QuestionChoices = ({ index }) => {
 
   useEffect(() => {
     if (!choices) {
-      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }]);
+      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
     }
   }, [choices]);
 
@@ -72,6 +72,8 @@ const QuestionChoices = ({ index }) => {
       <button type='button' className='btn btn-primary btn-sm' onClick={addChoice}>
         Add Choice
       </button>
+      {`questions.${activeQuestion}.choices`.length < 2 && <p>hey! this type of question needs at least two options</p>}
+
     </>
   );
 };

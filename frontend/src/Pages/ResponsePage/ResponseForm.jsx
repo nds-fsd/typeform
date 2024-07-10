@@ -4,7 +4,7 @@ import { api } from '../../utils/api.js';
 import style from './ResponseForm.module.css';
 import RenderQuestion from './RenderQuestion.jsx';
 import { useParams } from 'react-router-dom';
-import { MediumButton } from '../../components/Buttons/MediumButton.jsx';
+import MediumButton from '../../components/Buttons/MediumButton.jsx';
 
 const ResponseForm = () => {
   const { id: formId } = useParams();
@@ -98,7 +98,7 @@ const ResponseForm = () => {
             )}
           </div>
           <div className='absolute bottom-5 right-5'>
-            <MediumButton onClick={onSubmit} text={'Submit'} />
+            <MediumButton onClick={onSubmit} text='Submit' />
           </div>
         </form>
       </div>

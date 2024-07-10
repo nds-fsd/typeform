@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import QuestionCard from './QuestionCard.jsx';
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form';
-import Input from '../../components/ui/Input.jsx';
-import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
+import Input from '../../components/Form/Input.jsx';
+import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
+import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 
 export const QuestionList = () => {
   const { swapQuestion, addQuestion, register, getValues, control } = useCustomFormProvider();
@@ -36,12 +37,9 @@ export const QuestionList = () => {
   };
 
   return (
-    <div className='bg-white p-14 rounded-3xl w-1/5 shadow-md'>
+    <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
       <header className='flex flex-col gap-2'>
-        <Link className='btn btn-ghost text-xl' to={'/workspace'}>
-          My workspace
-        </Link>
-        <button type='button' onClick={() => dirtyFields.questions && alert('a')}>simulating click on my workspace without saving</button>
+        <button type='button' onClick={() => dirtyFields.questions && alert('a')}>simulate click on my workspace without saving</button>
         <Input type='text' placeholder='Form name' {...register('title')} />
         <h2 className='text-2xl'>Questions</h2>
       </header>
@@ -58,9 +56,7 @@ export const QuestionList = () => {
             />
           ))}
         </ul>
-        <SmallButton type='button' onClick={handleAddQuestion}>
-          + add question
-        </SmallButton>
+        <SmallButton type='button' text='+ add question' onClick={handleAddQuestion} />
       </aside>
     </div >
   );
