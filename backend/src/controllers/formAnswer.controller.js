@@ -1,4 +1,6 @@
 const FormSubmission = require('../schemas/formSubmission.schema');
+const Form = require('../schemas/form.schema');
+
 const {
   TextQuestion,
   MultipleChoiceQuestion,
@@ -24,32 +26,32 @@ const postAnswer = async (req, res) => {
 const getAnswers = async (req, res) => {
   try {
     const { form } = req.query;
-    const allAnswers = await FormSubmission.find({ form }).populate({
-      path: 'answers',
-      populate: {
-        path: 'question',
-        type: function (doc) {
-          // Choose the appropriate discriminator model based on the value of the discriminator key
-          switch (doc.payload.type) {
-            case 'TextQuestion':
-              return TextQuestion;
-            case 'MultipleChoiceQuestion':
-              return MultipleChoiceQuestion;
-            case 'SingleChoiceQuestion':
-              return SingleChoiceQuestion._id;
-            case 'YesNoQuestion':
-              return YesNoQuestion;
-            default:
-              throw new Error('Invalid discriminator value');
-          }
-        },
-      },
-    }); // Populating the discriminator key
 
-    if (!allAnswers) {
-      return res.status(404).json({ error: 'Form not found' });
-    }
-    res.status(200).json(allAnswers);
+    const formSubmission = await FormSubmission.find({ form });
+    const formData = await Form.findById(form);
+
+    const response = formSubmission.map((submission) => ({
+      form: {
+        _id: formData._id,
+        title: formData.title,
+      },
+      answers: submission.answers.map((answer) => {
+        const question = formData.questions.find((question) => question._id.equals(answer.question));
+        return {
+          question: {
+            _id: question._id,
+            title: question.text,
+            description: question.description,
+          },
+          answer: answer.answer,
+          type: answer.type,
+        };
+      }),
+      creationDateTime: submission.creationDateTime,
+      updateDateTime: submission.updateDateTime,
+    }));
+
+    res.status(200).json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to get answers' });
@@ -60,3 +62,7 @@ module.exports = {
   postAnswer,
   getAnswers,
 };
+
+// if (!formSubmission || !formData) {
+//   return res.status(404).json({ error: 'Form not found' });
+// }

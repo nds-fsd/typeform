@@ -48,7 +48,7 @@ export const QuestionList = () => {
       </header>
       <aside className='flex flex-col gap-2 items-center pt-2'>
         <ul className='w-full flex flex-col gap-1'>
-          {questionsFromGetValues.map((question, index) => (
+          {questions.map((question, index) => (
             <QuestionCard
               question={question}
               key={question.id}

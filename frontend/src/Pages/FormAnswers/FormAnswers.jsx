@@ -35,10 +35,10 @@ const FormAnswers = () => {
       {answers.length > 0 ? (
         answers.map((answerSet, index) => (
           <div key={index} className={style.container}>
-            <h1>{answerSet.form}</h1>
+            <h1>{answerSet.form.title}</h1>
             {answerSet.answers.map((answerSet, index) => (
               <div key={index} className={style.cardContainer}>
-                <h2>{answerSet.question}</h2>
+                <h2>{answerSet.question.title}</h2>
                 <div>{answerSet.answer}</div>
               </div>
             ))}
