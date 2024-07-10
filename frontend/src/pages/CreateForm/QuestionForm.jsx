@@ -14,7 +14,7 @@ const QuestionForm = () => {
     const type = watch(`questions.${activeQuestion}.type`);
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
 
-    console.log('Dirty Fields:', dirtyFields.questions?.length);
+    // console.log('Dirty Fields:', dirtyFields.questions?.length);
     // const [isDirty, setIsDirty] = useState(false);
 
     // useEffect(() => {
@@ -34,14 +34,14 @@ const QuestionForm = () => {
                     placeholder='Your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     {...register(`questions.${activeQuestion}.text`)}
-                    onChange={(e) => setValue(`questions.${activeQuestion}.text`, e.target.value)}
+                // onChange={(e) => setValue(`questions.${activeQuestion}.text`, e.target.value)}
                 />
                 <TextareaAutoSize
                     className='w-full text-lg outline-none resize-none rounded-md p-2 font-space-mono bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
                     placeholder='description (optional)'
                     value={watch(`questions.${activeQuestion}.description`)}
                     {...register(`questions.${activeQuestion}.description`)}
-                    onChange={(e) => setValue(`questions.${activeQuestion}.description`, e.target.value)}
+                // onChange={(e) => setValue(`questions.${activeQuestion}.description`, e.target.value)}
                 />
 
                 {dirtyFields?.questions?.[activeQuestion]?.text && <p>Text field is dirty.</p>}
