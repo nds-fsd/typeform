@@ -98,7 +98,7 @@ const ResponseForm = () => {
             )}
           </div>
           <div className='absolute bottom-5 right-5'>
-            <MediumButton onClick={onSubmit} text={'Submit'} />
+            <MediumButton onClick={onSubmit} text='Submit' />
           </div>
         </form>
       </div>

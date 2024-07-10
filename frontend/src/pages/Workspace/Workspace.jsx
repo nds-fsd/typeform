@@ -29,7 +29,7 @@ const Workspace = () => {
     <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-[#EBE3DF]">
       <UserNavbar />
       <div className='flex bg-neutral-100/25 m-0 rounded-2xl gap-8 h-max p-8'>
-        <SmallButton text={'create new form'} onClick={() => handleCreate()} />
+        <SmallButton text='create new form' onClick={() => handleCreate()} />
         <div className='grid grid-cols-4 grid-flow-row gap-8'>
           {forms && forms.length > 0 ? (
             forms.map((form) => <FormCard key={form._id} form={form} />)
