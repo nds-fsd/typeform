@@ -34,7 +34,6 @@ const QuestionForm = () => {
                     placeholder='Your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     {...register(`questions.${activeQuestion}.text`)}
-                    onChange={(e) => setValue(`questions.${activeQuestion}.text`, e.target.value)}
                 />
 
                 <TextareaAutoSize
@@ -42,7 +41,6 @@ const QuestionForm = () => {
                     placeholder='Description (optional)'
                     value={watch(`questions.${activeQuestion}.description`)}
                     {...register(`questions.${activeQuestion}.description`)}
-                    onChange={(e) => setValue(`questions.${activeQuestion}.description`, e.target.value)}
                 />
 
                 {dirtyFields?.questions?.[activeQuestion]?.text && <p>Text field is dirty.</p>}
