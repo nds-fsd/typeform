@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import QuestionCard from './QuestionCard.jsx';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useFormState } from 'react-hook-form';
 import Input from '../../components/Form/Input.jsx';
-import SmallButton from '../../components/Buttons/SmallButton.jsx';
+import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 
 export const QuestionList = () => {
-  const { swapQuestion, addQuestion, register, getValues } = useCustomFormProvider();
+  const { swapQuestion, addQuestion, register, getValues, control } = useCustomFormProvider();
+  const { dirtyFields, isDirty } = useFormState({
+    control
+  });
+  console.log(isDirty);
 
   const questionsFromGetValues = getValues('questions');
 
@@ -35,6 +39,7 @@ export const QuestionList = () => {
   return (
     <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
       <header className='flex flex-col gap-2'>
+        <button onClick={() => dirtyFields.questions && alert('a')}>simulating click on my workspace without saving</button>
         <Input type='text' placeholder='Form name' {...register('title')} />
         <h2 className='text-2xl'>Questions</h2>
       </header>
@@ -53,6 +58,6 @@ export const QuestionList = () => {
         </ul>
         <SmallButton text='+ add question' onClick={handleAddQuestion} />
       </aside>
-    </div>
+    </div >
   );
 };

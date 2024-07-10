@@ -16,8 +16,10 @@ const defaultValues = {
 };
 
 export const CustomFormProvider = ({ children }) => {
-  const { register, control, watch, setValue, getValues, handleSubmit } = useForm({ defaultValues });
+  const { register, control, watch, setValue, getValues, handleSubmit, formState } = useForm({ defaultValues });
+  const { isDirty, dirtyFields, touchedFields } = formState;
 
+  // console.log(isDirty, touchedFields);
   const {
     fields,
     remove: removeQuestion,
