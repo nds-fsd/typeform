@@ -3,7 +3,7 @@ import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ index }) => {
-  const { activeQuestion, watch, setValue, getValues } = useCustomFormProvider();
+  const { activeQuestion, watch, setValue } = useCustomFormProvider();
 
   const choices = watch(`questions.${activeQuestion}.choices`);
 
@@ -11,7 +11,7 @@ const QuestionChoices = ({ index }) => {
 
   useEffect(() => {
     if (!choices) {
-      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }]);
+      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
     }
   }, [choices]);
 
@@ -58,7 +58,7 @@ const QuestionChoices = ({ index }) => {
               }}
             />
           </div>
-          {index > 0 && (
+          {index > 1 && (
             <button
               type='button'
               className='btn btn-square btn-sm absolute right-[-40px] top-[1px]'
@@ -72,6 +72,8 @@ const QuestionChoices = ({ index }) => {
       <button type='button' className='btn btn-primary btn-sm' onClick={addChoice}>
         Add Choice
       </button>
+      {`questions.${activeQuestion}.choices`.length < 2 && <p>hey! this type of question needs at least two options</p>}
+
     </>
   );
 };

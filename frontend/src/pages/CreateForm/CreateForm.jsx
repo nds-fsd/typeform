@@ -13,11 +13,26 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues } = useCustomFormProvider();
   const currentForm = forms?.find((form) => form._id === id);
+
+  const questionsFromGetValues = getValues('questions');
 
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
+  console.log(questionsFromGetValues)
+  const fillEmptyChoices = () => {
+    // const questions = getValues('questions');
+    questionsFromGetValues.map((question, qIndex) => {
+      question.choices.map((choice, cIndex) => {
+        if (!choice.label) {
+          console.log('no labels');
+
+          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `choice ${cIndex + 1}`);
+        }
+      });
+    });
+  };
 
   useEffect(() => {
     if (isEditMode) {
@@ -33,6 +48,7 @@ export const CreateForm = withCustomFormProvider(() => {
   }, [isEditMode, currentForm]);
 
   const onSubmit = (data) => {
+    fillEmptyChoices();
     if (isEditMode) {
       api()
         .patch(`/form/${id}`, data)
