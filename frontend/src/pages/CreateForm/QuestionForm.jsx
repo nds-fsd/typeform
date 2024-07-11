@@ -41,10 +41,6 @@ const QuestionForm = () => {
                     value={watch(`questions.${activeQuestion}.description`)}
                     {...register(`questions.${activeQuestion}.description`)}
                 />
-
-                {dirtyFields?.questions?.[activeQuestion]?.text && <p>Text field is dirty.</p>}
-                {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
-
                 {type === 'TextQuestion' && (
                     <div className='mt-2 p-2 pb-0 text-md w-full text-gray-900 border-b border-gray-900 font-space-mono'>your answer goes here</div>
                 )}
