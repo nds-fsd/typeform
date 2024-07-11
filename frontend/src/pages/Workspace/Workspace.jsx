@@ -7,6 +7,7 @@ const Workspace = () => {
   const navigate = useNavigate();
 
   const { forms } = useForms();
+  console.log(forms)
   const handleCreate = () => {
     navigate('/createform');
   };

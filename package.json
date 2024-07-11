@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "backend",
-    "frontend"
+    "frontend",
+    "emails"
   ],
   "scripts": {
     "start:frontend": "dotenv -- turbo run dev --scope='frontend'",
@@ -20,10 +21,11 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "prettier": "^3.2.5",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "handlebars": "^4.7.8",
     "jsonwebtoken": "^9.0.2",
+    "prettier": "^3.2.5",
     "react-hook-form": "^7.51.4",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.23.0",

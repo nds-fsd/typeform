@@ -1,3 +1,4 @@
+const { sendWelcomeEmail } = require('../service/email.service.js');
 const User = require('../schemas/user.schema');
 
 const signUp = async (req, res) => {
@@ -25,6 +26,10 @@ const signUp = async (req, res) => {
 
     const token = newUser.generateJWT();
     // el metodo "generateJWT" esta definido en 'user.schema.js'
+
+    // acá va la función sabre mail de bienvenida
+
+    await sendWelcomeEmail(email, name)
 
     return res.status(201).json({
       token,
