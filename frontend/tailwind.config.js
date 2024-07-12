@@ -27,16 +27,6 @@ module.exports = {
         // 'custom-gradient': 'linear-gradient(45deg, rgba(210,230,200,1) 0%, rgba(230,228,200,1) 100%)',
         'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgba(0,212,255,1) 100%)',
         // 'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 20%, rgba(151,211,252,1) 50%, rgba(0,212,255,1)  100%)',
-        'grainy': 'url(./assets/grainy-gradient.svg)',
-        // backgroundSize: {
-        //   'grainy-size': '200px 200px',
-        // },
-        // backgroundRepeat: {
-        //   'grainy-repeat': 'repeat',
-        // },
-        // backgroundPosition: {
-        //   'grainy-center': 'center',
-        // },
       },
       colors: {
         azure: '#F0FFFF',

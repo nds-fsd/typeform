@@ -19,13 +19,8 @@ import ProfileIcon from '../../components/Profile/Profile.jsx';
 const UserAccount = () => {
     const { userId, userEmail } = useUserProvider();
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     console.log(getUserSession().email)
-
-    // }, [])
     return (
-        <div className='h-screen bg-grainy'>
+        <div className='h-screen bg-custom-gradient'>
             <UserNavbar />
             <h2>{userEmail}</h2>
             <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />

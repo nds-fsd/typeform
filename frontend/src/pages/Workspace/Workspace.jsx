@@ -24,7 +24,7 @@ const Workspace = () => {
   }, [])
 
   return (
-    <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-grainy bg-cover min-h-screen">
+    <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-custom-gradient bg-cover min-h-screen">
       < UserNavbar showUserIcon={true} />
       <div className='sm:flex md:flex-col  bg-neutral-100/25 m-0 rounded-2xl gap-8 h-max p-8'>
         <SmallButton text='create new form' onClick={() => handleCreate()} />
