@@ -14,11 +14,14 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD,
   },
 });
+
 const readHBsTemplate = (templateName) => {
 const templatePath = path.join(__dirname, `../email-templates/${templateName}.hbs`);
 const templateString = fs.readFileSync(templatePath, "utf-8" );
 return handlebars.compile(templateString);
 }
+
+
 
 const sendWelcomeEmail = async (email, name) => {
     const welcomeTemplate = readHBsTemplate("welcome");
@@ -43,3 +46,4 @@ const sendEmail = async (email, subject, template) => {
 module.exports = {
     sendWelcomeEmail
 }
+
