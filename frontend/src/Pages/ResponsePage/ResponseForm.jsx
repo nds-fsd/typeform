@@ -81,6 +81,8 @@ const ResponseForm = () => {
 
   if (!formData) return <div>Loading...</div>;
 
+  const isLastQuestion = fields.length - 1;
+
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-custom-gradient'>
       <h2 className='text-center font-rubik font-extrabold text-3xl my-5'>{formData.title}</h2>
@@ -91,9 +93,11 @@ const ResponseForm = () => {
               <RenderQuestion question={fields[currentQuestion]} index={currentQuestion} register={register} />
             )}
           </div>
-          <div className='absolute bottom-5 right-5'>
-            <MediumButton onClick={onSubmit} text={'Submit'} />
-          </div>
+          {currentQuestion === isLastQuestion && (
+            <div className='absolute bottom-5 right-5'>
+              <MediumButton onClick={onSubmit} text={'Submit'} />
+            </div>
+          )}
         </form>
       </div>
       <div className='absolute left-5 right-5 top-1/2 flex transform -translate-y-1/2 justify-between'>

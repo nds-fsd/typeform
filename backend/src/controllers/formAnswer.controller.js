@@ -30,6 +30,9 @@ const getAnswers = async (req, res) => {
     const formSubmission = await FormSubmission.find({ form });
     const formData = await Form.findById(form);
 
+    if (!formSubmission || !formData) {
+      return res.status(404).json({ error: 'Form not found' });
+    }
     const response = formSubmission.map((submission) => ({
       form: {
         _id: formData._id,
@@ -63,6 +66,4 @@ module.exports = {
   getAnswers,
 };
 
-// if (!formSubmission || !formData) {
-//   return res.status(404).json({ error: 'Form not found' });
-// }
+
