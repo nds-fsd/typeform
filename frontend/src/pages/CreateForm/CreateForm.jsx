@@ -65,10 +65,8 @@ export const CreateForm = withCustomFormProvider(() => {
   };
   return (
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
-    <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
-
-
-      <UserNavbar />
+    <div className='flex h-screen min-w-screen overflow-hidden bg-custom-gradient'>
+      <UserNavbar showUserIcon={true} />
       {!isLoading && (
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex h-full p-2'>

@@ -6,9 +6,7 @@ import { emptyWorkspaceMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { getUserSession } from '../../utils/localStorage.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
-import UserGreeting from '../../components/UserNavbar/UserGreeting.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
-import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 
 
@@ -27,7 +25,7 @@ const Workspace = () => {
 
   return (
     <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-grainy bg-cover min-h-screen">
-      < UserNavbar />
+      < UserNavbar showUserIcon={true} />
       <div className='flex bg-neutral-100/25 m-0 rounded-2xl gap-8 h-max p-8'>
         <SmallButton text='create new form' onClick={() => handleCreate()} />
         <div className='grid grid-cols-4 grid-flow-row gap-8'>

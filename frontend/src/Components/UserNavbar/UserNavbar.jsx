@@ -1,16 +1,29 @@
 import UserGreeting from './UserGreeting'
 import UsernamesWorkspace from './UsernamesWorkspace'
 import MyWorkspaceLink from './MyWorkspaceLink'
+import ProfileIcon from '../Profile/Profile'
 
-const UserNavbar = () => {
+const UserNavbar = ({ showUserIcon }) => {
     return (
-        <div className="flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800">
-            <UsernamesWorkspace />
-            {/* <MyWorkspaceLink /> */}
-            {/* <UserGreeting /> */}
-        </div>
+        <>
+            {showUserIcon ? (
+                <div className="flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800">
+                    <UsernamesWorkspace />
+                    {/* <MyWorkspaceLink /> */}
+                    {/* <UserGreeting /> */}
+                    <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+
+                </div>
+            ) : (
+                <div className="flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800">
+                    <UsernamesWorkspace />
+                    {/* <MyWorkspaceLink /> */}
+                    {/* <UserGreeting /> */}
+                </div>
+            )}
+        </>
     )
-}
+};
 
 export default UserNavbar
 
