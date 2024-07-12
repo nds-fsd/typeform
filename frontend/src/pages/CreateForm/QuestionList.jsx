@@ -38,9 +38,8 @@ export const QuestionList = () => {
 
   return (
     <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
-      <button type='button' onClick={() => dirtyFields.questions && alert('a')}>simulate click on my workspace without saving</button>
       <Input type='text' placeholder='Form name' />
-      <aside className='flex flex-col shrink gap-2 items-center pt-2'>
+      <aside className='flex flex-col items-center pt-2'>
         <ul className='w-full flex flex-col gap-1'>
           {questionsFromGetValues.map((question, index) => (
             <QuestionCard

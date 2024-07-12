@@ -65,17 +65,20 @@ export const CreateForm = withCustomFormProvider(() => {
   };
   return (
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
-    <div className='flex h-screen min-w-screen overflow-hidden bg-custom-gradient'>
-      <UserNavbar showUserIcon={true} />
-      {!isLoading && (
-        <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
-          <div className='flex h-full p-2'>
-            <QuestionList />
-            <QuestionForm />
-            <QuestionOptions />
-          </div>
-        </form>
-      )}
+    <div className="flex flex-col" >
+
+      <div className='flexm-0 min-h-screen w-screen overflow-auto bg-custom-gradient'>
+        <UserNavbar showUserIcon={true} />
+        {!isLoading && (
+          <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex shrink h-full p-8'>
+              <QuestionList />
+              <QuestionForm />
+              <QuestionOptions />
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 });

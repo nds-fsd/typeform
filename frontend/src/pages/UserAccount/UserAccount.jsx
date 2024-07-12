@@ -13,6 +13,7 @@ import { useUserProvider } from '../../context/UserContext.jsx';
 import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import DeleteUser from './DeleteUser.jsx';
+import ProfileIcon from '../../components/Profile/Profile.jsx';
 // importar user (name, email e picture) de un UserContext.
 
 const UserAccount = () => {
@@ -24,14 +25,14 @@ const UserAccount = () => {
 
     // }, [])
     return (
-        <div>
+        <div className='h-screen bg-grainy'>
             <UserNavbar />
             <h2>{userEmail}</h2>
             <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
             <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
             <DeleteUser />
             <div>
-                {/* <ProfileIcon /> */}
+                <ProfileIcon />
             </div>
         </div>
     );
