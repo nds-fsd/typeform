@@ -19,7 +19,6 @@ export const CustomFormProvider = ({ children }) => {
   const { register, control, watch, setValue, getValues, handleSubmit, formState } = useForm({ defaultValues });
   const { isDirty, dirtyFields, touchedFields } = formState;
 
-  // console.log(isDirty, touchedFields);
   const {
     fields,
     remove: removeQuestion,
@@ -29,13 +28,6 @@ export const CustomFormProvider = ({ children }) => {
     control,
     name: 'questions',
   });
-  // const watchFieldArray = watch('questions');
-  // const questions = fields.map((field, index) => {
-  //   return {
-  //     ...field,
-  //     ...watchFieldArray[index],
-  //   };
-  // });
 
   const activeQuestion = watch('active');
   const questions = watch('questions');
@@ -53,6 +45,7 @@ export const CustomFormProvider = ({ children }) => {
     },
     [activeQuestion],
   );
+
   const fillEmptyChoices = () => {
     questions?.map((question, qIndex) => {
       question.choices?.map((choice, cIndex) => {
@@ -70,7 +63,6 @@ export const CustomFormProvider = ({ children }) => {
     setActiveQuestion,
     register,
     control,
-    // questions,
     addQuestion,
     removeQuestion: handleRemoveQuestion,
     swapQuestion,
@@ -80,7 +72,6 @@ export const CustomFormProvider = ({ children }) => {
     handleSubmit,
     fields,
     fillEmptyChoices
-    // watchFieldArray
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
@@ -93,9 +84,3 @@ export const withCustomFormProvider = (Component) => (props) => (
     <Component {...props} />
   </CustomFormProvider>
 );
-
-// const { data: formData } = useQuery(
-//     ['form', id],
-//     () => api().get(`/form/${id}`).then(res => res.data),
-//     { enabled: isEditMode }
-// );
