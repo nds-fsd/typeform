@@ -44,7 +44,10 @@ module.exports = {
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
         'space-mono': ['Space Mono', 'monospace'],
-        'abril-fatface': ['Abril Fatface', 'serif']
+        'abril-fatface': ['Abril Fatface', 'serif'],
+        // sobrescribe default font usada para todos los textos (ya que el default es sans),
+        // objetivo es no tener que especificarla en className todos los componentes
+        // 'sans': ['Space Mono']
       },
       boxShadow: {
         'glow': '0 0 10px 5px rgba(255, 255, 255, 0.6)',

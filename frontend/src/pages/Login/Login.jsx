@@ -50,7 +50,7 @@ const Login = () => {
             {error.email &&
               <p
                 id="email_error"
-                className="text-red-600 text-sm font-space-mono">
+                className="text-red-600 text-sm ">
                 {error.email}
               </p>
             }
@@ -68,13 +68,13 @@ const Login = () => {
             {error.password &&
               <p
                 id="password_error"
-                className="text-red-600 text-sm font-space-mono">
+                className="text-red-600 text-sm ">
                 {error.password}
               </p>
             }
           </div>
           <LargeButton submit={handleSubmit(onSubmit)} text={"LOGIN"} />
-          <a className="flex flex-row text-blue-600 hover:text-blue-800 text-sm font-space-mono cursor-pointer"
+          <a className="flex flex-row text-blue-600 hover:text-blue-800 text-sm  cursor-pointer"
             onClick={() => { navigate('/signup') }}>Not registered? Sign Up!</a>
         </form>
       </div>
