@@ -3,21 +3,25 @@ import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ index }) => {
-  const { activeQuestion, watch, setValue, getValues } = useCustomFormProvider();
+  const { activeQuestion, watch, setValue, getValues, register } = useCustomFormProvider();
 
   const choices = watch(`questions.${activeQuestion}.choices`);
-
   const questionType = watch(`questions.${activeQuestion}.type`);
 
+  const isSingleChoice = questionType === 'SingleChoiceQuestion';
+  const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
+
   useEffect(() => {
-    if (!choices) {
+    console.log('mudou tipo', questionType);
+
+    if (!choices || choices.length === 0) {
       setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
     }
-  }, [choices, questionType]);
+  }, [activeQuestion, questionType, choices]);
 
   const addChoice = () => {
-    const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
-    setValue(`questions.${activeQuestion}.choices`, [...currentQuestions, { label: '' }]);
+    const currentChoices = getValues(`questions.${activeQuestion}.choices`);
+    setValue(`questions.${activeQuestion}.choices`, [...currentChoices, { label: '' }]);
   };
 
   const removeChoice = (index) => {
@@ -26,9 +30,7 @@ const QuestionChoices = ({ index }) => {
     setValue(`questions.${activeQuestion}.choices`, newQuestions);
   };
 
-  const isSingleChoice = questionType === 'SingleChoiceQuestion';
 
-  const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
 
   return (
     <>
@@ -54,6 +56,7 @@ const QuestionChoices = ({ index }) => {
               className='outline-none bg-transparent pl-2'
               // placeholder={`choice ${index + 1}`}
               value={choice.label}
+              {...register(`questions.${activeQuestion}.choices.${index}.label`)}
               onChange={(e) => {
                 setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
               }}

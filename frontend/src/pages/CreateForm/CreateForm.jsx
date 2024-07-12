@@ -53,7 +53,9 @@ export const CreateForm = withCustomFormProvider(() => {
       api()
         .patch(`/form/${id}`, data)
         .then((response) => {
-          queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
+          queryClient.invalidateQueries('forms');
+          // queryClient.invalidateQueries('forms').then(() => window.location.href = '/workspace');
+          // queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
         });
     } else {
       api()
@@ -67,7 +69,7 @@ export const CreateForm = withCustomFormProvider(() => {
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
     <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
 
-      <UserNavbar />
+      <UserNavbar showUserIcon={true} />
       {!isLoading && (
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex h-full p-2'>

@@ -17,7 +17,6 @@ const defaultValues = {
 
 export const CustomFormProvider = ({ children }) => {
   const { register, control, watch, setValue, getValues, handleSubmit, formState } = useForm({ defaultValues });
-  const { isDirty, dirtyFields, touchedFields } = formState;
 
   const {
     fields,
@@ -50,7 +49,7 @@ export const CustomFormProvider = ({ children }) => {
     questions?.map((question, qIndex) => {
       question.choices?.map((choice, cIndex) => {
         if (choice.label === '') {
-          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `choice ${cIndex + 1}`);
+          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${cIndex + 1}`);
         }
       });
     });

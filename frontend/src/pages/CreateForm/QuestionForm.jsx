@@ -14,18 +14,6 @@ const QuestionForm = () => {
     const type = watch(`questions.${activeQuestion}.type`);
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
 
-    // console.log('Dirty Fields:', dirtyFields.questions?.length);
-    // const [isDirty, setIsDirty] = useState(false);
-
-    // useEffect(() => {
-    //     // Check if any field in the active question is dirty
-    //     if (dirtyFields?.questions?.[activeQuestion]) {
-    //         setIsDirty(true);
-    //     } else {
-    //         setIsDirty(false);
-    //     }
-    // }, [dirtyFields, activeQuestion]);
-
     return (
         <main className='flex flex-col gap-1 flex-1 items-center justify-center '>
             <div className='bg-white/20 p-10 rounded-3xl shadow-md min-h-[200px] w-2/3 flex flex-col justify-center items-center gap-2'>

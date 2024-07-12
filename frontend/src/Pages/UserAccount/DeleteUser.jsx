@@ -22,10 +22,6 @@ const DeleteUser = () => {
         } catch (error) {
             console.error('Error deleting user', error);
         }
-        // console.log(isDeleted)
-        // handleDeleteUser(userId);
-        // removeUserSession();
-        // navigate('/home')
     }
 
     return (
