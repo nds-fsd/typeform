@@ -25,7 +25,7 @@ const UserAccount = () => {
     // }, [])
     return (
         <div>
-            <UserNavbar />
+            <UserNavbar icon={false} />
             <h2>{userEmail}</h2>
             <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
             <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />

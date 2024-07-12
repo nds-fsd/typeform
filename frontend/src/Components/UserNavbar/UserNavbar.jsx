@@ -1,6 +1,7 @@
 import UserGreeting from './UserGreeting'
 import UsernamesWorkspace from './UsernamesWorkspace'
 import MyWorkspaceLink from './MyWorkspaceLink'
+import ProfileIcon from '../Profile/Profile'
 
 const UserNavbar = () => {
     return (
@@ -8,6 +9,7 @@ const UserNavbar = () => {
             <UsernamesWorkspace />
             {/* <MyWorkspaceLink /> */}
             {/* <UserGreeting /> */}
+            <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
         </div>
     )
 }
