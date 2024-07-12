@@ -1,9 +1,3 @@
-/* 
-1. profile picture
-2. edit profile picture button
-3. change password button
-4. delete account OK
-*/
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
@@ -25,7 +19,6 @@ const UserAccount = () => {
     // }, [])
     return (
         <div>
-            <UserNavbar />
             <h2>{userEmail}</h2>
             <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
             <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
