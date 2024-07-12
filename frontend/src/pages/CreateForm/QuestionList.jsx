@@ -31,6 +31,8 @@ export const QuestionList = () => {
 
   const handleAddQuestion = () => {
     addQuestion({ text: '', type: 'TextQuestion', description: '' });
+    const newIndex = questions.length; // O índice da nova pergunta
+    setActiveQuestion(newIndex);
   };
 
   return (
