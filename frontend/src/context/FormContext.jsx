@@ -38,6 +38,7 @@ export const CustomFormProvider = ({ children }) => {
   // });
 
   const activeQuestion = watch('active');
+  const questions = watch('questions');
 
   const setActiveQuestion = (index) => {
     setValue('active', index);
@@ -52,8 +53,19 @@ export const CustomFormProvider = ({ children }) => {
     },
     [activeQuestion],
   );
+  const fillEmptyChoices = () => {
+    questions?.map((question, qIndex) => {
+      question.choices?.map((choice, cIndex) => {
+        if (choice.label === '') {
+          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `choice ${cIndex + 1}`);
+        }
+      });
+    });
+    return getValues()
+  };
 
   const value = {
+    questions,
     activeQuestion,
     setActiveQuestion,
     register,
@@ -66,7 +78,8 @@ export const CustomFormProvider = ({ children }) => {
     getValues,
     watch,
     handleSubmit,
-    fields
+    fields,
+    fillEmptyChoices
     // watchFieldArray
   };
 

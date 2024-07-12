@@ -3,7 +3,7 @@ import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ index }) => {
-  const { activeQuestion, watch, setValue } = useCustomFormProvider();
+  const { activeQuestion, watch, setValue, getValues } = useCustomFormProvider();
 
   const choices = watch(`questions.${activeQuestion}.choices`);
 
@@ -13,7 +13,7 @@ const QuestionChoices = ({ index }) => {
     if (!choices) {
       setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
     }
-  }, [choices]);
+  }, [choices, questionType]);
 
   const addChoice = () => {
     const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
@@ -33,7 +33,7 @@ const QuestionChoices = ({ index }) => {
   return (
     <>
       {choices?.map((choice, index) => (
-        <div className='relative' key={choice._id}>
+        <div className='relative' key={choice.id}>
           <div
             key={index}
             className={classNames(
@@ -52,6 +52,7 @@ const QuestionChoices = ({ index }) => {
             <input
               type='text'
               className='outline-none bg-transparent pl-2'
+              // placeholder={`choice ${index + 1}`}
               value={choice.label}
               onChange={(e) => {
                 setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
@@ -72,8 +73,6 @@ const QuestionChoices = ({ index }) => {
       <button type='button' className='btn btn-primary btn-sm' onClick={addChoice}>
         Add Choice
       </button>
-      {`questions.${activeQuestion}.choices`.length < 2 && <p>hey! this type of question needs at least two options</p>}
-
     </>
   );
 };

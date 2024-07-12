@@ -13,26 +13,15 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch, fillEmptyChoices } = useCustomFormProvider();
   const currentForm = forms?.find((form) => form._id === id);
 
-  const questionsFromGetValues = getValues('questions');
+  const questions = watch('questions');
+  const choices = watch(`questions.${activeQuestion}.choices`)
 
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
-  console.log(questionsFromGetValues)
-  const fillEmptyChoices = () => {
-    // const questions = getValues('questions');
-    questionsFromGetValues.map((question, qIndex) => {
-      question.choices.map((choice, cIndex) => {
-        if (!choice.label) {
-          console.log('no labels');
-
-          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `choice ${cIndex + 1}`);
-        }
-      });
-    });
-  };
+  console.log(questions, 'questionss');
 
   useEffect(() => {
     if (isEditMode) {
@@ -47,8 +36,19 @@ export const CreateForm = withCustomFormProvider(() => {
     }
   }, [isEditMode, currentForm]);
 
+  // const fillEmptyChoices = () => {
+  //   questions?.map((question, qIndex) => {
+  //     question.choices?.map((choice, cIndex) => {
+  //       if (choice.label === '') {
+  //         setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${cIndex + 1}`);
+  //       }
+  //     });
+  //   });
+  //   return getValues()
+  // };
+
   const onSubmit = (data) => {
-    fillEmptyChoices();
+    data = fillEmptyChoices();
     if (isEditMode) {
       api()
         .patch(`/form/${id}`, data)
@@ -66,7 +66,6 @@ export const CreateForm = withCustomFormProvider(() => {
   return (
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
     <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
-
 
       <UserNavbar />
       {!isLoading && (

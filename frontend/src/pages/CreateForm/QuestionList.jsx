@@ -8,13 +8,10 @@ import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 
 export const QuestionList = () => {
-  const { swapQuestion, addQuestion, register, getValues, control } = useCustomFormProvider();
+  const { swapQuestion, addQuestion, setActiveQuestion, register, getValues, control, questions } = useCustomFormProvider();
   const { dirtyFields, isDirty } = useFormState({
     control
   });
-  console.log(isDirty);
-
-  const questionsFromGetValues = getValues('questions');
 
   const [draggedIndex, setDraggedIndex] = useState(null);
   const handleDragStart = (e, index) => {
@@ -45,7 +42,7 @@ export const QuestionList = () => {
       </header>
       <aside className='flex flex-col gap-2 items-center pt-2'>
         <ul className='w-full flex flex-col gap-1'>
-          {questionsFromGetValues.map((question, index) => (
+          {questions.map((question, index) => (
             <QuestionCard
               question={question}
               key={question.id}

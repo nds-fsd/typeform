@@ -31,7 +31,7 @@ const QuestionForm = () => {
             <div className='bg-white/20 p-10 rounded-3xl shadow-md min-h-[200px] w-2/3 flex flex-col justify-center items-center gap-2'>
                 <TextareaAutoSize
                     className='w-full text-xl outline-none resize-none rounded-md p-2 font-space-mono bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
-                    placeholder='Your question here'
+                    placeholder='your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     {...register(`questions.${activeQuestion}.text`)}
                 />
