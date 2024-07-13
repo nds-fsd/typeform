@@ -5,7 +5,7 @@ import { useFormState } from 'react-hook-form';
 import TextareaAutoSize from 'react-textarea-autosize';
 import YesNoChoices from './YesNoChoices.jsx';
 
-const QuestionForm = ({ changeOrBlurAutoSave }) => {
+const QuestionForm = ({ onBlurAutoSave }) => {
     const { activeQuestion, watch, setValue, control, register } = useCustomFormProvider();
     const { dirtyFields, touchedFields } = useFormState({
         control
@@ -22,14 +22,14 @@ const QuestionForm = ({ changeOrBlurAutoSave }) => {
                     placeholder='your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     {...register(`questions.${activeQuestion}.text`)}
-                    onBlur={changeOrBlurAutoSave}
+                    onBlur={onBlurAutoSave}
                 />
                 <TextareaAutoSize
                     className='w-full text-lg outline-none resize-none rounded-md p-2 font-space-mono bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
                     placeholder='description (optional)'
                     value={watch(`questions.${activeQuestion}.description`)}
                     {...register(`questions.${activeQuestion}.description`)}
-                    onBlur={changeOrBlurAutoSave}
+                    onBlur={onBlurAutoSave}
                 />
 
                 {dirtyFields?.questions?.[activeQuestion]?.text && <p>Text field is dirty.</p>}
