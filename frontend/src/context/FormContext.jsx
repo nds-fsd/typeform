@@ -45,17 +45,6 @@ export const CustomFormProvider = ({ children }) => {
     [activeQuestion],
   );
 
-  const fillEmptyChoices = () => {
-    questions?.map((question, qIndex) => {
-      question.choices?.map((choice, cIndex) => {
-        if (choice.label === '') {
-          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${cIndex + 1}`);
-        }
-      });
-    });
-    return getValues()
-  };
-
   const value = {
     questions,
     activeQuestion,
@@ -69,8 +58,7 @@ export const CustomFormProvider = ({ children }) => {
     getValues,
     watch,
     handleSubmit,
-    fields,
-    fillEmptyChoices
+    fields
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

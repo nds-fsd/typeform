@@ -6,12 +6,15 @@ import Input from '../../components/Form/Input.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
+import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 export const QuestionList = () => {
   const { swapQuestion, addQuestion, setActiveQuestion, register, getValues, control, questions } = useCustomFormProvider();
   const { dirtyFields, isDirty } = useFormState({
     control
   });
+  let [isOpen, setIsOpen] = useState(false);
+
 
   const [draggedIndex, setDraggedIndex] = useState(null);
   const handleDragStart = (e, index) => {
@@ -25,11 +28,14 @@ export const QuestionList = () => {
     }
     setDraggedIndex(null);
   };
+
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
   const handleAddQuestion = () => {
+    setIsOpen(true);
+    console.log(isOpen)
     addQuestion({ text: '', type: 'TextQuestion', description: '' });
     const newIndex = questions.length; // O índice da nova pergunta
     setActiveQuestion(newIndex);

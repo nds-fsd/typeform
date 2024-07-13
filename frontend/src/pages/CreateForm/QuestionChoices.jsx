@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ index }) => {
   const { activeQuestion, watch, setValue, getValues, register } = useCustomFormProvider();
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const choices = watch(`questions.${activeQuestion}.choices`);
   const questionType = watch(`questions.${activeQuestion}.type`);
@@ -53,19 +54,21 @@ const QuestionChoices = ({ index }) => {
             </span>
             <input
               type='text'
-              className='outline-none bg-transparent pl-2'
-              // placeholder={`choice ${index + 1}`}
+              className='outline-none bg-transparent pl-2 z-1'
+              placeholder={`Choice ${toLetterAbbr(index + 1)}`}
               value={choice.label}
-              {...register(`questions.${activeQuestion}.choices.${index}.label`)}
               onChange={(e) => {
                 setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
               }}
+              onFocus={() => setActiveIndex(index)}
+              onBlur={() => setActiveIndex(null)}
             />
           </div>
-          {index > 1 && (
+          {choices.length > 2 && activeIndex === index && (
             <button
               type='button'
-              className='btn btn-square btn-sm absolute right-[-40px] top-[1px]'
+              className='z-5 btn btn-square btn-sm absolute right-[-40px] top-[1px]'
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => removeChoice(index)}
             >
               X

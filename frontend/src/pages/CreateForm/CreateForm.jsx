@@ -8,12 +8,14 @@ import QuestionOptions from './QuestionOptions.jsx';
 import { useForms } from '../../hooks/useForms.js';
 import { useQueryClient } from 'react-query';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
+import { useBlocker } from 'react-router-dom';
+
 
 export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, fillEmptyChoices } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch } = useCustomFormProvider();
   const currentForm = forms?.find((form) => form._id === id);
 
   const questions = watch('questions');
@@ -36,19 +38,9 @@ export const CreateForm = withCustomFormProvider(() => {
     }
   }, [isEditMode, currentForm]);
 
-  // const fillEmptyChoices = () => {
-  //   questions?.map((question, qIndex) => {
-  //     question.choices?.map((choice, cIndex) => {
-  //       if (choice.label === '') {
-  //         setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${cIndex + 1}`);
-  //       }
-  //     });
-  //   });
-  //   return getValues()
-  // };
-
   const onSubmit = (data) => {
-    data = fillEmptyChoices();
+    console.log('escape worked')
+    // data = fillEmptyChoices();
     if (isEditMode) {
       api()
         .patch(`/form/${id}`, data)
@@ -71,11 +63,12 @@ export const CreateForm = withCustomFormProvider(() => {
 
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
+        // <form className='h-full' onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)}>
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex h-full p-2'>
             <QuestionList />
-            <QuestionForm />
-            <QuestionOptions />
+            <QuestionForm onBlur={handleSubmit(onSubmit)} />
+            <QuestionOptions onChange={handleSubmit(onSubmit)} />
           </div>
         </form>
       )}
