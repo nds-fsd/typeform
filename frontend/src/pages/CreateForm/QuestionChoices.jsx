@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
-const QuestionChoices = ({ index }) => {
+const QuestionChoices = ({ autoSave }) => {
   const { activeQuestion, watch, setValue, getValues, register } = useCustomFormProvider();
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -13,8 +13,6 @@ const QuestionChoices = ({ index }) => {
   const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
 
   useEffect(() => {
-    console.log('mudou tipo', questionType);
-
     if (!choices || choices.length === 0) {
       setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
     }
@@ -29,9 +27,8 @@ const QuestionChoices = ({ index }) => {
     const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
     const newQuestions = currentQuestions.filter((_, i) => i !== index);
     setValue(`questions.${activeQuestion}.choices`, newQuestions);
+    autoSave()
   };
-
-
 
   return (
     <>

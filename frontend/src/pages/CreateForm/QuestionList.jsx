@@ -8,7 +8,7 @@ import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
-export const QuestionList = () => {
+export const QuestionList = ({ autoSave }) => {
   const { swapQuestion, addQuestion, setActiveQuestion, register, getValues, control, questions } = useCustomFormProvider();
   const { dirtyFields, isDirty } = useFormState({
     control
@@ -45,7 +45,7 @@ export const QuestionList = () => {
     <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
       <header className='flex flex-col gap-2'>
         <button type='button' onClick={() => dirtyFields.questions && alert('a')}>simulate click on my workspace without saving</button>
-        <Input type='text' placeholder='Form name' {...register('title')} />
+        <Input type='text' placeholder='Form name' {...register('title')} onBlur={autoSave} />
         <h2 className='text-2xl'>Questions</h2>
       </header>
       <aside className='flex flex-col gap-2 items-center pt-2'>

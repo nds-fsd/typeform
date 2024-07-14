@@ -5,20 +5,19 @@ import Select from '../../components/Form/Select.jsx';
 import MediumButton from '../../components/Buttons/MediumButton.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 
-const QuestionOptions = () => {
+const QuestionOptions = ({ autoSave }) => {
   const { setValue, activeQuestion, watch } = useCustomFormProvider();
 
   const currentType = watch(`questions.${activeQuestion}.type`);
-
   const type = useMemo(() => questionTypes.find((questionType) => questionType.value === currentType), [currentType]);
 
   const options = questionTypes.map((questionType) => ({
     value: questionType.value,
     label: (
-      <>
+      <div key={questionType.value}>
         {questionType.icon}
         {questionType.label}
-      </>
+      </div>
     ),
   }));
 
@@ -28,7 +27,10 @@ const QuestionOptions = () => {
         <Select
           label='Question Type'
           value={options.find((option) => option.value === currentType)}
-          onChange={(value) => setValue(`questions.${activeQuestion}.type`, value)}
+          onChange={(value) => {
+            setValue(`questions.${activeQuestion}.type`, value);
+            autoSave()
+          }}
           options={options}
         />
       </div>

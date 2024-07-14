@@ -5,7 +5,7 @@ import { useFormState } from 'react-hook-form';
 import TextareaAutoSize from 'react-textarea-autosize';
 import YesNoChoices from './YesNoChoices.jsx';
 
-const QuestionForm = ({ onBlurAutoSave }) => {
+const QuestionForm = ({ autoSave }) => {
     const { activeQuestion, watch, setValue, control, register } = useCustomFormProvider();
     const { dirtyFields, touchedFields } = useFormState({
         control
@@ -22,26 +22,22 @@ const QuestionForm = ({ onBlurAutoSave }) => {
                     placeholder='your question here'
                     value={watch(`questions.${activeQuestion}.text`)}
                     {...register(`questions.${activeQuestion}.text`)}
-                    onBlur={onBlurAutoSave}
                 />
                 <TextareaAutoSize
                     className='w-full text-lg outline-none resize-none rounded-md p-2 font-space-mono bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
                     placeholder='description (optional)'
                     value={watch(`questions.${activeQuestion}.description`)}
                     {...register(`questions.${activeQuestion}.description`)}
-                    onBlur={onBlurAutoSave}
+                    onBlur={autoSave}
                 />
 
-                {dirtyFields?.questions?.[activeQuestion]?.text && <p>Text field is dirty.</p>}
-                {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
+                {/* {dirtyFields?.questions?.[activeQuestion]?.text && <p>Text field is dirty.</p>}
+                {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>} */}
 
                 {type === 'TextQuestion' && (
-                    <div className='mt-2 p-2 pb-0 text-md w-full text-gray-900 border-b border-gray-900 font-space-mono'>your answer goes here</div>
+                    <div className='mt-2 p-2 pb-0 text-md w-full text-gray-900 border-b border-gray-900 font-space-mono'>answer goes here</div>
                 )}
-                {hasChoices && <QuestionChoices />}
-                {/* {mensaje abajo es temporaria hasta que el aviso funcione} */}
-                {/* {hasChoices && <p>hey! this type of question needs at least two options</p>} */}
-
+                {hasChoices && <QuestionChoices autoSave={autoSave} />}
                 {type === 'YesNoQuestion' && <YesNoChoices />}
             </div>
         </main>

@@ -23,7 +23,7 @@ export const CreateForm = withCustomFormProvider(() => {
 
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
-  console.log(questions, 'questionss');
+  // console.log(questions, 'questions');
 
   useEffect(() => {
     if (isEditMode) {
@@ -39,9 +39,10 @@ export const CreateForm = withCustomFormProvider(() => {
   }, [isEditMode, currentForm]);
 
   const onSubmit = (data) => {
-    console.log('escape worked')
+    console.log('worked')
     // data = fillEmptyChoices();
     if (isEditMode) {
+      console.log(data)
       api()
         .patch(`/form/${id}`, data)
         .then((response) => {
@@ -53,7 +54,8 @@ export const CreateForm = withCustomFormProvider(() => {
       api()
         .post('/form', data)
         .then((response) => {
-          queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
+          queryClient.invalidateQueries('forms');
+          // queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
         });
     }
   };
@@ -66,9 +68,9 @@ export const CreateForm = withCustomFormProvider(() => {
         // <form className='h-full' onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)}>
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex h-full p-2'>
-            <QuestionList />
-            <QuestionForm onBlur={handleSubmit(onSubmit)} />
-            <QuestionOptions onChange={handleSubmit(onSubmit)} />
+            <QuestionList autoSave={handleSubmit(onSubmit)} />
+            <QuestionForm autoSave={handleSubmit(onSubmit)} />
+            <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
         </form>
       )}
