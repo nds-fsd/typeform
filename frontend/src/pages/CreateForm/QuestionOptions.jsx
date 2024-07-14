@@ -5,7 +5,7 @@ import Select from '../../components/Form/Select.jsx';
 import MediumButton from '../../components/Buttons/MediumButton.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 
-const QuestionOptions = ({ autoSave }) => {
+const QuestionOptions = () => {
   const { setValue, activeQuestion, watch } = useCustomFormProvider();
 
   const currentType = watch(`questions.${activeQuestion}.type`);
@@ -14,7 +14,7 @@ const QuestionOptions = ({ autoSave }) => {
   const options = questionTypes.map((questionType) => ({
     value: questionType.value,
     label: (
-      <div key={questionType.value}>
+      <div>
         {questionType.icon}
         {questionType.label}
       </div>
@@ -22,14 +22,13 @@ const QuestionOptions = ({ autoSave }) => {
   }));
 
   return (
-    <div className='bg-white/20 p-10 rounded-3xl w-1/5 shadow-md flex flex-col items-center justify-between'>
+    <div className='bg-white p-10 rounded-3xl w-full h-2/5 shadow-md flex flex-col items-center justify-between'>
       <div className='w-full max-w-xs'>
         <Select
           label='Question Type'
           value={options.find((option) => option.value === currentType)}
           onChange={(value) => {
             setValue(`questions.${activeQuestion}.type`, value);
-            autoSave()
           }}
           options={options}
         />
