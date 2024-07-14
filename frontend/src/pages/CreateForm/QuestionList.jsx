@@ -43,8 +43,8 @@ export const QuestionList = ({ autoSave }) => {
 
   return (
     <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
+
       <header className='flex flex-col gap-2'>
-        <button type='button' onClick={() => dirtyFields.questions && alert('a')}>simulate click on my workspace without saving</button>
         <Input type='text' placeholder='Form name' {...register('title')} onBlur={autoSave} />
         <h2 className='text-2xl'>Questions</h2>
       </header>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../../utils/api.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QuestionList } from './QuestionList.jsx';
@@ -8,15 +8,27 @@ import QuestionOptions from './QuestionOptions.jsx';
 import { useForms } from '../../hooks/useForms.js';
 import { useQueryClient } from 'react-query';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
-import { useBlocker } from 'react-router-dom';
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import { useFormState } from 'react-hook-form';
+import ConfirmationModal from '../../components/Modal/ConfirmationModal.jsx';
+import SmallButton from '../../components/Buttons/SmallButton.jsx';
 
 
 export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch, control } = useCustomFormProvider();
+  const { dirtyFields, touchedFields } = useFormState({
+    control
+  });
+  const [openModal, setOpenModal] = useState(false);
+
+
+  console.log()
+
   const currentForm = forms?.find((form) => form._id === id);
+
 
   const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`)
@@ -59,9 +71,21 @@ export const CreateForm = withCustomFormProvider(() => {
         });
     }
   };
+
+  const handleDeleteClick = () => {
+    if (dirtyFields?.questions) {
+      setOpenModal(true);
+    }
+  };
   return (
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
+
     <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
+      <SmallButton text='delete account' onClick={handleDeleteClick} />
+
+      {/* <SmallButton text='delete account' onClick={() => { dirtyFields.questions && setOpenModal(true) }} /> */}
+
+      {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
 
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
@@ -73,6 +97,18 @@ export const CreateForm = withCustomFormProvider(() => {
             <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
         </form>
+      )}
+
+      {openModal && (
+        <ConfirmationModal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          textOnClose='cancel'
+          textOnConfirm='yes'
+          description='Do you want to save your changes before leaving?'
+          // aqui debe salvar y redirect a cualquier ruta !== ruta actual
+          onConfirm={() => console.log('confirmed')}
+        />
       )}
     </div>
   );
