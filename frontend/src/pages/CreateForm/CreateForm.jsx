@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../utils/api.js';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useBlocker, useNavigate, useParams } from 'react-router-dom';
 import { QuestionList } from './QuestionList.jsx';
 import QuestionForm from './QuestionForm.jsx';
 import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
@@ -13,25 +13,26 @@ import { useFormState } from 'react-hook-form';
 import ConfirmationModal from '../../components/Modal/ConfirmationModal.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 
-
 export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
   const { handleSubmit, setValue, getValues, activeQuestion, watch, control } = useCustomFormProvider();
-  const { dirtyFields, touchedFields } = useFormState({
-    control
+  const { dirtyFields, touchedFields, isDirty } = useFormState({
+    control,
   });
   const [openModal, setOpenModal] = useState(false);
 
+  let blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => isDirty && currentLocation.pathname !== nextLocation.pathname,
+  );
 
-  console.log()
+  console.log(blocker);
 
   const currentForm = forms?.find((form) => form._id === id);
 
-
   const questions = watch('questions');
-  const choices = watch(`questions.${activeQuestion}.choices`)
+  const choices = watch(`questions.${activeQuestion}.choices`);
 
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
@@ -51,10 +52,9 @@ export const CreateForm = withCustomFormProvider(() => {
   }, [isEditMode, currentForm]);
 
   const onSubmit = (data) => {
-    console.log('worked')
     // data = fillEmptyChoices();
     if (isEditMode) {
-      console.log(data)
+      console.log(data);
       api()
         .patch(`/form/${id}`, data)
         .then((response) => {
@@ -99,17 +99,15 @@ export const CreateForm = withCustomFormProvider(() => {
         </form>
       )}
 
-      {openModal && (
-        <ConfirmationModal
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          textOnClose='cancel'
-          textOnConfirm='yes'
-          description='Do you want to save your changes before leaving?'
-          // aqui debe salvar y redirect a cualquier ruta !== ruta actual
-          onConfirm={() => console.log('confirmed')}
-        />
-      )}
+      <ConfirmationModal
+        open={blocker.state === 'blocked'}
+        onClose={() => blocker.reset()}
+        textOnClose='cancel'
+        textOnConfirm='yes'
+        description='Changes will be lost, do you wish to continue?'
+        // aqui debe salvar y redirect a cualquier ruta !== ruta actual
+        onConfirm={() => blocker.proceed()}
+      />
     </div>
   );
 });

@@ -22,7 +22,7 @@ const QuestionOptions = () => {
   }));
 
   return (
-    <div className='bg-white p-10 rounded-3xl w-full h-2/5 shadow-md flex flex-col items-center justify-between'>
+    <div className='bg-white p-10 rounded-3xl h-2/5 shadow-md flex flex-col items-center justify-between'>
       <div className='w-full max-w-xs'>
         <Select
           label='Question Type'
