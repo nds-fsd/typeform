@@ -4,8 +4,8 @@ import { api } from '../../utils/api';
 import { useMutation } from 'react-query';
 import { setUserSession } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../../components/Buttons/LargeButton.jsx';
-import Input from '../../components/ui/Input.jsx';
+import LargeButton from '../../components/Buttons/LargeButton.jsx';
+import Input from '../../components/Form/Input.jsx';
 import { useUserProvider } from '../../context/UserContext.jsx';
 
 const SignUp = () => {
@@ -61,7 +61,7 @@ const SignUp = () => {
               placeholder='Email'
               {...register('email', {
                 required: { value: true, message: '*email is required' },
-                pattern: { value: /^\S+@\S+$/i, message: '*Invalid email format' },
+                pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
               })}
             />
           </div>
@@ -71,7 +71,7 @@ const SignUp = () => {
               error={errors?.name?.message}
               label="Name"
               placeholder='Name'
-              {...register('name', { required: { value: true, message: '*name is required' } })}
+              {...register('name', { required: { value: true, message: 'Name is required' } })}
             />
           </div>
 
@@ -82,8 +82,8 @@ const SignUp = () => {
               label="Password"
               placeholder='Password'
               {...register('password', {
-                required: { value: true, message: '*password is required' },
-                minLength: { value: 6, message: '*password needs at least 6 characters' },
+                required: { value: true, message: 'Password is required' },
+                minLength: { value: 6, message: 'Password needs at least 6 characters' },
               })}
             />
           </div>

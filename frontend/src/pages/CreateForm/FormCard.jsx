@@ -1,4 +1,3 @@
-import style from './FormCard.module.css';
 import { handleDeleteForm } from '../../utils/api';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
