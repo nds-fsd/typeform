@@ -21,15 +21,7 @@ export const CustomFormProvider = ({ children }) => {
   const { register, control, watch, setValue, getValues, handleSubmit, formState, reset } = useForm({ defaultValues });
   const [typeChanges, setTypeChanges] = useState([]);
 
-  const updateTypeChanges = (questionIndex) => {
-    setTypeChanges((prevChanges) => {
-      if (!prevChanges.includes(questionIndex)) {
-        return [...prevChanges, questionIndex];
-      }
-      return prevChanges;
-    });
-  };
-
+  console.log(typeChanges, 'type changes');
   const {
     fields,
     remove: removeQuestion,
@@ -60,9 +52,9 @@ export const CustomFormProvider = ({ children }) => {
   const fillEmptyChoices = () => {
     questions?.map((question, qIndex) => {
       question.choices?.map((choice, cIndex) => {
-        if (choice.label === '') {
-          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${toLetterAbbr(cIndex + 1)}`);
-        }
+        // if (choice.label === '') {
+        setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${toLetterAbbr(cIndex + 1)}`);
+        // }
       });
     });
     return getValues()
@@ -84,7 +76,6 @@ export const CustomFormProvider = ({ children }) => {
     fields,
     fillEmptyChoices,
     reset,
-    updateTypeChanges,
     typeChanges,
     setTypeChanges
   };

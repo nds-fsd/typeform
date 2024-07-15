@@ -3,7 +3,7 @@ import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ autoSave }) => {
-  const { activeQuestion, watch, setValue, getValues, register } = useCustomFormProvider();
+  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoices } = useCustomFormProvider();
   const [activeIndex, setActiveIndex] = useState(null);
 
   const choices = watch(`questions.${activeQuestion}.choices`);
@@ -21,13 +21,16 @@ const QuestionChoices = ({ autoSave }) => {
   const addChoice = () => {
     const currentChoices = getValues(`questions.${activeQuestion}.choices`);
     setValue(`questions.${activeQuestion}.choices`, [...currentChoices, { label: '' }]);
+    // autoSave()
+
   };
 
   const removeChoice = (index) => {
-    const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
-    const newQuestions = currentQuestions.filter((_, i) => i !== index);
-    setValue(`questions.${activeQuestion}.choices`, newQuestions);
-    autoSave()
+    const currentChoices = getValues(`questions.${activeQuestion}.choices`);
+    const newChoices = currentChoices.filter((_, i) => i !== index);
+    setValue(`questions.${activeQuestion}.choices`, newChoices);
+    fillEmptyChoices(newChoices);
+    // autoSave();
   };
 
   return (

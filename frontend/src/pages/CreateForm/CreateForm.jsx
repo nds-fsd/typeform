@@ -21,21 +21,16 @@ export const CreateForm = withCustomFormProvider(() => {
     control,
   });
 
-  const [typeDirty, setTypeDirty] = useState(false);
-
-  let blocker = useBlocker(({ currentLocation, nextLocation }) =>
-    (Object.keys(dirtyFields)?.length > 0 || typeChanges.length > 0) &&
-    currentLocation.pathname !== nextLocation.pathname,
-  );
-
   // console.log(blocker, isDirty, dirtyFields);
-  // console.log(typeDirty, 'typeDirty');
-  console.log(typeChanges, 'typechanges list');
+  // console.log(typeChanges, 'typechanges list');
   const currentForm = forms?.find((form) => form._id === id);
   const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
   const type = watch(`questions.${activeQuestion}.type`);
-  console.log(type)
+  const [initialType, setInitialType] = useState('');
+  // const [typeChanged, setTypeChanged] = useState(null);
+
+  console.log(initialType, 'must differ from', type)
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
@@ -49,15 +44,30 @@ export const CreateForm = withCustomFormProvider(() => {
           choices: question.choices || [],
         })) || [],
       );
+      setTypeChanges([]); // Clear typeChanges after loading form
+      setInitialType(currentForm.questions[activeQuestion].type); // Set initial type
+    } else {
+      setTypeChanges([]); // Clear typeChanges for new form
     }
-  }, [isEditMode, currentForm]);
-
+  }, [isEditMode, currentForm, setValue, setTypeChanges]);
   useEffect(() => {
-    // Monitorar cambios en type para q sea dirty y bloquee navegacion
-    if (type) {
-      setTypeDirty(true);
-    }
-  }, [type]);
+    // Clear typeChanges when the component mounts or id changes
+    setTypeChanges([]);
+  }, [id, setTypeChanges]);
+
+  // let blocker = useBlocker(({ currentLocation, nextLocation }) =>
+  //   (Object.keys(dirtyFields)?.length > 0 || typeChanges.length > 0) &&
+  //   currentLocation.pathname !== nextLocation.pathname,
+  // );
+  let blocker = useBlocker(({ currentLocation, nextLocation }) =>
+    (Object.keys(dirtyFields)?.length > 0 || initialType !== type) &&
+    currentLocation.pathname !== nextLocation.pathname,
+  );
+  // useEffect(() => {
+  //   type !== initialType &&
+  //     // Clear typeChanges when the component mounts or id changes
+  //     setTypeChanged(type);
+  // }, [type]);
 
   const onSubmit = (data) => {
     data = fillEmptyChoices();
@@ -67,7 +77,6 @@ export const CreateForm = withCustomFormProvider(() => {
         .patch(`/form/${id}`, data)
         .then((response) => {
           reset(data);
-          setTypeDirty(false);
           setTypeChanges([]);
 
           queryClient.invalidateQueries('forms');
@@ -77,12 +86,16 @@ export const CreateForm = withCustomFormProvider(() => {
         .post('/form', data)
         .then((response) => {
           reset(data);
-          setTypeDirty(false);
           setTypeChanges([]);
           queryClient.invalidateQueries('forms');
         });
     }
   };
+
+  useEffect(() => {
+    // Clear typeChanges when the component mounts or id changes
+    setTypeChanges([]);
+  }, [id, setTypeChanges]);
 
   const ConfirmNavigation = ({ blocker }) => {
     if (blocker.state === "blocked") {
@@ -109,7 +122,7 @@ export const CreateForm = withCustomFormProvider(() => {
   return (
     <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
       {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
-      {dirtyFields?.questions?.[activeQuestion]?.type && <p>type field is dirty.</p>}
+      {dirtyFields?.questions?.[activeQuestion]?.choices && <p>choices field is dirty.</p>}
 
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
