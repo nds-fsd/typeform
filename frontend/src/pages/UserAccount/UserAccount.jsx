@@ -6,6 +6,7 @@
 */
 import { useNavigate, useParams } from 'react-router-dom';
 import { SmallButton } from '../../components/Buttons/SmallButton.jsx';
+import { FileInput } from '../../components/FileInput/FileInput.jsx';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 import { handleDeleteUser } from '../../utils/api.js';
@@ -42,7 +43,7 @@ const DeleteUserDialog = () => {
     return (
         <>
             <SmallButton id={'deleteAccountButton'} type='button' onClick={() => setIsOpen(true)}>
-                delete my account
+                Delete my account
             </SmallButton>
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
@@ -84,9 +85,10 @@ const UserAccount = () => {
             <h1>Hi, {userName}!</h1>
             <h2>{userEmail}</h2>
             <SmallButton type='button' onClick={console.log('should allow user to change password')}>
-                change password
+                Change password
             </SmallButton>
             <DeleteUserDialog />
+            <FileInput />
             <div>
                 {/* <ProfileIcon /> */}
             </div>
