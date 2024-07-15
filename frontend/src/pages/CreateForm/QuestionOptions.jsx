@@ -33,7 +33,6 @@ const QuestionOptions = () => {
           options={options}
         />
       </div>
-      <SmallButton text='save' />
     </div>
   );
 };

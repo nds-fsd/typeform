@@ -16,7 +16,7 @@ const defaultValues = {
 };
 
 export const CustomFormProvider = ({ children }) => {
-  const { register, control, watch, setValue, getValues, handleSubmit, formState } = useForm({ defaultValues });
+  const { register, control, watch, setValue, getValues, handleSubmit, formState, reset } = useForm({ defaultValues });
 
   const {
     fields,
@@ -58,7 +58,8 @@ export const CustomFormProvider = ({ children }) => {
     getValues,
     watch,
     handleSubmit,
-    fields
+    fields,
+    reset
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

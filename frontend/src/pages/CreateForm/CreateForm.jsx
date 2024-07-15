@@ -16,23 +16,22 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, control } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset } = useCustomFormProvider();
   const { dirtyFields, touchedFields, isDirty } = useFormState({
     control,
   });
+
   const [openModal, setOpenModal] = useState(false);
 
   let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) => isDirty && currentLocation.pathname !== nextLocation.pathname,
+    ({ currentLocation, nextLocation }) => Object.keys(dirtyFields)?.length > 0 &&
+      currentLocation.pathname !== nextLocation.pathname,
   );
 
-  console.log(blocker);
-
+  console.log(blocker, isDirty, dirtyFields);
   const currentForm = forms?.find((form) => form._id === id);
-
   const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
-
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
@@ -57,6 +56,7 @@ export const CreateForm = withCustomFormProvider(() => {
         .patch(`/form/${id}`, data)
         .then((response) => {
           queryClient.invalidateQueries('forms');
+          reset(); // Limpar campos sujos após submissão
           // queryClient.invalidateQueries('forms').then(() => window.location.href = '/workspace');
           // queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
         });
@@ -65,6 +65,7 @@ export const CreateForm = withCustomFormProvider(() => {
         .post('/form', data)
         .then((response) => {
           queryClient.invalidateQueries('forms');
+          reset(); // Limpar campos sujos após submissão
           // queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
         });
     }
@@ -100,18 +101,19 @@ export const CreateForm = withCustomFormProvider(() => {
   }
   return (
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
-    <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
-      <SmallButton text='delete account' onClick={handleDeleteClick} />
-      {/* {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>} */}
+    <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
+      {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
 
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
+          <SmallButton text='save' />
           <div className='flex h-full p-2'>
             <QuestionList autoSave={handleSubmit(onSubmit)} />
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
             <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
+
         </form>
 
       )}
