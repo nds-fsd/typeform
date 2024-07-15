@@ -17,9 +17,14 @@ export const CreateForm = withCustomFormProvider(() => {
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
   const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoices } = useCustomFormProvider();
+
   const { dirtyFields, touchedFields, isDirty } = useFormState({
     control,
   });
+  // const { dirtyFields, touchedFields, isDirty } = useFormState({
+  //   control,
+  //   name: `questions.${activeQuestion}.choices`
+  // });
 
   const currentForm = forms?.find((form) => form._id === id);
   const questions = watch('questions');
@@ -29,6 +34,9 @@ export const CreateForm = withCustomFormProvider(() => {
 
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
+
+  // console.log(Object.values(dirtyFields), initialType, type, choices)
+
 
   useEffect(() => {
     if (currentForm) {
@@ -43,10 +51,9 @@ export const CreateForm = withCustomFormProvider(() => {
       setInitialType(currentForm.questions[activeQuestion].type);
     }
   }, [isEditMode, currentForm, setValue]);
-  console.log(Object.keys(dirtyFields), initialType, type)
 
   let blocker = useBlocker(({ currentLocation, nextLocation }) =>
-    (Object.keys(dirtyFields)?.length > 0 || initialType ? initialType !== type : '') &&
+    (Object.keys(dirtyFields).length > 0 || (initialType ? initialType !== type : false)) &&
     currentLocation.pathname !== nextLocation.pathname,
   );
 
