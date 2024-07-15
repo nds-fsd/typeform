@@ -27,6 +27,13 @@ export const CustomFormProvider = ({ children }) => {
     control,
     name: 'questions',
   });
+  // const watchFieldArray = watch('questions');
+  // const questions = fields.map((field, index) => {
+  //   return {
+  //     ...field,
+  //     ...watchFieldArray[index],
+  //   };
+  // });
 
   const activeQuestion = watch('active');
 
@@ -49,6 +56,7 @@ export const CustomFormProvider = ({ children }) => {
     setActiveQuestion,
     register,
     control,
+    // questions,
     addQuestion,
     removeQuestion: handleRemoveQuestion,
     swapQuestion,
@@ -56,6 +64,8 @@ export const CustomFormProvider = ({ children }) => {
     getValues,
     watch,
     handleSubmit,
+    fields
+    // watchFieldArray
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

@@ -11,7 +11,7 @@ const signUp = async (req, res) => {
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      return res.status(400).json({ error: '*email already registered' });
+      return res.status(409).json({ error: '*email already registered' });
     }
 
     const newUser = new User({

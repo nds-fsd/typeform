@@ -33,7 +33,7 @@ const QuestionChoices = ({ index }) => {
   return (
     <>
       {choices?.map((choice, index) => (
-        <div className='relative'>
+        <div className='relative' key={choice._id}>
           <div
             key={index}
             className={classNames(

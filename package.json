@@ -9,7 +9,8 @@
   "scripts": {
     "start:frontend": "dotenv -- turbo run dev --scope='frontend'",
     "start:backend": "dotenv -- turbo run dev --scope='backend'",
-    "dev": "dotenv -- turbo run dev "
+    "dev": "dotenv -- turbo run dev ",
+    "test": "cross-env dotenv -- turbo run test"
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",
@@ -18,6 +19,12 @@
     "globals": "^15.2.0",
     "turbo": "^1.13.3",
     "typescript-eslint": "^7.8.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.2.1",

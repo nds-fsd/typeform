@@ -7,7 +7,10 @@ import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
 import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
 import QuestionForm from './pages/CreateForm/QuestionForm.jsx';
-import ResponseForm from './components/ResponsePage/ResponseForm.jsx';
+import ResponseForm from './pages/ResponsePage/ResponseForm.jsx';
+import FormAnswers from './pages/FormAnswers/FormAnswers.jsx';
+import UserAccount from './pages/UserAccount/UserAccount.jsx';
+
 
 function App() {
   const navigate = useNavigate();
@@ -20,12 +23,14 @@ function App() {
       <Route path='/login' element={<Login />} />
       {token && (
         <>
+          <Route path='/formAnswers' element={<FormAnswers />} />
           <Route path='/responseform/:id' element={<ResponseForm />} />
           <Route path='/workspace' element={<Workspace />} />
-          <Route path='/createform/:id?' element={<CreateForm />}/>
+          <Route path='/createform/:id?' element={<CreateForm />} />
+          <Route path='/user/:id/account' element={<UserAccount />} />
         </>
       )}
-      <Route path="/" element={<Navigate to={token ? '/workspace' : '/home'} replace={true} />}/>
+      <Route path="/" element={<Navigate to={token ? '/workspace' : '/home'} replace={true} />} />
     </Routes>
   );
 }
