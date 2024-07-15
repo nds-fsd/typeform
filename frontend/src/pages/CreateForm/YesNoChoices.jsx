@@ -1,5 +1,3 @@
-import { toLetterAbbr } from '../../utils/utils.js';
-
 const YesNoChoices = () => {
   return (
     <div className='flex gap-2 mt-4'>

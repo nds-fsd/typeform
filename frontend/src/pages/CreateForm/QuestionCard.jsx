@@ -1,4 +1,4 @@
-import { useCustomFormProvider } from '../../context/FormContext';
+import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { cloneElement, useCallback } from 'react';
 import { questionTypes } from '../../constants/questionTypes.jsx';
 import { classNames } from '../../utils/utils.js';

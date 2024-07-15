@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import FormCard from '../CreateForm/FormCard';
-import style from './Workspace.module.css';
+import FormCard from '../CreateForm/FormCard.jsx';
 import { useForms } from '../../hooks/useForms.js';
 import { MediumButton } from '../../components/Buttons/MediumButton.jsx'
 import ProfileIcon from '../../components/Profile/Profile.jsx';
@@ -8,6 +7,10 @@ import { emptyWorkspaceMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { getUserSession } from '../../utils/localStorage.js';
 import { useUserProvider } from '../../context/UserContext.jsx';
+import UserGreeting from '../../components/UserNavbar/UserGreeting.jsx';
+import SmallButton from '../../components/Buttons/SmallButton.jsx';
+import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
+import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 
 
 const Workspace = () => {
@@ -25,24 +28,20 @@ const Workspace = () => {
   }, [])
 
   return (
-    <div className="bg-custom-gradient min-h-screen w-screen overflow-y-auto relative">
-      <h1 className="text-gray-900 text-3xl mb-8 ml-8 mt-2">My Workspace</h1>
-      <div className="m-5 bg-white p-5 rounded-2xl shadow-md relative pt-8">
-        <div className='pl-8 pb-10'>  
-          <MediumButton onClick={handleCreate} text='Create New Form' />
+    <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-custom-gradient bg-cover min-h-screen">
+      < UserNavbar />
+      <div className='flex bg-neutral-100/25 m-0 rounded-2xl gap-8 h-max p-8'>
+        <SmallButton text='create new form' onClick={() => handleCreate()} />
+        <div className='grid grid-cols-4 grid-flow-row gap-8'>
+          {forms && forms.length > 0 ? (
+            forms.map((form) => <FormCard key={form._id} form={form} />)
+          ) : (
+            <p>{emptyWorkspaceMessage}</p>
+          )}
+          <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
         </div>
-    
-      <div className="grid grid-cols-1 gap-4">     
-        {forms && forms.length > 0 ? (
-          forms.map((form) => <FormCard key={form._id} form={form} className={style.formcard} />)
-        ) : (
-          <p>{emptyWorkspaceMessage}</p>
-        )}
       </div>
-   
-        <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
-      </div>
-    </div>
+    </div >
   );
 };
 
