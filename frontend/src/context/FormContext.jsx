@@ -19,9 +19,7 @@ const defaultValues = {
 
 export const CustomFormProvider = ({ children }) => {
   const { register, control, watch, setValue, getValues, handleSubmit, formState, reset } = useForm({ defaultValues });
-  const [typeChanges, setTypeChanges] = useState([]);
 
-  console.log(typeChanges, 'type changes');
   const {
     fields,
     remove: removeQuestion,
@@ -75,9 +73,7 @@ export const CustomFormProvider = ({ children }) => {
     handleSubmit,
     fields,
     fillEmptyChoices,
-    reset,
-    typeChanges,
-    setTypeChanges
+    reset
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

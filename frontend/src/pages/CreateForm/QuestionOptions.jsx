@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import Select from '../../components/Form/Select.jsx';
 
 const QuestionOptions = () => {
-  const { setValue, activeQuestion, watch, typeChanges, setTypeChanges } = useCustomFormProvider();
+  const { setValue, activeQuestion, watch } = useCustomFormProvider();
 
   const currentType = watch(`questions.${activeQuestion}.type`);
   const type = useMemo(() => questionTypes.find((questionType) => questionType.value === currentType), [currentType]);
@@ -18,12 +18,6 @@ const QuestionOptions = () => {
       </div>
     ),
   }));
-
-  // useEffect(() => {
-  //   if (!typeChanges.includes(activeQuestion)) {
-  //     setTypeChanges((prevChanges) => [...prevChanges, activeQuestion]);
-  //   }
-  // }, [currentType]);
 
   const handleOnChangeType = (value) => {
     setValue(`questions.${activeQuestion}.type`, value);

@@ -16,21 +16,17 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoices, typeChanges, setTypeChanges } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoices } = useCustomFormProvider();
   const { dirtyFields, touchedFields, isDirty } = useFormState({
     control,
   });
 
-  // console.log(blocker, isDirty, dirtyFields);
-  // console.log(typeChanges, 'typechanges list');
   const currentForm = forms?.find((form) => form._id === id);
   const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
   const type = watch(`questions.${activeQuestion}.type`);
   const [initialType, setInitialType] = useState('');
-  // const [typeChanged, setTypeChanged] = useState(null);
 
-  console.log(initialType, 'must differ from', type)
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
@@ -44,30 +40,15 @@ export const CreateForm = withCustomFormProvider(() => {
           choices: question.choices || [],
         })) || [],
       );
-      setTypeChanges([]); // Clear typeChanges after loading form
-      setInitialType(currentForm.questions[activeQuestion].type); // Set initial type
-    } else {
-      setTypeChanges([]); // Clear typeChanges for new form
+      setInitialType(currentForm.questions[activeQuestion].type);
     }
-  }, [isEditMode, currentForm, setValue, setTypeChanges]);
-  useEffect(() => {
-    // Clear typeChanges when the component mounts or id changes
-    setTypeChanges([]);
-  }, [id, setTypeChanges]);
+  }, [isEditMode, currentForm, setValue]);
+  console.log(Object.keys(dirtyFields), initialType, type)
 
-  // let blocker = useBlocker(({ currentLocation, nextLocation }) =>
-  //   (Object.keys(dirtyFields)?.length > 0 || typeChanges.length > 0) &&
-  //   currentLocation.pathname !== nextLocation.pathname,
-  // );
   let blocker = useBlocker(({ currentLocation, nextLocation }) =>
     (Object.keys(dirtyFields)?.length > 0 || initialType !== type) &&
     currentLocation.pathname !== nextLocation.pathname,
   );
-  // useEffect(() => {
-  //   type !== initialType &&
-  //     // Clear typeChanges when the component mounts or id changes
-  //     setTypeChanged(type);
-  // }, [type]);
 
   const onSubmit = (data) => {
     data = fillEmptyChoices();
@@ -77,8 +58,6 @@ export const CreateForm = withCustomFormProvider(() => {
         .patch(`/form/${id}`, data)
         .then((response) => {
           reset(data);
-          setTypeChanges([]);
-
           queryClient.invalidateQueries('forms');
         });
     } else {
@@ -86,16 +65,11 @@ export const CreateForm = withCustomFormProvider(() => {
         .post('/form', data)
         .then((response) => {
           reset(data);
-          setTypeChanges([]);
           queryClient.invalidateQueries('forms');
         });
     }
+    reset(data);
   };
-
-  useEffect(() => {
-    // Clear typeChanges when the component mounts or id changes
-    setTypeChanges([]);
-  }, [id, setTypeChanges]);
 
   const ConfirmNavigation = ({ blocker }) => {
     if (blocker.state === "blocked") {
@@ -133,7 +107,6 @@ export const CreateForm = withCustomFormProvider(() => {
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
             <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
-
         </form>
 
       )}
