@@ -29,7 +29,7 @@ const FormCard = ({ form }) => {
       }
       onClick={() => navigate(`/createform/${form._id}`)}
     >
-      <div className=' top-3 right-3s'>
+      <div className='fix top-3 right-3s'>
         <Dropdown form={form} handleDelete={handleDelete} />
       </div>
       <p>{form.title}</p>

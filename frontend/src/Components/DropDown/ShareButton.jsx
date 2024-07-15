@@ -9,7 +9,7 @@ const ShareButton = ({ formId }) => {
       <button
         type='button'
         onClick={() => setShowModal(true)}
-        className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+        className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
       >
         Publish
       </button>

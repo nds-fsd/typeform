@@ -6,7 +6,9 @@ const Dropdown = ({ form, handleDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (event) => {
+    event.stopPropagation();
+
     setIsOpen(!isOpen);
   };
 
@@ -56,12 +58,12 @@ const Dropdown = ({ form, handleDelete }) => {
                 navigate(`/formAnswers?form=${form._id}`);
                 setIsOpen(false);
               }}
-              className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+              className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
             >
               Results
             </button>
             <button
-              className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+              className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
               onClick={(event) => {
                 handleDelete(form._id, event);
                 setIsOpen(false);
