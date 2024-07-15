@@ -23,14 +23,17 @@ const FormCard = ({ form }) => {
   });
 
   return (
-    <div className={style.formgrid}>
-      <div className={style.formcard} onClick={() => navigate(`/createform/${form._id}`)}>
-        <div className=' top-3 right-3s'>
-          <Dropdown form={form} handleDelete={handleDelete} />
-        </div>
-        <p>{form.title}</p>
-        <div className='flex flex-row relative top-3 right-'></div>
+    <div
+      className={
+        'w-60 h-40 flex items-center justify-center shadow-md rounded-3xl hover:shadow-none transition-all duration-300 font-space-mono hover:border-2 border-[#FC00B9]'
+      }
+      onClick={() => navigate(`/createform/${form._id}`)}
+    >
+      <div className=' top-3 right-3s'>
+        <Dropdown form={form} handleDelete={handleDelete} />
       </div>
+      <p>{form.title}</p>
+      <div className='flex flex-row relative top-3 right-'></div>
     </div>
   );
 };
