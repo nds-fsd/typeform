@@ -31,7 +31,7 @@ export const CreateForm = withCustomFormProvider(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isEditMode) {
+    if (currentForm) {
       setValue('title', currentForm.title || '');
       setValue(
         'questions',
@@ -46,28 +46,20 @@ export const CreateForm = withCustomFormProvider(() => {
   console.log(Object.keys(dirtyFields), initialType, type)
 
   let blocker = useBlocker(({ currentLocation, nextLocation }) =>
-    (Object.keys(dirtyFields)?.length > 0 || initialType !== type) &&
+    (Object.keys(dirtyFields)?.length > 0 || initialType ? initialType !== type : '') &&
     currentLocation.pathname !== nextLocation.pathname,
   );
 
   const onSubmit = (data) => {
     data = fillEmptyChoices();
-    if (isEditMode) {
-      console.log(data);
-      api()
-        .patch(`/form/${id}`, data)
-        .then((response) => {
-          reset(data);
-          queryClient.invalidateQueries('forms');
-        });
-    } else {
-      api()
-        .post('/form', data)
-        .then((response) => {
-          reset(data);
-          queryClient.invalidateQueries('forms');
-        });
-    }
+    console.log(data);
+    api()
+      .patch(`/form/${id}`, data)
+      .then((response) => {
+        reset(data);
+        queryClient.invalidateQueries('forms');
+      });
+
     reset(data);
   };
 
