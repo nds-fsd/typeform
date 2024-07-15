@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { api } from '../../utils/api';
-import { setUserSession } from '../../utils/localStorage';
+import { api } from '../../utils/api.js';
+import { setUserSession } from '../../utils/localStorage.js';
 import { useNavigate } from 'react-router-dom';
-import { LargeButton } from '../../components/Buttons/LargeButton';
-import Input from '../../components/ui/Input';
+import LargeButton from '../../components/Buttons/LargeButton.jsx';
+import Input from '../../components/Form/Input.jsx';
 import { sendError } from 'zod-express-middleware';
 import { useUserProvider } from '../../context/UserContext.jsx';
 
