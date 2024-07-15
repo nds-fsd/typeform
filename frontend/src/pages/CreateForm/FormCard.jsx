@@ -2,6 +2,7 @@ import style from './FormCard.module.css';
 import { handleDeleteForm } from '../../utils/api';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import Dropdown from '../../components/DropDown/Dropdown';
 
 const FormCard = ({ form }) => {
   const queryClient = useQueryClient();
@@ -25,10 +26,11 @@ const FormCard = ({ form }) => {
   return (
     <div className={style.formgrid}>
       <div className={style.formcard} onClick={() => navigate(`/createform/${form._id}`)}>
+        <div className=' top-3 right-3s'>
+          <Dropdown form={form} handleDelete={handleDelete} />
+        </div>
         <p>{form.title}</p>
-        <button className={style.deleteButton} onClick={(event) => handleDelete(form._id, event)}>
-          X
-        </button>
+        <div className='flex flex-row relative top-3 right-'></div>
       </div>
     </div>
   );
