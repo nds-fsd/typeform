@@ -3,12 +3,11 @@ import { api } from '../../utils/api.js';
 import { useBlocker, useNavigate, useParams } from 'react-router-dom';
 import { QuestionList } from './QuestionList.jsx';
 import QuestionForm from './QuestionForm.jsx';
-import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
 import QuestionOptions from './QuestionOptions.jsx';
+import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
 import { useForms } from '../../hooks/useForms.js';
 import { useQueryClient } from 'react-query';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
-import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useFormState } from 'react-hook-form';
 import ConfirmationModal from '../../components/Modal/ConfirmationModal.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
@@ -36,7 +35,6 @@ export const CreateForm = withCustomFormProvider(() => {
 
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
-  // console.log(questions, 'questions');
 
   useEffect(() => {
     if (isEditMode) {
@@ -77,19 +75,37 @@ export const CreateForm = withCustomFormProvider(() => {
       setOpenModal(true);
     }
   };
+
+  const ConfirmNavigation = ({ blocker }) => {
+    if (blocker.state === "blocked") {
+      return (
+        <>
+          <p style={{ color: "red" }}>
+            Blocked the last navigation to {blocker.location.pathname}
+          </p>
+          <button onClick={() => blocker.proceed?.()}>Let me through</button>
+          <button onClick={() => blocker.reset?.()}>Keep me here</button>
+        </>
+      );
+    }
+    return null;
+
+    if (blocker.state === "proceeding") {
+      return (
+        <p style={{ color: "orange" }}>Proceeding through blocked navigation</p>
+      );
+    }
+
+    return <p style={{ color: "green" }}>Blocker is currently unblocked</p>;
+  }
   return (
     // <div className='bg-custom-gradient p-2 box-border h-screen'>
-
     <div className='flexm-0 h-screen min-w-screen overflow-y-auto bg-custom-gradient'>
       <SmallButton text='delete account' onClick={handleDeleteClick} />
-
-      {/* <SmallButton text='delete account' onClick={() => { dirtyFields.questions && setOpenModal(true) }} /> */}
-
-      {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
+      {/* {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>} */}
 
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
-        // <form className='h-full' onSubmit={handleSubmit(onSubmit)} onBlur={handleSubmit(onSubmit)}>
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex h-full p-2'>
             <QuestionList autoSave={handleSubmit(onSubmit)} />
@@ -97,8 +113,8 @@ export const CreateForm = withCustomFormProvider(() => {
             <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
         </form>
-      )}
 
+      )}
       <ConfirmationModal
         open={blocker.state === 'blocked'}
         onClose={() => blocker.reset()}
