@@ -16,22 +16,26 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoices, typeChanges, setTypeChanges } = useCustomFormProvider();
   const { dirtyFields, touchedFields, isDirty } = useFormState({
     control,
   });
 
-  const [openModal, setOpenModal] = useState(false);
+  const [typeDirty, setTypeDirty] = useState(false);
 
-  let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) => Object.keys(dirtyFields)?.length > 0 &&
-      currentLocation.pathname !== nextLocation.pathname,
+  let blocker = useBlocker(({ currentLocation, nextLocation }) =>
+    (Object.keys(dirtyFields)?.length > 0 || typeChanges.length > 0) &&
+    currentLocation.pathname !== nextLocation.pathname,
   );
 
-  console.log(blocker, isDirty, dirtyFields);
+  // console.log(blocker, isDirty, dirtyFields);
+  // console.log(typeDirty, 'typeDirty');
+  console.log(typeChanges, 'typechanges list');
   const currentForm = forms?.find((form) => form._id === id);
   const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
+  const type = watch(`questions.${activeQuestion}.type`);
+  console.log(type)
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
@@ -48,32 +52,35 @@ export const CreateForm = withCustomFormProvider(() => {
     }
   }, [isEditMode, currentForm]);
 
+  useEffect(() => {
+    // Monitorar cambios en type para q sea dirty y bloquee navegacion
+    if (type) {
+      setTypeDirty(true);
+    }
+  }, [type]);
+
   const onSubmit = (data) => {
-    // data = fillEmptyChoices();
+    data = fillEmptyChoices();
     if (isEditMode) {
       console.log(data);
       api()
         .patch(`/form/${id}`, data)
         .then((response) => {
+          reset(data);
+          setTypeDirty(false);
+          setTypeChanges([]);
+
           queryClient.invalidateQueries('forms');
-          reset(); // Limpar campos sujos após submissão
-          // queryClient.invalidateQueries('forms').then(() => window.location.href = '/workspace');
-          // queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
         });
     } else {
       api()
         .post('/form', data)
         .then((response) => {
+          reset(data);
+          setTypeDirty(false);
+          setTypeChanges([]);
           queryClient.invalidateQueries('forms');
-          reset(); // Limpar campos sujos após submissão
-          // queryClient.invalidateQueries('forms').then(() => navigate('/workspace'));
         });
-    }
-  };
-
-  const handleDeleteClick = () => {
-    if (dirtyFields?.questions) {
-      setOpenModal(true);
     }
   };
 
@@ -100,9 +107,9 @@ export const CreateForm = withCustomFormProvider(() => {
     return <p style={{ color: "green" }}>Blocker is currently unblocked</p>;
   }
   return (
-    // <div className='bg-custom-gradient p-2 box-border h-screen'>
     <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
       {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
+      {dirtyFields?.questions?.[activeQuestion]?.type && <p>type field is dirty.</p>}
 
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
@@ -123,7 +130,6 @@ export const CreateForm = withCustomFormProvider(() => {
         textOnClose='cancel'
         textOnConfirm='yes'
         description='Changes will be lost, do you wish to continue?'
-        // aqui debe salvar y redirect a cualquier ruta !== ruta actual
         onConfirm={() => blocker.proceed()}
       />
     </div>

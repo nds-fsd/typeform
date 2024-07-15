@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import QuestionCard from './QuestionCard.jsx';
-import { useFieldArray, useFormContext, useFormState } from 'react-hook-form';
+import { useFormState } from 'react-hook-form';
 import Input from '../../components/Form/Input.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
-import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
-import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 export const QuestionList = ({ autoSave }) => {
   const { swapQuestion, addQuestion, setActiveQuestion, register, getValues, control, questions } = useCustomFormProvider();

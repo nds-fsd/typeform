@@ -1,5 +1,7 @@
-import { createContext, useCallback, useContext } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toLetterAbbr } from '../utils/utils';
+
 
 export const FormContext = createContext(null);
 
@@ -17,6 +19,16 @@ const defaultValues = {
 
 export const CustomFormProvider = ({ children }) => {
   const { register, control, watch, setValue, getValues, handleSubmit, formState, reset } = useForm({ defaultValues });
+  const [typeChanges, setTypeChanges] = useState([]);
+
+  const updateTypeChanges = (questionIndex) => {
+    setTypeChanges((prevChanges) => {
+      if (!prevChanges.includes(questionIndex)) {
+        return [...prevChanges, questionIndex];
+      }
+      return prevChanges;
+    });
+  };
 
   const {
     fields,
@@ -45,6 +57,17 @@ export const CustomFormProvider = ({ children }) => {
     [activeQuestion],
   );
 
+  const fillEmptyChoices = () => {
+    questions?.map((question, qIndex) => {
+      question.choices?.map((choice, cIndex) => {
+        if (choice.label === '') {
+          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${toLetterAbbr(cIndex + 1)}`);
+        }
+      });
+    });
+    return getValues()
+  };
+
   const value = {
     questions,
     activeQuestion,
@@ -59,7 +82,11 @@ export const CustomFormProvider = ({ children }) => {
     watch,
     handleSubmit,
     fields,
-    reset
+    fillEmptyChoices,
+    reset,
+    updateTypeChanges,
+    typeChanges,
+    setTypeChanges
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

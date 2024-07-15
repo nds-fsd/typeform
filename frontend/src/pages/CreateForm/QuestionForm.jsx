@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
 import QuestionChoices from './QuestionChoices.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
-import { useFormState } from 'react-hook-form';
 import TextareaAutoSize from 'react-textarea-autosize';
 import YesNoChoices from './YesNoChoices.jsx';
 
 const QuestionForm = ({ autoSave }) => {
     const { activeQuestion, watch, setValue, control, register } = useCustomFormProvider();
-    const { dirtyFields, touchedFields } = useFormState({
-        control
-    });
 
     const type = watch(`questions.${activeQuestion}.type`);
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);

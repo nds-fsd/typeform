@@ -33,7 +33,3 @@ const FormCard = ({ form }) => {
 };
 
 export default FormCard;
-
-
-// // borda oscura/bien marcada
-// className={'w-60 h-40 flex items-center justify-center shadow-md border-2 border-neutral rounded-3xl hover:shadow-glow transition-all duration-500 font-space-mono'}

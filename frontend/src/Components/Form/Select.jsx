@@ -34,14 +34,14 @@ const Select = ({ options, onChange, value, label }) => {
               <>
                 <span
                   className={classNames(
-                    option?.value === value.value ? 'font-semibold' : 'font-normal',
+                    option?.value === value ? 'font-semibold' : 'font-normal',
                     'flex truncate items-center gap-2',
                   )}
                 >
                   {option.label}
                 </span>
 
-                {option.value === value.value ? (
+                {option?.value === value?.value ? (
                   <span className={classNames('absolute inset-y-0 right-0 flex items-center pr-4')}>
                     <HiCheck />
                   </span>
