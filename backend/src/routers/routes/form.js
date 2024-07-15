@@ -8,12 +8,22 @@ const router = express.Router();
 
 router.get('/', Authorization, getAllForms);
 router.get('/:id', Authorization, getForm);
-router.post('/', Authorization, validateRequest({
-  body: CreateFormBodyValidation
-}), createForm);
-router.patch('/:id', Authorization, validateRequest({
-  body: CreateFormBodyValidation
-}), updateForm);
+router.post(
+  '/',
+  Authorization,
+  validateRequest({
+    body: CreateFormBodyValidation,
+  }),
+  createForm,
+);
+router.patch(
+  '/:id',
+  Authorization,
+  validateRequest({
+    body: CreateFormBodyValidation,
+  }),
+  updateForm,
+);
 router.delete('/:id', Authorization, deleteForm);
 
 module.exports = router;

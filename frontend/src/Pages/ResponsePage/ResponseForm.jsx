@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { api } from '../../utils/api.js';
-import style from './ResponseForm.module.css';
 import RenderQuestion from './RenderQuestion.jsx';
 import { useParams } from 'react-router-dom';
 import MediumButton from '../../components/Buttons/MediumButton.jsx';
@@ -82,6 +81,8 @@ const ResponseForm = () => {
 
   if (!formData) return <div>Loading...</div>;
 
+  const isLastQuestion = fields.length - 1;
+
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-custom-gradient'>
       <h2 className='text-center font-rubik font-extrabold text-3xl my-5'>{formData.title}</h2>
@@ -89,17 +90,14 @@ const ResponseForm = () => {
         <form className='w-full h-full flex flex-col justify-between' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-col overflow-auto h-full align-center my-5 ml-4'>
             {fields.length > 0 && (
-              <RenderQuestion
-                question={fields[currentQuestion]}
-                index={currentQuestion}
-                register={register}
-                style={style}
-              />
+              <RenderQuestion question={fields[currentQuestion]} index={currentQuestion} register={register} />
             )}
           </div>
-          <div className='absolute bottom-5 right-5'>
-            <MediumButton onClick={onSubmit} text='Submit' />
-          </div>
+          {currentQuestion === isLastQuestion && (
+            <div className='absolute bottom-5 right-5'>
+              <MediumButton onClick={onSubmit} text={'Submit'} />
+            </div>
+          )}
         </form>
       </div>
       <div className='absolute left-5 right-5 top-1/2 flex transform -translate-y-1/2 justify-between'>
