@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUserProvider } from '../../context/UserContext';
 import { getUserSession, removeUserSession } from '../../utils/localStorage';
 
+
 const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();

@@ -27,3 +27,18 @@ export const handleDeleteUser = async (userId) => {
     throw new Error('Error deleting user');
   }
 };
+
+const CLOUDINARY_URL = 'cloudinary://554346411718287:FkldIiBIF_uS-C-woi9_kZBEFww@dflb5okkq';
+
+export const handleUpload = async (image) => {
+  const formData = new FormData();
+  formData.append('file', image);
+
+  const response = await axios.post(CLOUDINARY_URL, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return response.data.secure_url;
+};

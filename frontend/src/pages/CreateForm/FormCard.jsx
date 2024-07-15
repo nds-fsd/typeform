@@ -24,7 +24,7 @@ const FormCard = ({ form }) => {
 
   return (
     <div className={style.formgrid}>
-      <div className={style.formcard} onClick={() => navigate(`/createform/${form._id}`)}>
+      <div className="flex items-center justify-center jum-5 bg-white p-5 rounded-2xl shadow-md relative transition duration-300 ease-in-out transform hover:bg-gray-100" onClick={() => navigate(`/createform/${form._id}`)}>
         <p>{form.title}</p>
         <button className={style.deleteButton} onClick={(event) => handleDelete(form._id, event)}>
           X
