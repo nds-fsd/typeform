@@ -50,9 +50,9 @@ export const CustomFormProvider = ({ children }) => {
   const fillEmptyChoices = () => {
     questions?.map((question, qIndex) => {
       question.choices?.map((choice, cIndex) => {
-        // if (choice.label === '') {
-        setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${toLetterAbbr(cIndex + 1)}`);
-        // }
+        if (choice.label === '') {
+          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${toLetterAbbr(cIndex + 1)}`);
+        }
       });
     });
     return getValues()

@@ -7,7 +7,6 @@ import ShareButton from '../DropDown/ShareButton';
 
 const UserNavbar = () => {
   const { id } = useParams();
-  console.log(id);
   return (
     <div className='flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800'>
       <UsernamesWorkspace />

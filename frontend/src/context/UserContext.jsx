@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(getUserSession()?.email);
   const [userName, setUserName] = useState(getUserSession()?.name);
 
-  console.log(userId, 'desde context')
+  console.log(userName, 'desde context')
   // () => setUserId(getUserSession().id);
   // setUserName(getUserSession().name);
   // setUserEmail(getUserSession().email);
