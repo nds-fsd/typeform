@@ -4,10 +4,12 @@ import { api } from '../../utils/api.js';
 import RenderQuestion from './RenderQuestion.jsx';
 import { useParams } from 'react-router-dom';
 import MediumButton from '../../components/Buttons/MediumButton.jsx';
+import FormSubmitModal from './FormSubmitModal.jsx';
 
 const ResponseForm = () => {
   const { id: formId } = useParams();
   const [formData, setFormData] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const getForm = async (formId) => {
@@ -63,6 +65,7 @@ const ResponseForm = () => {
     };
     console.log(submissionData);
     postAnswer(submissionData);
+    setShowModal(true);
   };
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -108,10 +111,9 @@ const ResponseForm = () => {
           ❯
         </button>
       </div>
+      <FormSubmitModal showModal={showModal} />
     </div>
   );
 };
 
 export default ResponseForm;
-
-//populate method
