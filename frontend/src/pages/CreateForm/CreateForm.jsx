@@ -27,22 +27,15 @@ export const CreateForm = withCustomFormProvider(() => {
   // });
 
   const currentForm = forms?.find((form) => form._id === id);
-  const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
   const type = watch(`questions.${activeQuestion}.type`);
+
   const [initialType, setInitialType] = useState('');
   const [initialChoices, setInitialChoices] = useState([]);
-  // console.log(initialChoices, 'should correspond to choices changes just saved:')
-  // console.log(initialType, 'init type', type)
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
-  console.log(initialChoices, 'should correspond to choices changes saved:', choices)
-  // console.log(Object.values(dirtyFields), initialType, type, choices)
-
-  // console.log(JSON.stringify(watchLabels) === JSON.stringify(labels));
   useEffect(() => {
-
     if (currentForm) {
       setInitialType(currentForm.questions[activeQuestion].type);
       setInitialChoices(currentForm.questions[activeQuestion].choices || []);
@@ -58,7 +51,6 @@ export const CreateForm = withCustomFormProvider(() => {
       // setInitialChoices(currentForm.questions[activeQuestion].choices[activeIndex]);
     }
   }, [isEditMode, currentForm, setValue]);
-  // console.log(initialChoices, 'versus', choices)
 
   const onSubmit = async (data) => {
     data = fillEmptyChoiceLabels();
@@ -67,17 +59,6 @@ export const CreateForm = withCustomFormProvider(() => {
     setInitialChoices(res.data.questions[activeQuestion].choices);
     queryClient.invalidateQueries('forms');
   };
-  // const onSubmit = (data) => {
-  //   data = fillEmptyChoiceLabels();
-  //   api().patch(`/form/${id}`, data).then(
-  //     (res) => {
-  //       reset(data);
-  //       setInitialChoices(res.data.questions[activeQuestion].choices);
-  //       setInitialType(res.data.questions[activeQuestion].type);
-  //       queryClient.invalidateQueries('forms');
-  //     }
-  //   );
-  // };
 
   let blocker = useBlocker(({ currentLocation, nextLocation }) => {
     const choicesChanged = JSON.stringify(choices) !== JSON.stringify(initialChoices);
