@@ -35,6 +35,11 @@ export const CreateForm = withCustomFormProvider(() => {
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
+<<<<<<< HEAD
+=======
+  console.log(initialChoices, 'should correspond to choices changes saved:', choices)
+
+>>>>>>> 6121132aeef13c872bb032b5da1bde92685708ec
   useEffect(() => {
     if (currentForm) {
       setInitialType(currentForm.questions[activeQuestion].type);
