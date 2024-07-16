@@ -4,18 +4,20 @@ import { classNames, toLetterAbbr } from '../../utils/utils.js';
 import { useFormState } from 'react-hook-form';
 
 const QuestionChoices = ({ autoSave }) => {
-  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoices, control } = useCustomFormProvider();
-  const [activeIndex, setActiveIndex] = useState(null);
+  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoiceLabels, control, activeIndex, setActiveIndex } = useCustomFormProvider();
+  // const [activeIndex, setActiveIndex] = useState(null);
   const { dirtyFields, touchedFields, isDirty } = useFormState({
     control,
+    name: `questions.${activeQuestion}.choices.${activeIndex}.label`
   });
 
   const choices = watch(`questions.${activeQuestion}.choices`);
+  const label = watch(`questions.${activeQuestion}.choices.${activeIndex}.label`)
   const questionType = watch(`questions.${activeQuestion}.type`);
 
   const isSingleChoice = questionType === 'SingleChoiceQuestion';
   const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
-  console.log(Object.values(dirtyFields), choices)
+  // console.log(Object.keys(dirtyFields), choices, 'label:', label)
 
   useEffect(() => {
     if (!choices || choices.length === 0) {
@@ -26,14 +28,14 @@ const QuestionChoices = ({ autoSave }) => {
   const addChoice = () => {
     const currentChoices = getValues(`questions.${activeQuestion}.choices`);
     setValue(`questions.${activeQuestion}.choices`, [...currentChoices, { label: '' }]);
-    autoSave()
+    // autoSave()
   };
 
   const removeChoice = (index) => {
     const currentChoices = getValues(`questions.${activeQuestion}.choices`);
     const newChoices = currentChoices.filter((_, i) => i !== index);
     setValue(`questions.${activeQuestion}.choices`, newChoices);
-    fillEmptyChoices(newChoices);
+    fillEmptyChoiceLabels(newChoices);
     autoSave();
   };
 
@@ -67,6 +69,7 @@ const QuestionChoices = ({ autoSave }) => {
               }}
               onFocus={() => setActiveIndex(index)}
               onBlur={() => setActiveIndex(null)}
+            // onBlur={() => { setActiveIndex(null); autoSave() }}
             />
           </div>
           {choices.length > 2 && activeIndex === index && (

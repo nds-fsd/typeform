@@ -16,7 +16,7 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoices } = useCustomFormProvider();
+  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoiceLabels, activeIndex } = useCustomFormProvider();
 
   const { dirtyFields, touchedFields, isDirty } = useFormState({
     control,
@@ -31,15 +31,22 @@ export const CreateForm = withCustomFormProvider(() => {
   const choices = watch(`questions.${activeQuestion}.choices`);
   const type = watch(`questions.${activeQuestion}.type`);
   const [initialType, setInitialType] = useState('');
-
+  const [initialChoices, setInitialChoices] = useState([]);
+  // console.log(initialChoices, 'should correspond to choices changes just saved:')
+  // console.log(initialType, 'init type', type)
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
+  console.log(initialChoices, 'should correspond to choices changes saved:', choices)
   // console.log(Object.values(dirtyFields), initialType, type, choices)
 
-
+  // console.log(JSON.stringify(watchLabels) === JSON.stringify(labels));
   useEffect(() => {
+
     if (currentForm) {
+      setInitialType(currentForm.questions[activeQuestion].type);
+      setInitialChoices(currentForm.questions[activeQuestion].choices || []);
+
       setValue('title', currentForm.title || '');
       setValue(
         'questions',
@@ -48,50 +55,39 @@ export const CreateForm = withCustomFormProvider(() => {
           choices: question.choices || [],
         })) || [],
       );
-      setInitialType(currentForm.questions[activeQuestion].type);
+      // setInitialChoices(currentForm.questions[activeQuestion].choices[activeIndex]);
     }
   }, [isEditMode, currentForm, setValue]);
+  // console.log(initialChoices, 'versus', choices)
 
-  let blocker = useBlocker(({ currentLocation, nextLocation }) =>
-    (Object.keys(dirtyFields).length > 0 || (initialType ? initialType !== type : false)) &&
-    currentLocation.pathname !== nextLocation.pathname,
-  );
-
-  const onSubmit = (data) => {
-    data = fillEmptyChoices();
-    console.log(data);
-    api()
-      .patch(`/form/${id}`, data)
-      .then((response) => {
-        reset(data);
-        queryClient.invalidateQueries('forms');
-      });
-
+  const onSubmit = async (data) => {
+    data = fillEmptyChoiceLabels();
+    const res = await api().patch(`/form/${id}`, data);
     reset(data);
+    setInitialChoices(res.data.questions[activeQuestion].choices);
+    queryClient.invalidateQueries('forms');
   };
+  // const onSubmit = (data) => {
+  //   data = fillEmptyChoiceLabels();
+  //   api().patch(`/form/${id}`, data).then(
+  //     (res) => {
+  //       reset(data);
+  //       setInitialChoices(res.data.questions[activeQuestion].choices);
+  //       setInitialType(res.data.questions[activeQuestion].type);
+  //       queryClient.invalidateQueries('forms');
+  //     }
+  //   );
+  // };
 
-  const ConfirmNavigation = ({ blocker }) => {
-    if (blocker.state === "blocked") {
-      return (
-        <>
-          <p style={{ color: "red" }}>
-            Blocked the last navigation to {blocker.location.pathname}
-          </p>
-          <button onClick={() => blocker.proceed?.()}>Let me through</button>
-          <button onClick={() => blocker.reset?.()}>Keep me here</button>
-        </>
-      );
-    }
-    return null;
+  let blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    const choicesChanged = JSON.stringify(choices) !== JSON.stringify(initialChoices);
+    const typeChanged = JSON.stringify(type) !== JSON.stringify(initialType);
+    console.log(choicesChanged, 'choices cnhanges', JSON.stringify(choices), 'vs ---', JSON.stringify(initialChoices))
 
-    if (blocker.state === "proceeding") {
-      return (
-        <p style={{ color: "orange" }}>Proceeding through blocked navigation</p>
-      );
-    }
+    return (Object.keys(dirtyFields).length > 0 || choicesChanged || typeChanged) &&
+      currentLocation.pathname !== nextLocation.pathname;
+  });
 
-    return <p style={{ color: "green" }}>Blocker is currently unblocked</p>;
-  }
   return (
     <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
       {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}

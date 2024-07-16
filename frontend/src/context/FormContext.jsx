@@ -36,6 +36,7 @@ export const CustomFormProvider = ({ children }) => {
   const setActiveQuestion = (index) => {
     setValue('active', index);
   };
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const handleRemoveQuestion = useCallback(
     (index) => {
@@ -47,7 +48,7 @@ export const CustomFormProvider = ({ children }) => {
     [activeQuestion],
   );
 
-  const fillEmptyChoices = () => {
+  const fillEmptyChoiceLabels = () => {
     questions?.map((question, qIndex) => {
       question.choices?.map((choice, cIndex) => {
         if (choice.label === '') {
@@ -72,8 +73,10 @@ export const CustomFormProvider = ({ children }) => {
     watch,
     handleSubmit,
     fields,
-    fillEmptyChoices,
-    reset
+    fillEmptyChoiceLabels,
+    reset,
+    activeIndex,
+    setActiveIndex
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
