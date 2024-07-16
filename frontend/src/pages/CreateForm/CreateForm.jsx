@@ -16,33 +16,20 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoiceLabels, activeIndex } = useCustomFormProvider();
+  const { handleSubmit, setValue, activeQuestion, watch, control, reset, fillEmptyChoiceLabels, activeIndex } = useCustomFormProvider();
+  const { dirtyFields, isDirty } = useFormState({ control, });
 
-  const { dirtyFields, touchedFields, isDirty } = useFormState({
-    control,
-  });
-  // const { dirtyFields, touchedFields, isDirty } = useFormState({
-  //   control,
-  //   name: `questions.${activeQuestion}.choices`
-  // });
-
-  const currentForm = forms?.find((form) => form._id === id);
-  const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
+  const [initialChoices, setInitialChoices] = useState([]);
+
   const type = watch(`questions.${activeQuestion}.type`);
   const [initialType, setInitialType] = useState('');
-  const [initialChoices, setInitialChoices] = useState([]);
-  // console.log(initialChoices, 'should correspond to choices changes just saved:')
-  // console.log(initialType, 'init type', type)
+
+  const currentForm = forms?.find((form) => form._id === id);
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
-  console.log(initialChoices, 'should correspond to choices changes saved:', choices)
-  // console.log(Object.values(dirtyFields), initialType, type, choices)
-
-  // console.log(JSON.stringify(watchLabels) === JSON.stringify(labels));
   useEffect(() => {
-
     if (currentForm) {
       setInitialType(currentForm.questions[activeQuestion].type);
       setInitialChoices(currentForm.questions[activeQuestion].choices || []);
@@ -55,10 +42,8 @@ export const CreateForm = withCustomFormProvider(() => {
           choices: question.choices || [],
         })) || [],
       );
-      // setInitialChoices(currentForm.questions[activeQuestion].choices[activeIndex]);
     }
   }, [isEditMode, currentForm, setValue]);
-  // console.log(initialChoices, 'versus', choices)
 
   const onSubmit = async (data) => {
     data = fillEmptyChoiceLabels();
@@ -67,22 +52,10 @@ export const CreateForm = withCustomFormProvider(() => {
     setInitialChoices(res.data.questions[activeQuestion].choices);
     queryClient.invalidateQueries('forms');
   };
-  // const onSubmit = (data) => {
-  //   data = fillEmptyChoiceLabels();
-  //   api().patch(`/form/${id}`, data).then(
-  //     (res) => {
-  //       reset(data);
-  //       setInitialChoices(res.data.questions[activeQuestion].choices);
-  //       setInitialType(res.data.questions[activeQuestion].type);
-  //       queryClient.invalidateQueries('forms');
-  //     }
-  //   );
-  // };
 
   let blocker = useBlocker(({ currentLocation, nextLocation }) => {
     const choicesChanged = JSON.stringify(choices) !== JSON.stringify(initialChoices);
     const typeChanged = JSON.stringify(type) !== JSON.stringify(initialType);
-    console.log(choicesChanged, 'choices cnhanges', JSON.stringify(choices), 'vs ---', JSON.stringify(initialChoices))
 
     return (Object.keys(dirtyFields).length > 0 || choicesChanged || typeChanged) &&
       currentLocation.pathname !== nextLocation.pathname;
@@ -90,9 +63,6 @@ export const CreateForm = withCustomFormProvider(() => {
 
   return (
     <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
-      {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
-      {dirtyFields?.questions?.[activeQuestion]?.choices && <p>choices field is dirty.</p>}
-
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
@@ -103,7 +73,6 @@ export const CreateForm = withCustomFormProvider(() => {
             <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
         </form>
-
       )}
       <ConfirmationModal
         open={blocker.state === 'blocked'}
