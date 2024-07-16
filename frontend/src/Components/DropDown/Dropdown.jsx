@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import ShareButton from './ShareButton';
 import { useNavigate } from 'react-router-dom';
+import ConfirmationModal from '../Modal/ConfirmationModal';
 
 const Dropdown = ({ form, handleDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleDropdown = (event) => {
     event.stopPropagation();
-
     setIsOpen(!isOpen);
   };
 
   const handleMenuClick = (event) => {
     event.stopPropagation();
+  };
+
+  const confirmDelete = () => {
+    handleDelete(form._id);
+    setIsModalOpen(false);
   };
 
   return (
@@ -63,14 +69,20 @@ const Dropdown = ({ form, handleDelete }) => {
               Results
             </button>
             <button
-              className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
-              onClick={(event) => {
-                handleDelete(form._id, event);
-                setIsOpen(false);
-              }}
+              onClick={() => setIsModalOpen(true)}
+              className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
             >
               Delete
             </button>
+            <ConfirmationModal
+              open={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              title='Confirm Deletion'
+              description='Are you sure you want to delete the form?'
+              onConfirm={confirmDelete}
+              textOnClose='Cancel'
+              textOnConfirm='Yes'
+            />
           </div>
         </div>
       )}
