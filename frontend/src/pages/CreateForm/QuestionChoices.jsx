@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
+import { useFormState } from 'react-hook-form';
 
 const QuestionChoices = ({ autoSave }) => {
-  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoices } = useCustomFormProvider();
+  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoices, control } = useCustomFormProvider();
   const [activeIndex, setActiveIndex] = useState(null);
+  const { dirtyFields, touchedFields, isDirty } = useFormState({
+    control,
+  });
 
   const choices = watch(`questions.${activeQuestion}.choices`);
   const questionType = watch(`questions.${activeQuestion}.type`);
 
   const isSingleChoice = questionType === 'SingleChoiceQuestion';
   const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
+  console.log(Object.values(dirtyFields), choices)
 
   useEffect(() => {
     if (!choices || choices.length === 0) {
@@ -21,8 +26,7 @@ const QuestionChoices = ({ autoSave }) => {
   const addChoice = () => {
     const currentChoices = getValues(`questions.${activeQuestion}.choices`);
     setValue(`questions.${activeQuestion}.choices`, [...currentChoices, { label: '' }]);
-    // autoSave()
-
+    autoSave()
   };
 
   const removeChoice = (index) => {
@@ -30,7 +34,7 @@ const QuestionChoices = ({ autoSave }) => {
     const newChoices = currentChoices.filter((_, i) => i !== index);
     setValue(`questions.${activeQuestion}.choices`, newChoices);
     fillEmptyChoices(newChoices);
-    // autoSave();
+    autoSave();
   };
 
   return (
@@ -57,6 +61,7 @@ const QuestionChoices = ({ autoSave }) => {
               className='outline-none bg-transparent pl-2 z-1'
               placeholder={`Choice ${toLetterAbbr(index + 1)}`}
               value={choice.label}
+              {...register(`questions.${activeQuestion}.choices.${index}.label`)}
               onChange={(e) => {
                 setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
               }}
