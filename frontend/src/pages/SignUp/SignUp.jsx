@@ -29,6 +29,7 @@ const SignUp = () => {
       }
       return response.data;
     } catch (err) {
+      setError(err.response?.data.error);
       throw err.response?.data.error;
     }
   };
@@ -49,37 +50,37 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
-      <div className="bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 font-rubik">Register to Flow!</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
-
-          <div className="w-full">
+    <div className='flex items-center justify-center min-h-screen bg-custom-gradient'>
+      <div className='bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center'>
+        <h1 className='text-3xl font-bold mb-6 text-center text-gray-900 font-rubik'>Register to Flow!</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-6 w-full flex flex-col items-center'>
+          <div className='w-full'>
             <Input
               error={errors?.email?.message}
-              label="Email"
+              label='Email'
               placeholder='Email'
               {...register('email', {
                 required: { value: true, message: '*email is required' },
                 pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
               })}
             />
+            {error && <p className='text-red-500'>{error}</p>}
           </div>
 
-          <div className="w-full">
+          <div className='w-full'>
             <Input
               error={errors?.name?.message}
-              label="Name"
+              label='Name'
               placeholder='Name'
               {...register('name', { required: { value: true, message: 'Name is required' } })}
             />
           </div>
 
-          <div className="w-full">
+          <div className='w-full'>
             <Input
               error={errors?.password?.message}
               type='password'
-              label="Password"
+              label='Password'
               placeholder='Password'
               {...register('password', {
                 required: { value: true, message: 'Password is required' },
@@ -89,10 +90,15 @@ const SignUp = () => {
           </div>
           {/* <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
             {error && <p style={{ color: 'red' }}>{error}</p>} */}
-          <LargeButton submit={handleSubmit(onSubmit)} text={"SIGN UP"} />
-          <p className="w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
-            onClick={() => { navigate('/login'); }} >I already have an account</p>
-
+          <LargeButton submit={handleSubmit(onSubmit)} text={'SIGN UP'} />
+          <p
+            className='w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer'
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            I already have an account
+          </p>
         </form>
       </div>
     </div>

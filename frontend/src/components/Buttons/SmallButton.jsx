@@ -1,18 +1,25 @@
-import React from 'react'
+import React from 'react';
 
 const SmallButton = ({ text, ...rest }) => {
   return (
     <>
-      <button className="w-fit h-fit shadow-md bg-azure/80 hover:bg-[#F23C00]
-        hover:shadow-none rounded-4xl transition-all
-        duration-300 font-space-mono p-5" {...rest}>{text}</button>
+      <button
+        className='w-fit h-fit shadow-md bg-azure/80 hover:bg-[#F23C00]
+        hover:shadow-none rounded-2xl transition-all
+        duration-300 font-space-mono p-3'
+        {...rest}
+      >
+        {text}
+      </button>
     </>
-  )
-}
+  );
+};
 
-export default SmallButton
-{/* <>
+export default SmallButton;
+{
+  /* <>
 <button className="w-fit h-fit m-8 shadow-md bg-azure/80 hover:bg-white
   hover:shadow-none rounded-4xl transition-all
   duration-300 font-space-mono p-5" {...rest}>{text}</button>
-</> */}
+</> */
+}
