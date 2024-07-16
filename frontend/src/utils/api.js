@@ -28,17 +28,26 @@ export const handleDeleteUser = async (userId) => {
   }
 };
 
-const CLOUDINARY_URL = 'cloudinary://554346411718287:FkldIiBIF_uS-C-woi9_kZBEFww@dflb5okkq';
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dflb5okkq/image/upload';
+const UPLOAD_PRESET = 'profile_images'
 
-export const handleUpload = async (image) => {
+export const handleUpload = async (event) => {
+  const file = event.target.files[0];
+  
   const formData = new FormData();
-  formData.append('file', image);
-
-  const response = await axios.post(CLOUDINARY_URL, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-
-  return response.data.secure_url;
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  
+  try {
+    const response = await axios.post(CLOUDINARY_URL, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.secure_url;
+  } catch (error) {
+    console.error('Error uploading image', error);
+    throw new Error('Error uploading image');
+  }
 };
+

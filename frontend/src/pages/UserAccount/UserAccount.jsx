@@ -14,7 +14,7 @@ import { useUserProvider } from '../../context/UserContext.jsx';
 import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import DeleteUser from './DeleteUser.jsx';
-import FileInput from '../../components/FileInput/FileInput.jsx';
+
 // importar user (name, email e picture) de un UserContext.
 
 const UserAccount = () => {
