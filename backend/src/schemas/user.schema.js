@@ -10,6 +10,7 @@ const userSchema = new Schema({
   name: { type: String },
   password: { type: String },
   createdAt: { type: Date, default: Date.now },
+  profilePicture: { type: String }
 });
 
 userSchema.pre('save', function (next) {

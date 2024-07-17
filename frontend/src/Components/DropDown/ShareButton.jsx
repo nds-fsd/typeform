@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CopyClipboard from './CopyClipboard';
 
-const ShareButton = ({ formId }) => {
+const ShareButton = ({ formId, publishBtnClass }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -9,7 +9,7 @@ const ShareButton = ({ formId }) => {
       <button
         type='button'
         onClick={() => setShowModal(true)}
-        className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+        className={publishBtnClass || 'font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'}
       >
         Publish
       </button>
