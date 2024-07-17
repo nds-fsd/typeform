@@ -43,20 +43,21 @@ const Workspace = withCustomFormProvider(() => {
   }, [])
 
   return (
-    <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-custom-gradient bg-cover min-h-screen">
-      < UserNavbar />
-      <div className='flex bg-neutral-100/25 m-0 rounded-2xl gap-8 h-max p-8'>
-        <SmallButton text='create new form' onClick={handleSubmit(handleCreate)} />
-        <div className='grid grid-cols-4 grid-flow-row gap-8'>
-          {forms && forms.length > 0 ? (
-            forms.map((form) => <FormCard key={form._id} form={form} />)
-          ) : (
-            <p>{emptyWorkspaceMessage}</p>
-          )}
-          <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+    <div className="flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient bg-cover">
+      <UserNavbar />
+      <div className="flex-grow m-4 md:m-8 p-4 md:p-8 bg-white rounded-2xl overflow-hidden">
+        <SmallButton text="create new form" onClick={handleSubmit(handleCreate)} />
+        <div className="mt-4 md:mt-8 p-2 h-full overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
+            {forms && forms.length > 0 ? (
+              forms.map((form) => <FormCard key={form._id} form={form} />)
+            ) : (
+              <p>{emptyWorkspaceMessage}</p>
+            )}
+          </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 });
 
