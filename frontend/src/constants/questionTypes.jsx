@@ -6,7 +6,7 @@ import React from 'react';
 
 const SquaredIcon = ({ icon, color, number }) => {
   return (
-    <span className={`rounded p-1 ${color} text-gray-900 flex items-center gap-2 text-xs`}>
+    <span className={`rounded p-1 ${color} text-gray-900 flex items-center gap-2 text-xs w-10`}>
       {icon}
       {number}
     </span>
