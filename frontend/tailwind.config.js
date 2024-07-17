@@ -12,7 +12,7 @@ module.exports = {
         '4xl': '3rem',
       },
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgba(0,212,255,1) 100%)',
+        'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgb(240, 255, 255) 100%)',
       },
       colors: {
         azure: '#F0FFFF',
