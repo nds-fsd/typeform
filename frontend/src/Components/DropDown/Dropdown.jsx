@@ -7,7 +7,7 @@ const Dropdown = ({ form, handleDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  console.log(form, 'form by props')
+
   const toggleDropdown = (event) => {
     event.stopPropagation();
     setIsOpen(!isOpen);

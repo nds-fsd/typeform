@@ -1,6 +1,6 @@
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { questionTypes } from '../../constants/questionTypes.jsx';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import Select from '../../components/Form/Select.jsx';
 
 const QuestionOptions = () => {

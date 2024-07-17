@@ -19,7 +19,6 @@ export const handleDeleteForm = async (formId) => {
 
 export const handleDeleteUser = async (userId) => {
   try {
-    console.log(userId)
     const res = await api().delete(`/user/${userId}`);
     return res.data;
   } catch (error) {
@@ -33,11 +32,11 @@ const UPLOAD_PRESET = 'profile_images'
 
 export const handleUpload = async (event) => {
   const file = event.target.files[0];
-  
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', UPLOAD_PRESET);
-  
+
   try {
     const response = await axios.post(CLOUDINARY_URL, formData, {
       headers: {

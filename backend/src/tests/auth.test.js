@@ -24,7 +24,6 @@ describe('Auth controller TEST', () => {
     describe('POST /register', () => {
         it('should allow user to register', async () => {
             const res = await fakeRequest.post('/signup').send(userData);
-            // console.log(res.body);
             expect(res.status).toBe(201);
             expect(res.body.token).toBeDefined();
             expect(res.body.user.id).toBeDefined();
@@ -32,7 +31,6 @@ describe('Auth controller TEST', () => {
             expect(res.body.user.name).toBeDefined();
             const createdAt = new Date(res.body.user.createdAt);
             expect(createdAt.getTime()).toBeLessThanOrEqual(Date.now());
-            // console.log('gtetime', createdAt.getTime(), 'date now:', Date.now());
             expect(res.body.user.password).not.toBe(userData.password);
             console.log(res.body.user.password);
         })
@@ -46,7 +44,6 @@ describe('Auth controller TEST', () => {
             expect(res.body.token).toBeDefined();
             expect(res.body.user.email).toBe(userData.email);
             expect(res.body.user.name).toBe(userData.name);
-            // expect(res.body.user.role)
         });
         it('shouldn\'t allow unregistered emails to login', async () => {
             const res = await fakeRequest.post('/login').send({

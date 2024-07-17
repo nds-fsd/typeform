@@ -23,7 +23,6 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
   return (
     <div className='flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800 border-b-2 justify-between'>
       <UsernamesWorkspace />
-      {/* <MyWorkspaceLink /> */}
       {/* <UserGreeting /> */}
       {isCreateMode && (
         <div className={'flex align-right'}>
