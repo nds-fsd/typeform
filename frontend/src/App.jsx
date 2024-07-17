@@ -11,7 +11,7 @@ import SignUp from './pages/SignUp/SignUp.jsx';
 import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
 import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
-import ResponseForm from './pages/ResponsePage/ResponseForm.jsx';
+// import ResponseForm from './pages/ResponsePage/ResponseForm.jsx';
 import FormAnswers from './pages/FormAnswers/FormAnswers.jsx';
 import UserAccount from './pages/UserAccount/UserAccount.jsx';
 
@@ -25,7 +25,7 @@ const router = createBrowserRouter(
       {token && (
         <>
           <Route path='/formAnswers' element={<FormAnswers />} />
-          <Route path='/responseform/:id' element={<ResponseForm />} />
+          {/* <Route path='/responseform/:id' element={<ResponseForm />} /> */}
           <Route path='/workspace' element={<Workspace />} />
           <Route path='/createform/:id?' element={<CreateForm />} />
           <Route path='/user/:id/account' element={<UserAccount />} />
