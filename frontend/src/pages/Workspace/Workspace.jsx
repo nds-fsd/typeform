@@ -5,7 +5,7 @@ import { emptyWorkspaceMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { getUserSession } from '../../utils/localStorage.js';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
-import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
+// import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import { api } from '../../utils/api.js';
 import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
 import { useQueryClient } from 'react-query';
