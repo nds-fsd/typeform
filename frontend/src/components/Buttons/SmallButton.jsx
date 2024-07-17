@@ -4,9 +4,8 @@ const SmallButton = ({ text, ...rest }) => {
   return (
     <>
       <button
-        className='w-fit h-fit shadow-md bg-azure/80 hover:bg-[#F23C00]
-        hover:shadow-none rounded-2xl transition-all
-        duration-300 font-space-mono p-3'
+        className='w-fit h-fit shadow-md bg-azure/80 hover:shadow-none transition-all duration-100 font-space-mono hover:bg-gray-200/30
+        rounded-2xl p-3'
         {...rest}
       >
         {text}

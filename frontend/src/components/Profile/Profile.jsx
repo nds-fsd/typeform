@@ -31,7 +31,7 @@ const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   }
 
   return (
-    <div className="flex items-center justify-center gap-3 dropdown dropdown-end scale-150 absolute top-10 right-12">
+    <div className="flex items-center justify-center gap-3 dropdown dropdown-end scale-150 pl-6 pr-6">
       <h2>Hi, {userName}</h2>
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
