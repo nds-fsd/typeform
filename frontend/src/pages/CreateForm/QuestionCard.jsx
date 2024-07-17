@@ -11,7 +11,7 @@ const QuestionCard = ({ question, index, onDragStart, onDragOver, onDrop }) => {
 
   const isSelected = activeQuestion === index;
 
-  const icon = questionTypes.find((questionType) => questionType.value === question.type).icon;
+  const icon = questionTypes?.find((questionType) => questionType.value === question.type)?.icon;
 
   return (
     <div className='relative'>
