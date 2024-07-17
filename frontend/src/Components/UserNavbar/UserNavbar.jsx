@@ -21,14 +21,13 @@ const UserNavbar = ({ isCreateMode }) => {
   };
 
   return (
-    <div className='flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800'>
+    <div className='flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800 border-b-2 justify-between'>
       <UsernamesWorkspace />
       {/* <MyWorkspaceLink /> */}
       {/* <UserGreeting /> */}
-      <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
       {isCreateMode && (
-        <>
-          <ShareButton formId={id} />
+        <div className={'flex align-right'}>
+          <ShareButton formId={id} publishBtnClass={"w-60 h-14 text-gray-900 shadow-md bg-azure hover:bg-white hover:shadow-none rounded-4xl transition-all duration-300"} />
           <button
             onClick={() => {
               navigate(`/formAnswers?form=${id}`)
@@ -44,7 +43,9 @@ const UserNavbar = ({ isCreateMode }) => {
           >
             Delete
           </button>
-        </>
+          <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+
+        </div>
 
 
       )

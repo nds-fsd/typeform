@@ -63,7 +63,7 @@ export const CreateForm = withCustomFormProvider(() => {
 
   return (
     <div className='flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient'>
-      <UserNavbar showUserIcon={true} />
+      <UserNavbar isCreateMode={true} />
       {!isLoading && (
         <form className='h-full p-5' onSubmit={handleSubmit(onSubmit)}>
           <SmallButton text='save' />

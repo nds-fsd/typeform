@@ -44,7 +44,7 @@ const FormAnswers = () => {
 
   return (
     <div className={'flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll'}>
-      <UserNavbar />
+      <UserNavbar isCreateMode={false} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <table>
         <thead>

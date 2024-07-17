@@ -33,7 +33,6 @@ const Dropdown = ({ form, handleDelete }) => {
           aria-expanded={isOpen}
           onClick={toggleDropdown}
           onBlur={toggleDropdown}
-
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
