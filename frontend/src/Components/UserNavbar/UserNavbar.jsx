@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../Modal/ConfirmationModal';
 import { useState } from 'react';
 
-const UserNavbar = () => {
+const UserNavbar = ({ isCreateMode }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -25,22 +25,32 @@ const UserNavbar = () => {
       <UsernamesWorkspace />
       {/* <MyWorkspaceLink /> */}
       {/* <UserGreeting /> */}
-      <ShareButton formId={id} />
       <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
-      <button
-        onClick={() => {
-          navigate(`/formAnswers?form=${id}`)
-        }}
-        className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
-      >
-        Results
-      </button>
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
-      >
-        Delete
-      </button>
+      {isCreateMode && (
+        <>
+          <ShareButton formId={id} />
+          <button
+            onClick={() => {
+              navigate(`/formAnswers?form=${id}`)
+            }}
+            className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+          >
+            Results
+          </button>
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
+          >
+            Delete
+          </button>
+        </>
+
+
+      )
+
+      }
+
       <ConfirmationModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
