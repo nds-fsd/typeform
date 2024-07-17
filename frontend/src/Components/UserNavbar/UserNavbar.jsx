@@ -16,7 +16,7 @@ const UserNavbar = () => {
 
 
   const confirmDelete = (id) => {
-    handleDelete(id);
+    // handleDelete(id);
     setIsModalOpen(false);
   };
 
@@ -46,7 +46,7 @@ const UserNavbar = () => {
         onClose={() => setIsModalOpen(false)}
         title='Confirm Deletion'
         description='Are you sure you want to delete the form?'
-        onConfirm={confirmDelete(id)}
+        onConfirm={() => confirmDelete(id)}
         textOnClose='Cancel'
         textOnConfirm='Yes'
       />
