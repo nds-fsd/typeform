@@ -1,6 +1,5 @@
 import UserGreeting from './UserGreeting';
 import UsernamesWorkspace from './UsernamesWorkspace';
-import MyWorkspaceLink from './MyWorkspaceLink';
 import ProfileIcon from '../Profile/Profile';
 import { useParams } from 'react-router-dom';
 import ShareButton from '../DropDown/ShareButton';
