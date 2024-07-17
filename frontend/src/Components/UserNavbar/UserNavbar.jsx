@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../Modal/ConfirmationModal';
 import { useState } from 'react';
 
-const UserNavbar = ({ isCreateMode }) => {
+const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -36,22 +36,14 @@ const UserNavbar = ({ isCreateMode }) => {
           >
             Results
           </button>
-
           <button
             onClick={() => setIsModalOpen(true)}
             className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
           >
             Delete
           </button>
-          <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
-
         </div>
-
-
-      )
-
-      }
-
+      )}
       <ConfirmationModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -61,6 +53,9 @@ const UserNavbar = ({ isCreateMode }) => {
         textOnClose='Cancel'
         textOnConfirm='Yes'
       />
+      {showProfileIcon && (
+        <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+      )}
     </div>
   );
 };

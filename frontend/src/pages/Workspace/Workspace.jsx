@@ -44,7 +44,7 @@ const Workspace = withCustomFormProvider(() => {
 
   return (
     <div className="flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient bg-cover">
-      <UserNavbar />
+      <UserNavbar isCreateMode={false} />
       <div className="flex-grow m-4 md:m-8 p-4 md:p-8 bg-white rounded-2xl overflow-hidden">
         <SmallButton text="create new form" onClick={handleSubmit(handleCreate)} />
         <div className="mt-4 md:mt-8 p-2 h-full overflow-y-auto">

@@ -15,8 +15,6 @@ import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import DeleteUser from './DeleteUser.jsx';
 
-// importar user (name, email e picture) de un UserContext.
-
 const UserAccount = () => {
     const { userId, userEmail } = useUserProvider();
 
@@ -27,7 +25,7 @@ const UserAccount = () => {
     // }, [])
     return (
         <div>
-            <UserNavbar icon={false} />
+            <UserNavbar showProfileIcon={false} />
             <h2>{userEmail}</h2>
             <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
             <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
