@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
 const QuestionChoices = ({ autoSave }) => {
-  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoices } = useCustomFormProvider();
-  const [activeIndex, setActiveIndex] = useState(null);
+  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoiceLabels, control, activeIndex, setActiveIndex } = useCustomFormProvider();
 
   const choices = watch(`questions.${activeQuestion}.choices`);
   const questionType = watch(`questions.${activeQuestion}.type`);
 
   const isSingleChoice = questionType === 'SingleChoiceQuestion';
-  const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
 
   useEffect(() => {
     if (!choices || choices.length === 0) {
@@ -21,16 +19,14 @@ const QuestionChoices = ({ autoSave }) => {
   const addChoice = () => {
     const currentChoices = getValues(`questions.${activeQuestion}.choices`);
     setValue(`questions.${activeQuestion}.choices`, [...currentChoices, { label: '' }]);
-    // autoSave()
-
   };
 
   const removeChoice = (index) => {
     const currentChoices = getValues(`questions.${activeQuestion}.choices`);
     const newChoices = currentChoices.filter((_, i) => i !== index);
     setValue(`questions.${activeQuestion}.choices`, newChoices);
-    fillEmptyChoices(newChoices);
-    // autoSave();
+    fillEmptyChoiceLabels(newChoices);
+    autoSave();
   };
 
   return (
@@ -57,6 +53,7 @@ const QuestionChoices = ({ autoSave }) => {
               className='outline-none bg-transparent pl-2 z-1'
               placeholder={`Choice ${toLetterAbbr(index + 1)}`}
               value={choice.label}
+              {...register(`questions.${activeQuestion}.choices.${index}.label`)}
               onChange={(e) => {
                 setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
               }}
@@ -84,3 +81,5 @@ const QuestionChoices = ({ autoSave }) => {
 };
 
 export default QuestionChoices;
+
+

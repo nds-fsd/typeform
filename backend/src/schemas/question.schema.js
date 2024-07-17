@@ -24,7 +24,7 @@ const QuestionSchema = new Schema(
   },
 );
 
-const TextQuestion = QuestionSchema.discriminator('TextQuestion', new Schema({}));
+exports.TextQuestion = QuestionSchema.discriminator('TextQuestion', new Schema({}));
 
 const QuestionChoice = new Schema({
   choices: [
@@ -37,11 +37,11 @@ const QuestionChoice = new Schema({
   ],
 });
 
-const MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuestion', QuestionChoice);
+exports.MultipleChoiceQuestion = QuestionSchema.discriminator('MultipleChoiceQuestion', QuestionChoice);
 
-const SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', QuestionChoice);
+exports.SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestion', QuestionChoice);
 
-const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
+exports.YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
 
 exports.QuestionSchema = QuestionSchema;
 

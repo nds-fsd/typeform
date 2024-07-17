@@ -6,7 +6,7 @@
   "homepage": "",
   "license": "ISC",
   "scripts": {
-    "dev": "cross-env nodemon src/index.js",
+    "dev": "nodemon src/index.js",
     "start": "node --watch src/index.js",
     "test": "NODE_ENV=test cross-env jest --coverage --runInBand"
   },

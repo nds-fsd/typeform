@@ -11,5 +11,8 @@ export default defineConfig(({ command, mode }) => {
     define: {
       'process.env.REACT_APP_BACKEND_URL': JSON.stringify(env.REACT_APP_BACKEND_URL),
     },
+    optimizeDeps: {
+      include: ['react-copy-to-clipboard'],
+    }
   };
 });

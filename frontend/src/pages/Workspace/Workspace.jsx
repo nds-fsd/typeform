@@ -10,16 +10,32 @@ import UserGreeting from '../../components/UserNavbar/UserGreeting.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
+import { api } from '../../utils/api.js';
+import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
+import { useQueryClient } from 'react-query';
 
 
-const Workspace = () => {
+const Workspace = withCustomFormProvider(() => {
+  const { handleSubmit, reset } = useCustomFormProvider();
+
   const navigate = useNavigate();
   const { userName } = useUserProvider();
 
   const { forms } = useForms();
-  console.log(forms)
-  const handleCreate = () => {
-    navigate('/createform');
+  const queryClient = useQueryClient();
+
+  const handleCreate = (data) => {
+    api()
+      .post('/form', data)
+      .then((response) => {
+        if (response && response.data && response.data._id) {
+          reset(data);
+          queryClient.invalidateQueries('forms');
+          navigate(`/createform/${response.data._id}`)
+        } else {
+          console.error('Form creation was successful but no ID was returned');
+        }
+      }).catch((error) => console.error('Error creating form:', error))
   };
 
   useEffect(() => {
@@ -30,7 +46,7 @@ const Workspace = () => {
     <div className="flexm-0 min-h-screen min-w-screen overflow-y-auto bg-custom-gradient bg-cover">
       < UserNavbar />
       <div className='flex bg-neutral-100/25 m-0 rounded-2xl gap-8 h-max p-8'>
-        <SmallButton text='create new form' onClick={() => handleCreate()} />
+        <SmallButton text='create new form' onClick={handleSubmit(handleCreate)} />
         <div className='grid grid-cols-4 grid-flow-row gap-8'>
           {forms && forms.length > 0 ? (
             forms.map((form) => <FormCard key={form._id} form={form} />)
@@ -42,6 +58,6 @@ const Workspace = () => {
       </div>
     </div >
   );
-};
+});
 
 export default Workspace;

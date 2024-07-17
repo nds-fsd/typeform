@@ -1,14 +1,13 @@
 import { handleDeleteForm } from '../../utils/api';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import SmallButton from '../../components/Buttons/SmallButton';
+import Dropdown from '../../components/DropDown/Dropdown';
 
 const FormCard = ({ form }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const handleDelete = (formId, event) => {
-    event.stopPropagation();
+  const handleDelete = (formId) => {
     deleteFormByIdMutation.mutate(formId);
   };
 
@@ -24,10 +23,14 @@ const FormCard = ({ form }) => {
 
   return (
     <div
-      className={'w-60 h-40 flex items-center justify-center shadow-md rounded-3xl hover:shadow-none transition-all duration-300 font-space-mono hover:border-2 border-[#FC00B9]'}
-      onClick={() => navigate(`/createform/${form._id}`)}>
-      <p>{form.title}</p>
-      <SmallButton text='X' onClick={(event) => handleDelete(form._id, event)} />
+      className='relative w-60 h-40 flex flex-col items-center justify-center shadow-md rounded-3xl hover:shadow-none transition-all duration-300 font-space-mono hover:border-2 border-[#FC00B9]'
+      onClick={() => navigate(`/createform/${form._id}`)}
+    >
+      <div className='absolute top-2 right-2'>
+        <Dropdown form={form} handleDelete={handleDelete} />
+      </div>
+      <p className='mt-6'>{form.title}</p>
+      <div className='flex flex-row relative top-3 right-'></div>
     </div>
   );
 };

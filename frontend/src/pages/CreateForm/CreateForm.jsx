@@ -16,22 +16,24 @@ export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, getValues, activeQuestion, watch, control, reset, fillEmptyChoices } = useCustomFormProvider();
-  const { dirtyFields, touchedFields, isDirty } = useFormState({
-    control,
-  });
+  const { handleSubmit, setValue, activeQuestion, watch, control, reset, fillEmptyChoiceLabels, activeIndex } = useCustomFormProvider();
+  const { dirtyFields, isDirty } = useFormState({ control, });
 
-  const currentForm = forms?.find((form) => form._id === id);
-  const questions = watch('questions');
   const choices = watch(`questions.${activeQuestion}.choices`);
+  const [initialChoices, setInitialChoices] = useState([]);
+
   const type = watch(`questions.${activeQuestion}.type`);
   const [initialType, setInitialType] = useState('');
 
+  const currentForm = forms?.find((form) => form._id === id);
   const isEditMode = !!id && currentForm;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isEditMode) {
+    if (currentForm) {
+      setInitialType(currentForm.questions[activeQuestion].type);
+      setInitialChoices(currentForm.questions[activeQuestion].choices || []);
+
       setValue('title', currentForm.title || '');
       setValue(
         'questions',
@@ -40,64 +42,27 @@ export const CreateForm = withCustomFormProvider(() => {
           choices: question.choices || [],
         })) || [],
       );
-      setInitialType(currentForm.questions[activeQuestion].type);
     }
   }, [isEditMode, currentForm, setValue]);
-  console.log(Object.keys(dirtyFields), initialType, type)
 
-  let blocker = useBlocker(({ currentLocation, nextLocation }) =>
-    (Object.keys(dirtyFields)?.length > 0 || initialType !== type) &&
-    currentLocation.pathname !== nextLocation.pathname,
-  );
-
-  const onSubmit = (data) => {
-    data = fillEmptyChoices();
-    if (isEditMode) {
-      console.log(data);
-      api()
-        .patch(`/form/${id}`, data)
-        .then((response) => {
-          reset(data);
-          queryClient.invalidateQueries('forms');
-        });
-    } else {
-      api()
-        .post('/form', data)
-        .then((response) => {
-          reset(data);
-          queryClient.invalidateQueries('forms');
-        });
-    }
+  const onSubmit = async (data) => {
+    data = fillEmptyChoiceLabels();
+    const res = await api().patch(`/form/${id}`, data);
     reset(data);
+    setInitialChoices(res.data.questions[activeQuestion].choices);
+    queryClient.invalidateQueries('forms');
   };
 
-  const ConfirmNavigation = ({ blocker }) => {
-    if (blocker.state === "blocked") {
-      return (
-        <>
-          <p style={{ color: "red" }}>
-            Blocked the last navigation to {blocker.location.pathname}
-          </p>
-          <button onClick={() => blocker.proceed?.()}>Let me through</button>
-          <button onClick={() => blocker.reset?.()}>Keep me here</button>
-        </>
-      );
-    }
-    return null;
+  let blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    const choicesChanged = JSON.stringify(choices) !== JSON.stringify(initialChoices);
+    const typeChanged = JSON.stringify(type) !== JSON.stringify(initialType);
 
-    if (blocker.state === "proceeding") {
-      return (
-        <p style={{ color: "orange" }}>Proceeding through blocked navigation</p>
-      );
-    }
+    return (Object.keys(dirtyFields).length > 0 || choicesChanged || typeChanged) &&
+      currentLocation.pathname !== nextLocation.pathname;
+  });
 
-    return <p style={{ color: "green" }}>Blocker is currently unblocked</p>;
-  }
   return (
     <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
-      {dirtyFields?.questions?.[activeQuestion]?.description && <p>Description field is dirty.</p>}
-      {dirtyFields?.questions?.[activeQuestion]?.choices && <p>choices field is dirty.</p>}
-
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
         <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
@@ -108,7 +73,6 @@ export const CreateForm = withCustomFormProvider(() => {
             <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
         </form>
-
       )}
       <ConfirmationModal
         open={blocker.state === 'blocked'}
