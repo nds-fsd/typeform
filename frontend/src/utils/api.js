@@ -51,3 +51,22 @@ export const handleUpload = async (event) => {
   }
 };
 
+export const handleUpdateProfilePicture = async (userId, profilePictureUrl) => {
+  try {
+    const res = await api().put(`/user/${userId}`, { profilePicture: profilePictureUrl });
+    return res.data;
+  } catch (error) {
+    console.error('Error updating profile picture', error);
+    throw new Error('Error updating profile picture');
+  }
+};
+
+export const fetchUserData = async (userId) => {
+  try {
+    const res = await api().get(`/user/${userId}`);
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching user data', error);
+    throw new Error('Error fetching user data');
+  }
+};
