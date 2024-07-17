@@ -12,7 +12,7 @@ import { getUserToken } from './utils/localStorage.js';
 import Login from './pages/Login/Login.jsx';
 import { CreateForm } from './pages/CreateForm/CreateForm.jsx';
 // import ResponseForm from './pages/ResponsePage/ResponseForm.jsx';
-import FormAnswers from './pages/FormAnswers/FormAnswers.jsx';
+// import FormAnswers from './pages/FormAnswers/FormAnswers.jsx';
 import UserAccount from './pages/UserAccount/UserAccount.jsx';
 
 const token = getUserToken();
@@ -24,7 +24,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       {token && (
         <>
-          <Route path='/formAnswers' element={<FormAnswers />} />
+          {/* <Route path='/formAnswers' element={<FormAnswers />} /> */}
           {/* <Route path='/responseform/:id' element={<ResponseForm />} /> */}
           <Route path='/workspace' element={<Workspace />} />
           <Route path='/createform/:id?' element={<CreateForm />} />
