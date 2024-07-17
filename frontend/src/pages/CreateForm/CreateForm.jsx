@@ -62,10 +62,10 @@ export const CreateForm = withCustomFormProvider(() => {
   });
 
   return (
-    <div className='flexm-0 h-screen min-w-screen bg-custom-gradient'>
+    <div className='flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient'>
       <UserNavbar showUserIcon={true} />
       {!isLoading && (
-        <form className='h-full' onSubmit={handleSubmit(onSubmit)}>
+        <form className='h-full p-5' onSubmit={handleSubmit(onSubmit)}>
           <SmallButton text='save' />
           <div className='flex h-full p-2'>
             <QuestionList autoSave={handleSubmit(onSubmit)} />
