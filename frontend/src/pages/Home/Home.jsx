@@ -4,7 +4,7 @@ import { getUserToken } from '../../utils/localStorage.js';
 
 const Home = () => {
   const token = getUserToken();
-  console.log(getUserToken());
+  // console.log(getUserToken());
   return (
     <div className='bg-custom-gradient min-h-screen flex items-center justify-center p-2'>
       <div className='bg-white p-10 rounded-3xl shadow-md flex flex-col items-center w-full h-[90vh] mx-4'>
@@ -21,7 +21,7 @@ const Home = () => {
               hover:shadow-none hover:border hover:border-gray-600 rounded-4xl transition-all
               duration-300 font-space mono scale-150'
             >
-              <span className='font-bold'>Yes!</span>, Let's do this!
+              <span className='font-bold'>Yes!</span> Let's do this!
             </button>
           </Link>
         </div>

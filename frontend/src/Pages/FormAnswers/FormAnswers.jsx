@@ -51,7 +51,8 @@ const FormAnswers = () => {
           <tr>
             <th>DATE</th>
             {currentForm?.questions.map((question, index) => (
-              <th key={index}>{question.type}{question.text}</th>
+              // type icon
+              <th key={index}>{question.text}</th>
             ))}
           </tr>
         </thead>

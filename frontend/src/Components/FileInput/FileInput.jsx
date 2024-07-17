@@ -15,43 +15,43 @@ export const FileInput = () => {
         ['user', userId],
         () => fetchUserData(userId),
         { retry: false }
-        );
-    
+    );
+
     useEffect(() => {
         if (user?.profilePicture) {
             setUrlImage(user.profilePicture);
         }
-        }, [user]);
+    }, [user]);
 
     if (isLoading) {
-        return <div>Loading...</div> 
+        return <div>Loading...</div>
     }
-    
+
     if (isError) {
-        return <div>Sorry, there is an error.</div> 
+        return <div>Sorry, there is an error.</div>
     }
 
 
 
     const handleFileChange = async (event) => {
         try {
-          const url = await handleUpload(event);
-          setUrlImage(url);
-          await handleUpdateProfilePicture(userId, url);
-          refetch();
+            const url = await handleUpload(event);
+            setUrlImage(url);
+            await handleUpdateProfilePicture(userId, url);
+            refetch();
         } catch (error) {
-          console.error('Error uploading file', error);
+            console.error('Error uploading file', error);
         }
-      }; 
+    };
 
     return (
         <div>
             <div className="relative w-40 h-10">
                 <input id="file-input" type="file" className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
-                accept="image/png, image/jpeg" onChange={handleFileChange}/>
+                    accept="image/png, image/jpeg" onChange={handleFileChange} />
                 <button type="button" className="w-full h-full shadow-md bg-azure hover:bg-white hover:shadow-none hover:border
                  hover:border-gray-600 rounded-4xl transition-all duration-300">
-                <p>Change profile picture</p>
+                    <p>change picture</p>
                 </button>
                 {/* <button type="button" onClick={onSubmit}>Submit</button> */}
                 <ProfilePicture imageUrl={url_Image} />

@@ -24,15 +24,17 @@ const UserAccount = () => {
 
     // }, [])
     return (
-        <div>
+        <div className={'bg-custom-gradient bg-cover h-screen w-screen justify-center'}>
             <UserNavbar showProfileIcon={false} />
-            <h2>{userEmail}</h2>
-            <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
-            <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
-            <DeleteUser />
-            <FileInput />
-            <div>
-                {/* <ProfileIcon /> */}
+            <div className={'flex flex-col items-center gap-8'}>
+                <h1>{userEmail}</h1>
+                <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
+                <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
+                <DeleteUser />
+                <FileInput />
+                <div>
+                    {/* <ProfileIcon /> */}
+                </div>
             </div>
         </div>
     );

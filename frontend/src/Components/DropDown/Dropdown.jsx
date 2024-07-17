@@ -7,7 +7,7 @@ const Dropdown = ({ form, handleDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
+  console.log(form, 'form by props')
   const toggleDropdown = (event) => {
     event.stopPropagation();
     setIsOpen(!isOpen);
@@ -32,7 +32,7 @@ const Dropdown = ({ form, handleDelete }) => {
           aria-haspopup='true'
           aria-expanded={isOpen}
           onClick={toggleDropdown}
-          onBlur={toggleDropdown}
+        // onBlur={toggleDropdown}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
