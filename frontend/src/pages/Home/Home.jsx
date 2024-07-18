@@ -10,7 +10,7 @@ const Home = () => {
       <div className='bg-white p-10 rounded-3xl shadow-md flex flex-col items-center w-full h-[90vh] mx-4'>
         <div className='flex flex-col items-center justify-center h-full'>
           <div className='mb-36'>
-            <img style={{ width: 318, height: 60 }} src='src/Assets/Surflow logo@2x.png' alt='Surflow Logo' />
+            <img style={{ width: 318, height: 60 }} src='src/assets/Surflow logo@2x.png' alt='Surflow Logo' />
           </div>
           <h1 className=' text-gray-900 text-center text-3xl mb-24'>
             Are your surveys ready to <span className='text-gray-900 font-bold underline'>FLOW</span>?
