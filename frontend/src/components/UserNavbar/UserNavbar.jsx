@@ -1,6 +1,5 @@
 import UserGreeting from './UserGreeting';
 import UsernamesWorkspace from './UsernamesWorkspace';
-import MyWorkspaceLink from './MyWorkspaceLink';
 import ProfileIcon from '../Profile/Profile';
 import { useParams } from 'react-router-dom';
 import ShareButton from '../DropDown/ShareButton';
@@ -23,7 +22,6 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
   return (
     <div className='flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800 border-b-2 justify-between'>
       <UsernamesWorkspace />
-      {/* <MyWorkspaceLink /> */}
       {/* <UserGreeting /> */}
       {isCreateMode && (
         <div className={'flex align-right'}>

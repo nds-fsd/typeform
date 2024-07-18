@@ -17,7 +17,6 @@ const ResponseForm = () => {
       try {
         const res = await api().get(`/form/${formId}`);
         setFormData(res.data);
-        console.log(res.data);
       } catch (error) {
         console.error('Error fetching form data:', error);
       }
@@ -63,7 +62,6 @@ const ResponseForm = () => {
       creationDateTime: new Date(),
       updateDateTime: new Date(),
     };
-    console.log(submissionData);
     postAnswer(submissionData);
     setShowModal(true);
   };

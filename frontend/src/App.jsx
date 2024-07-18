@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Navigate,
   Route,
-  RouterProvider,
-  Routes,
-  useNavigate,
+  RouterProvider
 } from 'react-router-dom';
 import Home from './pages/Home/Home.jsx';
 import Workspace from './pages/Workspace/Workspace.jsx';

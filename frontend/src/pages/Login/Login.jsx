@@ -22,7 +22,7 @@ const Login = () => {
         navigate('/workspace');
       })
       .catch((error) => {
-        setError(error.response.data.error);
+        setError(error.response?.data?.error || {});
       });
   };
 

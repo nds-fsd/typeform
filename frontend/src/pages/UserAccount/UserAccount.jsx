@@ -1,9 +1,3 @@
-/* 
-1. profile picture
-2. edit profile picture button
-3. change password button
-4. delete account OK
-*/
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { FileInput } from '../../components/FileInput/FileInput.jsx';
@@ -18,11 +12,6 @@ import DeleteUser from './DeleteUser.jsx';
 const UserAccount = () => {
     const { userId, userEmail } = useUserProvider();
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     console.log(getUserSession().email)
-
-    // }, [])
     return (
         <div className={'bg-custom-gradient bg-cover h-screen w-screen justify-center'}>
             <UserNavbar showProfileIcon={false} />

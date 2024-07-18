@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import QuestionCard from './QuestionCard.jsx';
-import { useFormState } from 'react-hook-form';
 import Input from '../../components/Form/Input.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 
 export const QuestionList = ({ autoSave }) => {
-  const { swapQuestion, addQuestion, setActiveQuestion, register, getValues, control, questions } = useCustomFormProvider();
-  const { dirtyFields, isDirty } = useFormState({
-    control
-  });
-  let [isOpen, setIsOpen] = useState(false);
-
+  const { swapQuestion, addQuestion, setActiveQuestion, register, questions } = useCustomFormProvider();
 
   const [draggedIndex, setDraggedIndex] = useState(null);
+
   const handleDragStart = (e, index) => {
     setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
   };
 
   const handleOnDrop = (e, dropIndex) => {
@@ -26,21 +25,15 @@ export const QuestionList = ({ autoSave }) => {
     setDraggedIndex(null);
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
   const handleAddQuestion = () => {
     setIsOpen(true);
-    console.log(isOpen)
     addQuestion({ text: '', type: 'TextQuestion', description: '' });
-    const newIndex = questions.length; // O índice da nova pergunta
+    const newIndex = questions.length;
     setActiveQuestion(newIndex);
   };
 
   return (
     <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
-
       <header className='flex flex-col gap-2'>
         <Input type='text' placeholder='Form name' {...register('title')} onBlur={autoSave} />
         <h2 className='text-2xl'>Questions</h2>

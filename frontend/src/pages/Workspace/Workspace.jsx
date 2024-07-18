@@ -1,14 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import FormCard from '../CreateForm/FormCard.jsx';
 import { useForms } from '../../hooks/useForms.js';
-import ProfileIcon from '../../components/Profile/Profile.jsx';
 import { emptyWorkspaceMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { getUserSession } from '../../utils/localStorage.js';
-import { useUserProvider } from '../../context/UserContext.jsx';
-import UserGreeting from '../../components/UserNavbar/UserGreeting.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
-import UsernamesWorkspace from '../../components/UserNavbar/UsernamesWorkspace.jsx';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import { api } from '../../utils/api.js';
 import { useCustomFormProvider, withCustomFormProvider } from '../../context/FormContext.jsx';
@@ -17,10 +13,7 @@ import { useQueryClient } from 'react-query';
 
 const Workspace = withCustomFormProvider(() => {
   const { handleSubmit, reset } = useCustomFormProvider();
-
   const navigate = useNavigate();
-  const { userName } = useUserProvider();
-
   const { forms } = useForms();
   const queryClient = useQueryClient();
 

@@ -7,14 +7,12 @@ import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react
 const DeleteUser = () => {
     const { id } = useParams();
     const { userName, userEmail } = useUserProvider();
-    // console.log(userName, userId, userEmail);
     let [isOpen, setIsOpen] = useState(false);
     let [isDeleted, setIsDeleted] = useState(false);
     const navigate = useNavigate();
 
     const handleConfirmDelete = async (userId) => {
         try {
-            console.log(userId, 'íd', typeof userId)
             await handleDeleteUser(id);
             removeUserSession();
             setIsDeleted(true);
