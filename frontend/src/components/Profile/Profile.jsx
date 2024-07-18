@@ -11,7 +11,6 @@ const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();
 
-
   const { data: user } = useQuery(
     ['user', userId],
     () => fetchUserData(userId),
