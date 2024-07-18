@@ -18,7 +18,7 @@ const Home = () => {
           <Link to={token ? '/workspace' : '/login'}>
             <button
               className='w-80 text-gray-900 h-20 shadow-md bg-azure hover:bg-white
-              hover:shadow-none hover:border hover:border-gray-600 rounded-4xl transition-all
+              hover:shadow-none hover:border hover:border-gray-600 rounded-3xl transition-all
               duration-300  scale-150'
             >
               <span className='font-bold'>Yes!</span> Let's do this!

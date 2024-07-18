@@ -74,7 +74,7 @@ const Login = () => {
               </p>
             }
           </div>
-          <LargeButton submit={handleSubmit(onSubmit)} text={"LOGIN"} />
+          <LargeButton onClick={handleSubmit(onSubmit)} text={"LOGIN"} />
           <a className="flex flex-row text-blue-600 hover:text-blue-800 text-sm  cursor-pointer"
             onClick={() => { navigate('/signup') }}>Not registered? Sign Up!</a>
         </form>

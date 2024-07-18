@@ -90,7 +90,7 @@ const SignUp = () => {
           </div>
           {/* <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
             {error && <p style={{ color: 'red' }}>{error}</p>} */}
-          <LargeButton submit={handleSubmit(onSubmit)} text={'SIGN UP'} />
+          <LargeButton onClick={handleSubmit(onSubmit)} text={'SIGN UP'} />
           <p
             className='w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer'
             onClick={() => {

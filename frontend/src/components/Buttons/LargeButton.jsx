@@ -1,11 +1,16 @@
 import React from 'react'
 
-const LargeButton = ({ submit, text, id }) => {
+const LargeButton = ({ text, id, ...rest }) => {
   return (
     <>
-      <button id={id} onClick={submit} className="w-80 h-20 text-gray-900 shadow-md bg-azure hover:bg-white/50 
-        hover:shadow-none hover:border hover:border-gray-600 rounded-4xl transition-all
-        duration-300">{text}</button>
+      <button
+        id={id}
+        className="w-80 h-20 text-gray-900 shadow-md bg-azure hover:bg-white/50 
+        hover:shadow-none hover:border hover:border-gray-600 rounded-3xl transition-all
+        duration-300"
+        {...rest}>
+        {text}
+      </button>
     </>
   )
 }
