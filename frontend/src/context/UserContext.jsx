@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const session = getUserSession();
-    console.log(session)
+    console.log('Session on mount:', session);
     if (session) {
       setUserId(session.id);
       setUserName(session.name);
@@ -20,6 +20,8 @@ export const UserProvider = ({ children }) => {
 
   const setUserInContext = () => {
     const session = getUserSession();
+    console.log('Session after login:', session);
+
     if (session) {
       setUserId(session.id);
       setUserName(session.name);
