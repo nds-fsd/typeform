@@ -45,7 +45,7 @@ export const QuestionList = () => {
           />
         ))}
       </ul>
-      <SmallButton type='button' text='+ add question' onClick={handleAddQuestion} />
+      <SmallButton type='button' text='+ Add question' onClick={handleAddQuestion} />
     </div >
   );
 };

@@ -74,7 +74,7 @@ const QuestionChoices = ({ autoSave }) => {
           )}
         </div>
       ))}
-      <SmallButton type='button' text='Add choice' onClick={addChoice} />
+      <SmallButton type='button' text='+ Add choice' onClick={addChoice} />
     </>
   );
 };

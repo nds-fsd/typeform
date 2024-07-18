@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
+import { classNames } from '../../utils/utils';
 
-const Input = forwardRef(({ error, label, type = 'text', onBlur, ...rest }, ref) => {
+const Input = forwardRef(({ error, label, type = 'text', onBlur, className, ...rest }, ref) => {
   return (
     <>
       {label && (
@@ -10,7 +11,10 @@ const Input = forwardRef(({ error, label, type = 'text', onBlur, ...rest }, ref)
       )}
       <input
         type={type}
-        className='w-full text-lg outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500'
+        className={classNames(
+          'w-full resize-none rounded-lg p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500',
+          className
+        )}
         ref={ref}
         onBlur={onBlur}
         {...rest}

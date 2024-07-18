@@ -32,10 +32,10 @@ const QuestionCard = ({ question, index, onDragStart, onDragOver, onDrop }) => {
       {index > 0 && (
         <button
           type='button'
-          className='btn btn-square btn-sm absolute right-[-40px] top-[4px]'
+          className='btn btn-square border-none btn-sm absolute right-[-40px] top-[4px] text-2xl text-black/30 bg-transparent hover:bg-azure hover:text-black'
           onClick={() => removeQuestion(index)}
         >
-          X
+          ×
         </button>
       )}
     </div>

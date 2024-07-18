@@ -20,40 +20,43 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     };
 
     return (
-        <div className='flex items-baseline min-w-screen pb-4 px-16 py-16 gap-8 border-gray-800 border-b-2 justify-between'>
+        <div className='flex items-baseline min-w-screen pb-4 px-16 py-16 border-gray-800 border-b-2 justify-between'>
             <UsernamesWorkspace />
-            {/* <UserGreeting /> */}
-            {isCreateMode && (
-                <div className={'flex align-right'}>
-                    <ShareButton formId={id} publishBtnClass={"w-60 h-14 text-gray-900 shadow-md bg-azure hover:bg-white/50 hover:shadow-none rounded-4xl transition-all duration-300"} />
-                    <button
-                        onClick={() => {
-                            navigate(`/formAnswers?form=${id}`)
-                        }}
-                        className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
-                    >
-                        Results
-                    </button>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
-                    >
-                        Delete
-                    </button>
-                </div>
-            )}
-            <ConfirmationModal
-                open={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                title='Confirm Deletion'
-                description='Are you sure you want to delete the form?'
-                onConfirm={() => confirmDelete(id)}
-                textOnClose='Cancel'
-                textOnConfirm='Yes'
-            />
-            {showProfileIcon && (
-                <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
-            )}
+            <div className={'flex align-right justify-evenly gap-8'}>
+                {isCreateMode && (
+                    <div>
+                        <ShareButton formId={id} publishBtnClass={"w-60 h-14 text-gray-900 shadow-md bg-azure hover:bg-white/50 hover:shadow-none rounded-4xl transition-all duration-300"} />
+                        <button
+                            onClick={() => {
+                                navigate(`/formAnswers?form=${id}`)
+                            }}
+                            className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
+                        >
+                            Results
+                        </button>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
+                        >
+                            Delete
+                        </button>
+                    </div>
+                )}
+                <ConfirmationModal
+                    open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    title='Confirm Deletion'
+                    description='Are you sure you want to delete the form?'
+                    onConfirm={() => confirmDelete(id)}
+                    textOnClose='Cancel'
+                    textOnConfirm='Yes'
+                />
+                <UserGreeting />
+
+                {showProfileIcon && (
+                    <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
+                )}
+            </div>
         </div>
     );
 };

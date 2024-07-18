@@ -67,12 +67,12 @@ export const CreateForm = withCustomFormProvider(() => {
       <UserNavbar isCreateMode={true} />
       {!isLoading && (
         <form className='flex flex-col h-screen p-16 overflow-auto' onSubmit={handleSubmit(onSubmit)}>
-          <Input type='text' placeholder='Form name' {...register('title')} onBlur={handleSubmit(onSubmit)} />
+          <Input type='text' placeholder='Form name' className='text-3xl' {...register('title')} onBlur={handleSubmit(onSubmit)} />
           <div className='flex justify-between'>
             <div className='flex flex-col h-full p-2 w-1/3 gap-4'>
               <QuestionOptions autoSave={handleSubmit(onSubmit)} />
               <QuestionList autoSave={handleSubmit(onSubmit)} />
-              <SmallButton text='save' />
+              <SmallButton text='SAVE' className='w-full' />
             </div>
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
           </div>
