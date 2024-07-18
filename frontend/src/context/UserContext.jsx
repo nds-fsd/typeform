@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const session = getUserSession();
+    console.log(session)
     if (session) {
       setUserId(session.id);
       setUserName(session.name);
