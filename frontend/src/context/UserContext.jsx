@@ -20,8 +20,6 @@ export const UserProvider = ({ children }) => {
 
   const setUserInContext = () => {
     const session = getUserSession();
-    console.log('Session after login:', session);
-
     if (session) {
       setUserId(session.id);
       setUserName(session.name);

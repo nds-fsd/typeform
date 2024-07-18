@@ -18,13 +18,15 @@ const getUserToken = () => {
 
 const getUserSession = () => {
     const session = getStorageObject('user-storage');
+    console.log('Getting user session:', session);
     return session ? session.user : null;
 };
 
+
 const setUserSession = (data) => {
-    console.log('Setting user session:', data); // Verifique os dados de entrada
+    console.log('Setting user session:', data);
     setStorageObject('user-storage', { user: data });
-    console.log('User session set:', getStorageObject('user-storage')); // Verifique se os dados foram salvos corretamente
+    console.log('User session set:', getStorageObject('user-storage'));
 };
 
 const removeUserSession = () => {
