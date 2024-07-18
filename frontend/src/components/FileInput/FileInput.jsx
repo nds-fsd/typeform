@@ -49,7 +49,7 @@ export const FileInput = () => {
             <div className="relative w-40 h-10">
                 <input id="file-input" type="file" className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
                     accept="image/png, image/jpeg" onChange={handleFileChange} />
-                <button type="button" className="w-full h-full shadow-md bg-azure hover:bg-white hover:shadow-none hover:border
+                <button type="button" className="w-full h-full shadow-md bg-azure hover:bg-white/50 hover:shadow-none hover:border
                  hover:border-gray-600 rounded-4xl transition-all duration-300">
                     <p>change picture</p>
                 </button>

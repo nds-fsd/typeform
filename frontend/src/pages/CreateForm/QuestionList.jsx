@@ -32,7 +32,7 @@ export const QuestionList = () => {
   };
 
   return (
-    <div className='flex flex-col bg-white items-center p-10 rounded-3xl w-full overflow-y-scroll shadow-md'>
+    <div className='flex flex-col bg-white/50 items-center p-10 rounded-3xl w-full overflow-y-scroll shadow-md'>
       <ul className='w-full flex flex-col gap-1'>
         {questions.map((question, index) => (
           <QuestionCard

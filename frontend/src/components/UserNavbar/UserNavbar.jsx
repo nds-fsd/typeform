@@ -20,12 +20,12 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     };
 
     return (
-        <div className='flex items-baseline min-w-screen p-8 pb-0 gap-8 border-gray-800 border-b-2 justify-between'>
+        <div className='flex items-baseline min-w-screen pb-4 px-16 py-16 gap-8 border-gray-800 border-b-2 justify-between'>
             <UsernamesWorkspace />
             {/* <UserGreeting /> */}
             {isCreateMode && (
                 <div className={'flex align-right'}>
-                    <ShareButton formId={id} publishBtnClass={"w-60 h-14 text-gray-900 shadow-md bg-azure hover:bg-white hover:shadow-none rounded-4xl transition-all duration-300"} />
+                    <ShareButton formId={id} publishBtnClass={"w-60 h-14 text-gray-900 shadow-md bg-azure hover:bg-white/50 hover:shadow-none rounded-4xl transition-all duration-300"} />
                     <button
                         onClick={() => {
                             navigate(`/formAnswers?form=${id}`)

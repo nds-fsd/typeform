@@ -51,7 +51,7 @@ const SignUp = () => {
 
   return (
     <div className='flex items-center justify-center min-h-screen bg-custom-gradient'>
-      <div className='bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center'>
+      <div className='bg-white/50 p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center'>
         <h1 className='text-3xl font-bold mb-6 text-center text-gray-900'>Register to Flow!</h1>
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-6 w-full flex flex-col items-center'>
           <div className='w-full'>
@@ -60,7 +60,7 @@ const SignUp = () => {
               label='Email'
               placeholder='Email'
               {...register('email', {
-                required: { value: true, message: '*email is required' },
+                required: { value: true, message: 'Email is required' },
                 pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
               })}
             />

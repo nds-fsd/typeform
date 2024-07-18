@@ -17,7 +17,7 @@ const ShareButton = ({ formId, publishBtnClass }) => {
         <>
           <div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none'>
             <div className='relative w-auto mx-auto my-6 max-w-2xl'>
-              <div className='relative flex flex-col w-full bg-white rounded-lg shadow-lg outline-none focus:outline-none'>
+              <div className='relative flex flex-col w-full bg-white/50 rounded-lg shadow-lg outline-none focus:outline-none'>
                 <div className='flex items-start justify-between p-5 border-b border-solid border-gray-200 rounded-t'>
                   <h3 className='text-xl font-semibold'>Share form</h3>
                   <button

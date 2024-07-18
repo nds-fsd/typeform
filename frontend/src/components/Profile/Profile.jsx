@@ -18,7 +18,6 @@ const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
     { retry: false }
   );
 
-
   const handleLogout = () => {
     removeUserSession();
     console.log(userName, 'logged out!')
@@ -30,7 +29,7 @@ const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
       <h2>Hi, {userName}</h2>
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <ProfilePicture imageUrl={user?.profilePicture} />
+          <ProfilePicture imageUrl={user?.profilePicture ? user.profilePicture : null} />
         </div>
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

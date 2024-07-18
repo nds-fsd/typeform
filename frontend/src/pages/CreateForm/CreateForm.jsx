@@ -66,7 +66,7 @@ export const CreateForm = withCustomFormProvider(() => {
     <div className='flex flex-col m-0 h-screen w-screen bg-custom-gradient bg-cover md:bg-cover overflow-hidden'>
       <UserNavbar isCreateMode={true} />
       {!isLoading && (
-        <form className='flex flex-col h-screen p-5' onSubmit={handleSubmit(onSubmit)}>
+        <form className='flex flex-col h-screen p-16 overflow-auto' onSubmit={handleSubmit(onSubmit)}>
           <Input type='text' placeholder='Form name' {...register('title')} onBlur={handleSubmit(onSubmit)} />
           <div className='flex justify-between'>
             <div className='flex flex-col h-full p-2 w-1/3 gap-4'>

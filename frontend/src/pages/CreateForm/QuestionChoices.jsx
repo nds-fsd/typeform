@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
+import SmallButton from '../../components/Buttons/SmallButton.jsx';
 
 const QuestionChoices = ({ autoSave }) => {
   const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoiceLabels, control, activeIndex, setActiveIndex } = useCustomFormProvider();
@@ -73,9 +74,7 @@ const QuestionChoices = ({ autoSave }) => {
           )}
         </div>
       ))}
-      <button type='button' className='btn btn-primary btn-sm' onClick={addChoice}>
-        Add Choice
-      </button>
+      <SmallButton type='button' text='Add choice' onClick={addChoice} />
     </>
   );
 };

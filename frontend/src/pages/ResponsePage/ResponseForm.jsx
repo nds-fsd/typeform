@@ -87,7 +87,7 @@ const ResponseForm = () => {
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-custom-gradient'>
       <h2 className='text-center font-extrabold text-3xl my-5'>{formData.title}</h2>
-      <div className='bg-white p-10 rounded-3xl shadow-md w-full max-w-4xl h-96 m-7 flex flex-col items-center relative'>
+      <div className='bg-white/50 p-10 rounded-3xl shadow-md w-full max-w-4xl h-96 m-7 flex flex-col items-center relative'>
         <form className='w-full h-full flex flex-col justify-between' onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-col overflow-auto h-full align-center my-5 ml-4'>
             {fields.length > 0 && (
