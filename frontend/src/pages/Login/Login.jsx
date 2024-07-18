@@ -19,10 +19,11 @@ const Login = () => {
       .then((response) => {
         setUserSession(response.data);
         setUserInContext();
-        navigate('/workspace');
+
       })
+      .then(navigate('/workspace'))
       .catch((error) => {
-        setError(error.response?.data?.error || {});
+        setError(error.response.data.error);
       });
   };
 

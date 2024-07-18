@@ -11,11 +11,6 @@ const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();
 
-  useEffect(() => {
-    console.log(getUserSession().email, 'email de getUsersession desde Profile');
-    console.log(userId, 'id recibido desde el contexto')
-
-  }, []);
 
   const { data: user } = useQuery(
     ['user', userId],

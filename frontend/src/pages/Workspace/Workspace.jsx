@@ -31,10 +31,6 @@ const Workspace = withCustomFormProvider(() => {
       }).catch((error) => console.error('Error creating form:', error))
   };
 
-  useEffect(() => {
-    console.log(getUserSession().email)
-  }, [])
-
   return (
     <div className="flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient bg-cover">
       <UserNavbar isCreateMode={false} />
