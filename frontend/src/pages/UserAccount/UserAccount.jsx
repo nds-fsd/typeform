@@ -14,30 +14,29 @@ import { useUserProvider } from '../../context/UserContext.jsx';
 import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import DeleteUser from './DeleteUser.jsx';
+import ChangePassword from './ChangePassword.jsx';
 
 const UserAccount = () => {
-    const { userId, userEmail } = useUserProvider();
+  const { userId, userEmail } = useUserProvider();
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     console.log(getUserSession().email)
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //     console.log(getUserSession().email)
 
-    // }, [])
-    return (
-        <div className={'bg-custom-gradient bg-cover h-screen w-screen justify-center'}>
-            <UserNavbar showProfileIcon={false} />
-            <div className={'flex flex-col items-center gap-8'}>
-                <h1>{userEmail}</h1>
-                <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
-                <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
-                <DeleteUser />
-                <FileInput />
-                <div>
-                    {/* <ProfileIcon /> */}
-                </div>
-            </div>
-        </div>
-    );
+  // }, [])
+  return (
+    <div className={'bg-custom-gradient bg-cover h-screen w-screen justify-center'}>
+      <UserNavbar showProfileIcon={false} />
+      <div className={'flex flex-col items-center gap-8'}>
+        <h1>{userEmail}</h1>
+        <ChangePassword />
+        <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
+        <DeleteUser />
+        <FileInput />
+        <div>{/* <ProfileIcon /> */}</div>
+      </div>
+    </div>
+  );
 };
 
 export default UserAccount;

@@ -1,4 +1,5 @@
 const User = require('../schemas/user.schema');
+const bcrypt = require('bcrypt');
 
 const getAllUsers = async (req, res) => {
   try {
@@ -74,10 +75,35 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { id } = req.params;
+  const { newPassword, confirmNewPassword } = req.body;
+
+  if (newPassword !== confirmNewPassword) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error changing password' });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser,
+  changePassword,
 };

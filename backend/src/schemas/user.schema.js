@@ -6,11 +6,11 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET;
 
 const userSchema = new Schema({
-  email: { type: String }, //ver si es necesario acá que sea required, 
-  name: { type: String },
-  password: { type: String },
+  email: { type: String, required: true, unique: true }, // Asegurarse de que sea único y requerido
+  name: { type: String, required: true },
+  password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  profilePicture: { type: String }
+  profilePicture: { type: String },
 });
 
 userSchema.pre('save', function (next) {
@@ -48,11 +48,9 @@ userSchema.methods.generateJWT = function () {
     createdAt: user.createdAt,
   };
   return jwt.sign(data, secret, {
-    expiresIn: parseInt(expirationDate.getTime() / 1000, 10)
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
   });
 };
-
-
 
 const User = model('user', userSchema);
 
