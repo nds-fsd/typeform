@@ -11,12 +11,13 @@ import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import { useFormState } from 'react-hook-form';
 import ConfirmationModal from '../../components/Modal/ConfirmationModal.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
+import Input from '../../components/Form/Input.jsx';
 
 export const CreateForm = withCustomFormProvider(() => {
   const { id } = useParams();
   const { forms, isLoading } = useForms();
   const queryClient = useQueryClient();
-  const { handleSubmit, setValue, activeQuestion, watch, control, reset, fillEmptyChoiceLabels, activeIndex } = useCustomFormProvider();
+  const { handleSubmit, setValue, activeQuestion, watch, control, reset, fillEmptyChoiceLabels, activeIndex, register } = useCustomFormProvider();
   const { dirtyFields, isDirty } = useFormState({ control, });
 
   const choices = watch(`questions.${activeQuestion}.choices`);
@@ -62,15 +63,18 @@ export const CreateForm = withCustomFormProvider(() => {
   });
 
   return (
-    <div className='flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient'>
+    <div className='flex flex-col m-0 h-screen w-screen bg-custom-gradient bg-cover md:bg-cover overflow-hidden'>
       <UserNavbar isCreateMode={true} />
       {!isLoading && (
-        <form className='h-full p-5' onSubmit={handleSubmit(onSubmit)}>
-          <SmallButton text='save' />
-          <div className='flex h-full p-2'>
-            <QuestionList autoSave={handleSubmit(onSubmit)} />
+        <form className='flex flex-col h-screen p-5' onSubmit={handleSubmit(onSubmit)}>
+          <Input type='text' placeholder='Form name' {...register('title')} onBlur={handleSubmit(onSubmit)} />
+          <div className='flex justify-between'>
+            <div className='flex flex-col h-full p-2 w-1/3 gap-4'>
+              <QuestionOptions autoSave={handleSubmit(onSubmit)} />
+              <QuestionList autoSave={handleSubmit(onSubmit)} />
+              <SmallButton text='save' />
+            </div>
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
-            <QuestionOptions autoSave={handleSubmit(onSubmit)} />
           </div>
         </form>
       )}
