@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-const Input = forwardRef(({ error, label, type = 'text', ...rest }, ref) => {
+const Input = forwardRef(({ error, label, type = 'text', onBlur, ...rest }, ref) => {
   return (
     <>
       {label && (
@@ -12,6 +12,7 @@ const Input = forwardRef(({ error, label, type = 'text', ...rest }, ref) => {
         type={type}
         className='w-full text-4xl outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/20 border border-transparent focus:border-gray-900 transition duration-500'
         ref={ref}
+        onBlur={onBlur}
         {...rest}
       />
       {error && <p style={{ color: 'red' }}>{error}</p>}

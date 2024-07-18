@@ -1,39 +1,38 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
 import { classNames, toLetterAbbr } from '../../utils/utils.js';
 
-const QuestionChoices = ({ index }) => {
-  const { activeQuestion, watch, setValue } = useCustomFormProvider();
+const QuestionChoices = ({ autoSave }) => {
+  const { activeQuestion, watch, setValue, getValues, register, fillEmptyChoiceLabels, control, activeIndex, setActiveIndex } = useCustomFormProvider();
 
   const choices = watch(`questions.${activeQuestion}.choices`);
-
   const questionType = watch(`questions.${activeQuestion}.type`);
-
-  useEffect(() => {
-    if (!choices) {
-      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
-    }
-  }, [choices]);
-
-  const addChoice = () => {
-    const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
-    setValue(`questions.${activeQuestion}.choices`, [...currentQuestions, { label: '' }]);
-  };
-
-  const removeChoice = (index) => {
-    const currentQuestions = getValues(`questions.${activeQuestion}.choices`);
-    const newQuestions = currentQuestions.filter((_, i) => i !== index);
-    setValue(`questions.${activeQuestion}.choices`, newQuestions);
-  };
 
   const isSingleChoice = questionType === 'SingleChoiceQuestion';
 
-  const color = questionType === 'SingleChoiceQuestion' ? 'green' : 'yellow';
+  useEffect(() => {
+    if (!choices || choices.length === 0) {
+      setValue(`questions.${activeQuestion}.choices`, [{ label: '' }, { label: '' }]);
+    }
+  }, [activeQuestion, questionType, choices]);
+
+  const addChoice = () => {
+    const currentChoices = getValues(`questions.${activeQuestion}.choices`);
+    setValue(`questions.${activeQuestion}.choices`, [...currentChoices, { label: '' }]);
+  };
+
+  const removeChoice = (index) => {
+    const currentChoices = getValues(`questions.${activeQuestion}.choices`);
+    const newChoices = currentChoices.filter((_, i) => i !== index);
+    setValue(`questions.${activeQuestion}.choices`, newChoices);
+    fillEmptyChoiceLabels(newChoices);
+    autoSave();
+  };
 
   return (
     <>
       {choices?.map((choice, index) => (
-        <div className='relative' key={choice._id}>
+        <div className='relative' key={choice.id}>
           <div
             key={index}
             className={classNames(
@@ -51,17 +50,22 @@ const QuestionChoices = ({ index }) => {
             </span>
             <input
               type='text'
-              className='outline-none bg-transparent pl-2'
+              className='outline-none bg-transparent pl-2 z-1'
+              placeholder={`Choice ${toLetterAbbr(index + 1)}`}
               value={choice.label}
+              {...register(`questions.${activeQuestion}.choices.${index}.label`)}
               onChange={(e) => {
                 setValue(`questions.${activeQuestion}.choices.${index}.label`, e.target.value);
               }}
+              onFocus={() => setActiveIndex(index)}
+              onBlur={() => setActiveIndex(null)}
             />
           </div>
-          {index > 1 && (
+          {choices.length > 2 && activeIndex === index && (
             <button
               type='button'
-              className='btn btn-square btn-sm absolute right-[-40px] top-[1px]'
+              className='z-5 btn btn-square btn-sm absolute right-[-40px] top-[1px]'
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => removeChoice(index)}
             >
               X
@@ -72,32 +76,10 @@ const QuestionChoices = ({ index }) => {
       <button type='button' className='btn btn-primary btn-sm' onClick={addChoice}>
         Add Choice
       </button>
-      {`questions.${activeQuestion}.choices`.length < 2 && <p>hey! this type of question needs at least two options</p>}
-
     </>
   );
 };
 
 export default QuestionChoices;
 
-// // functional version (from TYP-30):
-// const QuestionChoices = ({ register, control, index }) => {
-//     const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
-//         control,
-//         name: `questions[${index}].choices`
-//     });
-
-//     return (
-//         <div>
-//             {fields.map((choice, choiceIndex) => (
-//                 <div className={styles.questionChoice} key={choice.id} >
-//                     <input id={styles.inputChoice} type="text" {...register(`questions[${index}].choices[${choiceIndex}].label`)} />
-//                     <button type="button" onClick={() => remove(choiceIndex)}>x</button>
-//                 </div>
-//             ))
-//             }
-//             <button type="button" onClick={() => append({})}>Add Choice</button>
-//         </div >
-//     )
-// }
 

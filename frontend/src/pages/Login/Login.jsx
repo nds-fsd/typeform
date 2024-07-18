@@ -19,8 +19,9 @@ const Login = () => {
       .then((response) => {
         setUserSession(response.data);
         setUserInContext();
-        navigate('/workspace');
+
       })
+      .then(navigate('/workspace'))
       .catch((error) => {
         setError(error.response.data.error);
       });
@@ -35,7 +36,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
       <div className="bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 font-rubik">Welcome back!</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900">Welcome back!</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
           <div className="w-full">
             <Input

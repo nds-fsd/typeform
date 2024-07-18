@@ -1,5 +1,7 @@
-import { createContext, useCallback, useContext } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toLetterAbbr } from '../utils/utils';
+
 
 export const FormContext = createContext(null);
 
@@ -16,10 +18,8 @@ const defaultValues = {
 };
 
 export const CustomFormProvider = ({ children }) => {
-  const { register, control, watch, setValue, getValues, handleSubmit, formState } = useForm({ defaultValues });
-  const { isDirty, dirtyFields, touchedFields } = formState;
+  const { register, control, watch, setValue, getValues, handleSubmit, formState, reset } = useForm({ defaultValues });
 
-  // console.log(isDirty, touchedFields);
   const {
     fields,
     remove: removeQuestion,
@@ -29,19 +29,14 @@ export const CustomFormProvider = ({ children }) => {
     control,
     name: 'questions',
   });
-  // const watchFieldArray = watch('questions');
-  // const questions = fields.map((field, index) => {
-  //   return {
-  //     ...field,
-  //     ...watchFieldArray[index],
-  //   };
-  // });
 
   const activeQuestion = watch('active');
+  const questions = watch('questions');
 
   const setActiveQuestion = (index) => {
     setValue('active', index);
   };
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const handleRemoveQuestion = useCallback(
     (index) => {
@@ -53,12 +48,23 @@ export const CustomFormProvider = ({ children }) => {
     [activeQuestion],
   );
 
+  const fillEmptyChoiceLabels = () => {
+    questions?.map((question, qIndex) => {
+      question.choices?.map((choice, cIndex) => {
+        if (choice.label === '') {
+          setValue(`questions.${qIndex}.choices.${cIndex}.label`, `Choice ${toLetterAbbr(cIndex + 1)}`);
+        }
+      });
+    });
+    return getValues()
+  };
+
   const value = {
+    questions,
     activeQuestion,
     setActiveQuestion,
     register,
     control,
-    // questions,
     addQuestion,
     removeQuestion: handleRemoveQuestion,
     swapQuestion,
@@ -66,8 +72,11 @@ export const CustomFormProvider = ({ children }) => {
     getValues,
     watch,
     handleSubmit,
-    fields
-    // watchFieldArray
+    fields,
+    fillEmptyChoiceLabels,
+    reset,
+    activeIndex,
+    setActiveIndex
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
@@ -80,9 +89,3 @@ export const withCustomFormProvider = (Component) => (props) => (
     <Component {...props} />
   </CustomFormProvider>
 );
-
-// const { data: formData } = useQuery(
-//     ['form', id],
-//     () => api().get(`/form/${id}`).then(res => res.data),
-//     { enabled: isEditMode }
-// );
