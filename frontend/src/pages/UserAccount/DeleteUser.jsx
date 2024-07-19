@@ -3,6 +3,8 @@ import { useUserProvider } from "../../context/UserContext";
 import { useState } from "react";
 import SmallButton from "../../components/Buttons/SmallButton";
 import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { handleDeleteUser } from "../../utils/api";
+import { removeUserSession } from "../../utils/localStorage";
 
 const DeleteUser = () => {
     const { id } = useParams();
