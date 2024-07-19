@@ -14,20 +14,19 @@ const QuestionCard = ({ question, index, onDragStart, onDragOver, onDrop }) => {
   const icon = questionTypes?.find((questionType) => questionType.value === question.type)?.icon;
 
   return (
-    <div className='relative w-full'>
+    <div className='relative'>
       <li
         className={classNames(
-          'flex p-1.5 pr-8 hover:bg-white/50 rounded-md gap-8 items-center w-full',
-          isSelected ? 'bg-white border-1 font-semibold' : '',
+          'flex border border-1 border-white/50 p-2 rounded-md gap-4 w-11/12 items-center',
+          isSelected ? 'border-1 border-neutral-900 font-semibold' : '',
         )}
         draggable
         onDragStart={onDragStart}
         onDrop={onDrop}
         onDragOver={onDragOver}
         onClick={handleSelectQuestion}
-        style={{ marginRight: '0.5rem' }} // Ajuste de margin inline
       >
-        {icon && cloneElement(icon, { number: index + 1 })}
+        {cloneElement(icon, { number: index + 1 })}
         <p className='truncate'>{question.text}</p>
       </li>
       {index > 0 && (
