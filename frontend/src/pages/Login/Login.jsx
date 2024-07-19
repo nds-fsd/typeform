@@ -21,7 +21,7 @@ const Login = () => {
         setUserInContext();
 
       })
-      .then(navigate('/workspace'))
+      .then(navigate('/workspace'), { replace: true })
       .catch((error) => {
         setError(error.response.data.error);
       });

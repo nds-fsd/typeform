@@ -6,6 +6,7 @@ import ShareButton from '../DropDown/ShareButton';
 import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../Modal/ConfirmationModal';
 import { useState } from 'react';
+import SmallButton from '../Buttons/SmallButton';
 
 const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     const { id } = useParams();
@@ -20,26 +21,16 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     };
 
     return (
-        <div className='flex items-baseline min-w-screen pb-4 px-16 py-16 border-gray-800 border-b-2 justify-between'>
+        <div className='flex items-center min-w-screen pb-4 px-16 py-10 border-gray-800 bg-white/20 border-b-2 justify-between'>
             <UsernamesWorkspace />
-            <div className={'flex align-right justify-evenly gap-8'}>
+            <div className={'flex align-right items-center justify-evenly gap-8'}>
+                <UserGreeting />
                 {isCreateMode && (
-                    <div>
-                        <ShareButton formId={id} publishBtnClass={"w-60 h-14 text-gray-900 shadow-md bg-azure hover:bg-white/50 hover:shadow-none rounded-3xl transition-all duration-300"} />
-                        <button
-                            onClick={() => {
-                                navigate(`/formAnswers?form=${id}`)
-                            }}
-                            className='font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'
-                        >
-                            Results
-                        </button>
-                        <button
-                            onClick={() => setIsModalOpen(true)}
-                            className='font-semibold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left'
-                        >
-                            Delete
-                        </button>
+                    <div className='flex gap-2'>
+                        <ShareButton formId={id} className='bg-transparent' />
+                        <SmallButton className='bg-transparent' text='Results' onClick={() => { navigate(`/formAnswers?form=${id}`) }} />
+                        <SmallButton className='bg-transparent' text='Delete' onClick={() => setIsModalOpen(true)}
+                        />
                     </div>
                 )}
                 <ConfirmationModal
@@ -51,8 +42,6 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
                     textOnClose='Cancel'
                     textOnConfirm='Yes'
                 />
-                <UserGreeting />
-
                 {showProfileIcon && (
                     <ProfileIcon accountSettingsId='accountSettings' profileIconId='profileIcon' />
                 )}

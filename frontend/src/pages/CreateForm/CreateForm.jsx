@@ -63,29 +63,34 @@ export const CreateForm = withCustomFormProvider(() => {
   });
 
   return (
-    <div className='flex flex-col m-0 h-screen w-screen bg-custom-gradient bg-cover md:bg-cover overflow-hidden'>
+    <div className='flex flex-col m-0 h-dvh w-screen bg-custom-gradient bg-cover md:bg-cover overflow-y-auto md:overflow-hidden'>
       <UserNavbar isCreateMode={true} />
       {!isLoading && (
-        <form className='flex flex-col h-screen p-16 overflow-auto' onSubmit={handleSubmit(onSubmit)}>
-          <Input type='text' placeholder='Form name' className='text-3xl' {...register('title')} onBlur={handleSubmit(onSubmit)} />
-          <div className='flex justify-between'>
-            <div className='flex flex-col h-full p-2 w-1/3 gap-4'>
-              <QuestionOptions autoSave={handleSubmit(onSubmit)} />
+        <form className='flex justify-center md:flex-col flex-grow p-8 h-8 justify-center' onSubmit={handleSubmit(onSubmit)}>
+          <div className='flex justify-around flex-grow h-6'>
+            <div className='flex flex-col w-4/12 gap-8 h-8'>
+              <Input type='text' placeholder='Form name' className='text-3xl' {...register('title')} onBlur={handleSubmit(onSubmit)} />
+              {/* <QuestionOptions autoSave={handleSubmit(onSubmit)} /> */}
               <QuestionList autoSave={handleSubmit(onSubmit)} />
-              <SmallButton text='SAVE' className='w-full' />
+              <SmallButton text='SAVE' className='w-full h-[64px] mt-8' />
             </div>
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
           </div>
+          {/* <footer className='fixed bottom-0 left-0 w-full flex justify-end px-4 py-4'>
+            <SmallButton text='SAVE' className='w-full md:w-64 h-[64px] m-10 mb-6' />
+          </footer> */}
+          <ConfirmationModal
+            open={blocker.state === 'blocked'}
+            onClose={() => blocker.reset()}
+            textOnClose='cancel'
+            textOnConfirm='yes'
+            description='Changes will be lost, do you wish to continue?'
+            onConfirm={() => blocker.proceed()}
+          />
         </form>
       )}
-      <ConfirmationModal
-        open={blocker.state === 'blocked'}
-        onClose={() => blocker.reset()}
-        textOnClose='cancel'
-        textOnConfirm='yes'
-        description='Changes will be lost, do you wish to continue?'
-        onConfirm={() => blocker.proceed()}
-      />
+
+
     </div>
   );
 });

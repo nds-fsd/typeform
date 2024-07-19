@@ -27,7 +27,7 @@ const DeleteUser = () => {
             <SmallButton text='Delete account' className='w-[250px]' onClick={() => setIsOpen(true)} />
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                    <DialogPanel className="max-w-lg space-y-4 border rounded-3xl bg-white p-12">
+                    <DialogPanel className="max-w-lg space-y-4 border rounded-3xl bg-whitep-8">
                         <DialogTitle className="font-bold text-2xl">Delete account</DialogTitle>
                         <Description>Caution! this will permanently delete your account</Description>
                         <p>are you sure you want to delete your account? All of your data will be permanently removed.</p>
@@ -42,7 +42,7 @@ const DeleteUser = () => {
             </Dialog>
             <Dialog open={isDeleted} onClose={() => navigate('/home')} className="relative z-50">
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                    <DialogPanel className="max-w-lg space-y-4 border bg-white/50 p-12">
+                    <DialogPanel className="max-w-lg space-y-4 border bg-white/50p-8usernavbar">
                         <DialogTitle className="font-bold">your account was successfully deleted :( bye</DialogTitle>
                         <div className="flex gap-4">
                             <button onClick={() => navigate('/home')}>ok</button>

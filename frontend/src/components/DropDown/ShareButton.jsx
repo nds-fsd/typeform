@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
 import CopyClipboard from './CopyClipboard';
+import SmallButton from '../Buttons/SmallButton';
 
-const ShareButton = ({ formId, publishBtnClass }) => {
+const ShareButton = ({ formId, inDropdown = false, className }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <button
-        type='button'
-        onClick={() => setShowModal(true)}
-        className={publishBtnClass || 'font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left'}
-      >
-        Publish
-      </button>
+      {inDropdown ? (
+        <button
+          type='button'
+          onClick={() => setShowModal(true)}
+          className={'font-semibold block w-full px-4 py-2 text-sm text-gray-700 hover:bg-azure text-left'}
+        >
+          Publish
+        </button>
+      ) : (
+        <SmallButton
+          type='button'
+          text='Publish'
+          onClick={() => setShowModal(true)}
+          className={className}
+        />
+      )
+      }
+
       {showModal && (
         <>
           <div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none'>

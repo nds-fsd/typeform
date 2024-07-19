@@ -5,7 +5,7 @@ const FormSubmitModal = ({ showModal }) => {
     <>
       {showModal && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='relative w-full max-w-md bg-white/50 rounded-3xl shadow-lg'>
+          <div className='relative w-full max-w-md bg-white/50 rounded-2xl shadow-lg'>
             <div className='p-4'>
               <h3 className='text-xl font-semibold'>Thank you!</h3>
               <p className='text-gray-700'>
