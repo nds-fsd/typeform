@@ -25,7 +25,7 @@ const SignUp = () => {
       if (response?.data.token) {
         setUserSession(response.data);
         setUserInContext();
-        navigate('/workspace');
+        // navigate('/workspace');
       }
       return response.data;
     } catch (err) {

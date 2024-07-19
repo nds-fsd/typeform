@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../Modal/ConfirmationModal';
 import { useState } from 'react';
 import SmallButton from '../Buttons/SmallButton';
+import { handleDeleteForm } from '../../utils/api';
 
 const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     const { id } = useParams();
@@ -16,8 +17,9 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
 
 
     const confirmDelete = (id) => {
-        // handleDelete(id);
+        handleDeleteForm(id);
         setIsModalOpen(false);
+        navigate('/workspace')
     };
 
     return (
