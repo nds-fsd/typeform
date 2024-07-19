@@ -100,7 +100,7 @@ Once you have decided to publish your form and share it with the world, you can 
 
 If you are in your workspace, you can also publish your form directly through the dropdown menu (...) on each form card. 
 
-![enter image description here]([https://res.cloudinary.com/dflb5okkq/image/upload/v1721378956/Screenshot_2024-07-19_at_10.48.16_AM_idzpug.png](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378956/Screenshot_2024-07-19_at_10.48.16_AM_idzpug.png))
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378956/Screenshot_2024-07-19_at_10.48.16_AM_idzpug.png)
 
 Both methods will open a popup with a link that you can share with the people you want to respond to your form. 
 
@@ -108,16 +108,20 @@ Both methods will open a popup with a link that you can share with the people yo
 
 ## View responses
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+The share link can be opened by the recipient, who will be able to answer each question one by one until they reach the last one. By pressing "Submit," their response will be saved.
 
 ![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721379154/Screenshot_2024-07-19_at_10.52.00_AM_szab6u.png)
 
+To view the responses, you can use the navbar or the dropdown menu on the form cards.
+
 ![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378955/Screenshot_2024-07-19_at_10.48.22_AM_cvmzxm.png)
+
+In the "Response Page" section, you will be able to see all the responses to your forms. 
 
 ![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721379153/Screenshot_2024-07-19_at_10.52.21_AM_onoqvy.png)
 ## Change profile data
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+In the "Profile" section, you can change your profile picture, update your password, or delete your account entirely. Manage your personal settings to keep your profile up-to-date and secure.
 
 ![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375794/image_6_o9mzgt.png)
 
@@ -125,7 +129,7 @@ You can export the current file by clicking **Export to disk** in the menu. You 
 
 This diagram shows the different Schemas and relations between entities that the app's backend uses to manage users and forms incoming data.
 
-![enter image description here]([https://res.cloudinary.com/dflb5okkq/image/upload/v1721324940/Artboard_1_2x-1002222_seqobj.jpg](https://res.cloudinary.com/dflb5okkq/image/upload/v1721324940/Artboard_1_2x-1002222_seqobj.jpg))
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721324940/Artboard_1_2x-1002222_seqobj.jpg)
 
 ## Dependencies & Libraries
 
@@ -154,6 +158,11 @@ This diagram shows the different Schemas and relations between entities that the
 - Github Actions
 
 **Now you are ready to enjoy the power of Surflow!**
+
+
+
+
+
 
 
 
