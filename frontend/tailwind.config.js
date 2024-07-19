@@ -12,18 +12,28 @@ module.exports = {
         '4xl': '3rem',
       },
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgba(0,212,255,1) 100%)',
+        // 'custom-gradient': '#ff0000',
+        // 'custom-gradient': 'linear-gradient(45deg, rgba(226, 222, 243,1) 0%, rgb(240, 255, 255) 100%)',
+        'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgb(240, 255, 255) 100%)',
       },
       colors: {
-        azure: '#F0FFFF',
+        azure: '#c5c5ff',
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
         'space-mono': ['Space Mono', 'monospace'],
-        'abril-fatface': ['Abril Fatface', 'serif']
+        'abril-fatface': ['Abril Fatface', 'serif'],
+        // sobrescribe default font usada para todos los textos (ya que el default es sans),
+        // objetivo es no tener que especificarla en className todos los componentes
+        // 'sans': ['Space Mono']
       },
       boxShadow: {
         'glow': '0 0 10px 5px rgba(255, 255, 255, 0.6)',
+      },
+      spacing: {
+        'base': '2rem',
+        'double-base': '4rem',
+        'triple-base': '6rem'
       }
     },
   },

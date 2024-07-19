@@ -1,9 +1,3 @@
-/* 
-1. profile picture
-2. edit profile picture button
-3. change password button
-4. delete account OK
-*/
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { FileInput } from '../../components/FileInput/FileInput.jsx';
@@ -15,26 +9,20 @@ import { getUserSession, removeUserSession } from '../../utils/localStorage.js';
 import UserNavbar from '../../components/UserNavbar/UserNavbar.jsx';
 import DeleteUser from './DeleteUser.jsx';
 
-// importar user (name, email e picture) de un UserContext.
-
 const UserAccount = () => {
     const { userId, userEmail } = useUserProvider();
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     console.log(getUserSession().email)
-
-    // }, [])
     return (
-        <div>
-            <UserNavbar icon={false} />
-            <h2>{userEmail}</h2>
-            <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
-            <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
-            <DeleteUser />
-            <FileInput />
-            <div>
-                {/* <ProfileIcon /> */}
+        <div className={'bg-custom-gradient bg-cover h-screen w-screen justify-center'}>
+            <UserNavbar showProfileIcon={true} />
+            <div className={'flex flex-col items-center gap-6 mt-8'}>
+                <p className='text-2xl'>{userEmail}</p>
+                <SmallButton text='Change Username' className='w-[250px]' onClick={() => console.log('should allow user to change username')} />
+                <DeleteUser />
+                <FileInput />
+                <div>
+                    {/* <ProfileIcon /> */}
+                </div>
             </div>
         </div>
     );

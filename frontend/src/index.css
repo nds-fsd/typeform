@@ -5,11 +5,17 @@
 @tailwind utilities;
 
 
-
 body {
     min-height: 100vh;
-    height: 100vh;
     box-sizing: border-box;
+    font-family: 'Space Mono', sans-serif;
+    letter-spacing: -0.04em;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Abril Fatface', serif;
 }
 
 #root {
@@ -20,4 +26,3 @@ body {
 * {
     box-sizing: border-box;
 }
-

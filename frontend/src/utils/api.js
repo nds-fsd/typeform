@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserToken, removeUserSession } from './localStorage';
+import { getUserToken, removeUserSession, setUserSession } from './localStorage';
 
 export const api = () => {
   const token = getUserToken();
@@ -19,7 +19,6 @@ export const handleDeleteForm = async (formId) => {
 
 export const handleDeleteUser = async (userId) => {
   try {
-    console.log(userId)
     const res = await api().delete(`/user/${userId}`);
     return res.data;
   } catch (error) {
@@ -33,11 +32,11 @@ const UPLOAD_PRESET = 'profile_images'
 
 export const handleUpload = async (event) => {
   const file = event.target.files[0];
-  
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', UPLOAD_PRESET);
-  
+
   try {
     const response = await axios.post(CLOUDINARY_URL, formData, {
       headers: {
@@ -68,5 +67,15 @@ export const fetchUserData = async (userId) => {
   } catch (error) {
     console.error('Error fetching user data', error);
     throw new Error('Error fetching user data');
+  }
+};
+
+export const handleUpdateUserName = async (userId, newUserName) => {
+  try {
+    const res = await api().put(`/user/${userId}`, { name: newUserName });
+    return res.data;
+  } catch (error) {
+    console.error('Error updating username', error);
+    throw new Error('Failed to update username. Please try again.');
   }
 };
