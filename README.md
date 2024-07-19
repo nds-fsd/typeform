@@ -131,6 +131,16 @@ This diagram shows the different Schemas and relations between entities that the
 
 ![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721403639/Artboard_1_2x-1004444_cu1qvi.jpg)
 
+## Test with Cypress
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721406456/Choose_a_browser_paw8or.png)
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721406456/image_14_womu8a.png)
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721406456/image_15_kz1kn2.png)
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721406457/Welcome_to_Cypress_clqrdg.png)
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721406456/Pasted_Graphic_4_bfvoog.png)
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721406457/image_13_wklvw6.png)
+
+
 ## Dependencies & Libraries
 
  - React
