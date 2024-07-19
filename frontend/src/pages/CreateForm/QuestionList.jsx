@@ -54,29 +54,27 @@ export const QuestionList = () => {
   };
 
   return (
-    <div>
-      <div className='flex flex-col flexx-grow bg-white/50 gap-8 items-center p-12 rounded-3xl max-h-[500px] overflow-y-auto shadow-md'>
-        <div className='w-full flex flex-col align-baseline max-w border-b-2 border-black pb-8'>
-          <Select
-            label='Question Type'
-            value={options.find((option) => option.value === currentType)}
-            onChange={(value) => handleOnChangeType(value)}
-            options={options}
+    <div className='flex-grow flex flex-col max-w-3xl md:w-1/2 w-full rounded-3xl shadow-md bg-white/50 p-12 items-center justify-center'>
+      <div className='max-h-42 border-b-2 border-black w-full mb-10'>
+        <Select
+          label='Question Type'
+          value={options.find((option) => option.value === currentType)}
+          onChange={(value) => handleOnChangeType(value)}
+          options={options}
+        />
+      </div>
+      <ul className='w-full flex-grow overflow-y-auto'>
+        {questions.map((question, index) => (
+          <QuestionCard
+            question={question}
+            key={question.id}
+            index={index}
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDrop={(e) => handleOnDrop(e, index)}
+            onDragOver={(e) => handleDragOver(e)}
           />
-        </div>
-        <ul className='w-full gap-1'>
-          {questions.map((question, index) => (
-            <QuestionCard
-              question={question}
-              key={question.id}
-              index={index}
-              onDragStart={(e) => handleDragStart(e, index)}
-              onDrop={(e) => handleOnDrop(e, index)}
-              onDragOver={(e) => handleDragOver(e)}
-            />
-          ))}
-        </ul>
-      </div >
+        ))}
+      </ul>
       <SmallButton type='button' text='+ Add question' onClick={handleAddQuestion} className='w-full mt-4' />
     </div>
   );

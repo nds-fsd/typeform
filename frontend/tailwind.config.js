@@ -14,7 +14,7 @@ module.exports = {
       backgroundImage: {
         // 'custom-gradient': '#ff0000',
         // 'custom-gradient': 'linear-gradient(45deg, rgba(226, 222, 243,1) 0%, rgb(240, 255, 255) 100%)',
-        'custom-gradient': 'linear-gradient(45deg, rgba(226, 222, 243,1) 0%, rgb(240, 255, 255) 100%)',
+        'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgb(240, 255, 255) 100%)',
       },
       colors: {
         azure: '#c5c5ff',

@@ -10,15 +10,15 @@ const QuestionForm = ({ autoSave }) => {
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
 
     return (
-        <main className='w-1/2 h-4/5 my-auto max-w-3xl rounded-3xl shadow-md bg-white/50 p-8 flex flex-col items-center justify-center'>
+        <main className='md:w-1/2 max-h-full my-auto max-w-3xl rounded-3xl shadow-md bg-white/50 p-8 flex flex-col items-center justify-center'>
             <TextareaAutoSize
-                className='w-full max-h-42 text-xl outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500'
+                className='w-full max-h-40 text-xl outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500'
                 placeholder='your question here'
                 value={watch(`questions.${activeQuestion}.text`)}
                 {...register(`questions.${activeQuestion}.text`)}
             />
             <TextareaAutoSize
-                className='w-full max-h-28 text-md outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500 mt-4'
+                className='w-full max-h-40 text-md outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500 mt-4'
                 placeholder='description (optional)'
                 value={watch(`questions.${activeQuestion}.description`)}
                 {...register(`questions.${activeQuestion}.description`)}
@@ -26,7 +26,7 @@ const QuestionForm = ({ autoSave }) => {
             />
             {type === 'TextQuestion' && (
                 <div className='mt-2 p-2 pb-0 text-md w-full text-gray-900 border-b border-gray-900'>
-                    answer goes here
+                    Answer goes here
                 </div>
             )}
             {hasChoices && <QuestionChoices autoSave={autoSave} />}
