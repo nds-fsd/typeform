@@ -29,10 +29,8 @@ const QuestionForm = ({ autoSave }) => {
                     answer goes here
                 </div>
             )}
-            <div className='flex flex-col overflow-auto w-full max-w-lg min-w-fit h-full max-h-80 self-center gap-2 mt-4'>
-                {hasChoices && <QuestionChoices autoSave={autoSave} />}
-                {type === 'YesNoQuestion' && <YesNoChoices />}
-            </div>
+            {hasChoices && <QuestionChoices autoSave={autoSave} />}
+            {type === 'YesNoQuestion' && <YesNoChoices />}
         </main>
     );
 };

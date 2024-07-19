@@ -12,7 +12,8 @@ module.exports = {
         '4xl': '3rem',
       },
       backgroundImage: {
-        // 'custom-gradient': '#ff0000'
+        // 'custom-gradient': '#ff0000',
+        // 'custom-gradient': 'linear-gradient(45deg, rgba(226, 222, 243,1) 0%, rgb(240, 255, 255) 100%)',
         'custom-gradient': 'linear-gradient(45deg, rgba(226, 222, 243,1) 0%, rgb(240, 255, 255) 100%)',
       },
       colors: {
@@ -30,9 +31,9 @@ module.exports = {
         'glow': '0 0 10px 5px rgba(255, 255, 255, 0.6)',
       },
       spacing: {
-        'base': '3rem',
-        'double-base': '6rem',
-        'triple-base': '9rem'
+        'base': '2rem',
+        'double-base': '4rem',
+        'triple-base': '6rem'
       }
     },
   },
