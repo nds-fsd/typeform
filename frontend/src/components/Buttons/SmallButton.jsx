@@ -1,24 +1,18 @@
 import React from 'react';
+import { classNames } from '../../utils/utils';
 
-const SmallButton = ({ text, ...rest }) => {
+const SmallButton = ({ text, className, ...rest }) => {
   return (
-    <>
-      <button
-        className='min-w-fit w-20 h-fit shadow-md bg-azure/80 hover:shadow-none transition-all duration-100 hover:bg-gray-200/30
-        rounded-2xl p-3'
-        {...rest}
-      >
-        {text}
-      </button>
-    </>
+    <button
+      className={classNames(
+        'min-w-fit w-fit px-4 py-1 h-fit shadow-md bg-azure hover:shadow-none transition-all duration-300 hover:bg-white rounded-xl p-3 text-lg  whitespace-nowrap',
+        className
+      )}
+      {...rest}
+    >
+      {text}
+    </button>
   );
 };
 
 export default SmallButton;
-{
-  /* <>
-<button className="w-fit h-fit m-8 shadow-md bg-azure/80 hover:bg-white
-  hover:shadow-none rounded-4xl transition-all
-  duration-300 p-5" {...rest}>{text}</button>
-</> */
-}

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ProfilePicture } from '../ProfilePicture/ProfilePicture';
 import { handleUpdateProfilePicture, handleUpload, fetchUserData } from '../../utils/api';
 import { useQuery } from 'react-query';
 import { useUserProvider } from '../../context/UserContext';
-import { useEffect } from 'react';
-
+import SmallButton from '../../components/Buttons/SmallButton';
 
 export const FileInput = () => {
     const [url_Image, setUrlImage] = useState();
@@ -31,8 +30,6 @@ export const FileInput = () => {
         return <div>Sorry, there is an error.</div>
     }
 
-
-
     const handleFileChange = async (event) => {
         try {
             const url = await handleUpload(event);
@@ -45,16 +42,17 @@ export const FileInput = () => {
     };
 
     return (
-        <div>
-            <div className="relative w-40 h-10">
-                <input id="file-input" type="file" className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
-                    accept="image/png, image/jpeg" onChange={handleFileChange} />
-                <button type="button" className="w-full h-full shadow-md bg-azure hover:bg-white hover:shadow-none hover:border
-                 hover:border-gray-600 rounded-4xl transition-all duration-300">
-                    <p>change picture</p>
-                </button>
-                {/* <button type="button" onClick={onSubmit}>Submit</button> */}
-                <ProfilePicture imageUrl={url_Image} />
+        <div className="flex flex-col items-center gap-4 w-36 max-w-52 ">
+            <ProfilePicture imageUrl={url_Image} />
+            <div className="relative">
+                <input
+                    id="file-input"
+                    type="file"
+                    className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
+                    accept="image/png, image/jpeg"
+                    onChange={handleFileChange}
+                />
+                <SmallButton type="button" text="Change picture" className="w-[250px]" />
             </div>
         </div>
     );

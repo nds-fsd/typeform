@@ -14,11 +14,10 @@ const UserAccount = () => {
 
     return (
         <div className={'bg-custom-gradient bg-cover h-screen w-screen justify-center'}>
-            <UserNavbar showProfileIcon={false} />
-            <div className={'flex flex-col items-center gap-8'}>
-                <h1>{userEmail}</h1>
-                <SmallButton text='change password' onClick={() => console.log('should allow user to change password')} />
-                <SmallButton text='change username' onClick={() => console.log('should allow user to change username')} />
+            <UserNavbar showProfileIcon={true} />
+            <div className={'flex flex-col items-center gap-6 mt-8'}>
+                <p className='text-2xl'>{userEmail}</p>
+                <SmallButton text='Change Username' className='w-[250px]' onClick={() => console.log('should allow user to change username')} />
                 <DeleteUser />
                 <FileInput />
                 <div>

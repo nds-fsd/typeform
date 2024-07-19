@@ -4,7 +4,7 @@ const UserGreeting = () => {
     const { userName } = useUserProvider();
 
     return (
-        <h1 className='text-4xl' >Hi, {userName}!</h1>
+        <p className='text-xl' >Hi, {userName}!</p>
     )
 };
 
