@@ -63,15 +63,15 @@ export const CreateForm = withCustomFormProvider(() => {
   });
 
   return (
-    <div className='flex flex-col h-dvh w-screen bg-custom-gradient bg-cover md:bg-cover overflow-y-auto md:overflow-hidden'>
+    <div className='flex flex-col gap-4 h-dvh w-screen bg-custom-gradient bg-cover md:bg-cover overflow-y-auto md:overflow-hidden'>
       <UserNavbar isCreateMode={true} />
-      <Input type='text' placeholder='Form name' className='text-3xl px-12' {...register('title')} onBlur={handleSubmit(onSubmit)} />
+      <Input type='text' placeholder='Form name' className='text-3xl px-20' {...register('title')} onBlur={handleSubmit(onSubmit)} />
       {!isLoading && (
-        <form className='flex flex-col md:flex justify-between flex-grow p-8 h-10 overflow-y-auto md:overflow-hidden' onSubmit={handleSubmit(onSubmit)}>
-          <div className='md:flex-row gap-8 md:h-full h-6 flex flex-col border-4 justify-around flex-grow pb-4'>
+        <form className='flex flex-col md:flex justify-between flex-grow py-16 h-10 overflow-y-auto md:overflow-hidden' onSubmit={handleSubmit(onSubmit)}>
+          <div className='md:flex-row md:h-full h-6 flex flex-col md:gap-20 mb-18 justify-between mx-20 flex-grow pb-4'>
             {/* <QuestionOptions autoSave={handleSubmit(onSubmit)} /> */}
             <QuestionList autoSave={handleSubmit(onSubmit)} />
-            <SmallButton text='SAVE' className='md:w-60 w-full h-[68px] absolute bottom-0 right-0 rounded-none md:rounded-2xl md:bottom-8 md:right-8' />
+            <SmallButton text='SAVE' className='md:w-60 w-full h-[72px] absolute bg-white hover:bg-black hover:text-white bottom-0 right-0 rounded-none md:rounded-2xl md:bottom-24 md:right-24' />
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
           </div>
           {/* <footer className='fixed bottom-0 left-0 w-full flex justify-end px-4 py-4'>

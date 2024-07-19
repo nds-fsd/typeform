@@ -10,7 +10,7 @@ const QuestionForm = ({ autoSave }) => {
     const hasChoices = ['MultipleChoiceQuestion', 'SingleChoiceQuestion'].includes(type);
 
     return (
-        <main className='md:w-1/2 max-h-full my-auto max-w-3xl rounded-3xl shadow-md bg-white/50 p-8 flex flex-col items-center justify-center'>
+        <main className='md:w-full h-full my-auto max-w-full rounded-3xl shadow-md bg-white/50 p-12 flex flex-col items-center justify-center'>
             <TextareaAutoSize
                 className='w-full max-h-40 text-xl outline-none resize-none rounded-md p-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 transition duration-500'
                 placeholder='your question here'

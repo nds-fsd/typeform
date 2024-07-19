@@ -26,7 +26,6 @@ export const UserProvider = ({ children }) => {
       setUserId(session.id);
       setUserName(session.name);
       setUserEmail(session.email);
-      console.log('userId', userId, userName, userEmail)
     }
   };
 

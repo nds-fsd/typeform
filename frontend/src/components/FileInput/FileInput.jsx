@@ -42,7 +42,7 @@ export const FileInput = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-4 w-56">
+        <div className="flex flex-col items-center gap-4 w-36 max-w-52 ">
             <ProfilePicture imageUrl={url_Image} />
             <div className="relative">
                 <input

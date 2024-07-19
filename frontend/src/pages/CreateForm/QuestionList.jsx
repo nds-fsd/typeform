@@ -54,7 +54,7 @@ export const QuestionList = () => {
   };
 
   return (
-    <div className='flex-grow flex flex-col max-w-3xl md:w-1/2 w-full rounded-3xl shadow-md bg-white/50 p-12 items-center justify-center'>
+    <div className='flex-grow flex flex-col max-w-3xl w-2/5 rounded-3xl shadow-md bg-white/50 p-12 pb-4 items-center justify-center'>
       <div className='max-h-42 border-b-2 border-black w-full mb-10'>
         <Select
           label='Question Type'
@@ -63,7 +63,7 @@ export const QuestionList = () => {
           options={options}
         />
       </div>
-      <ul className='w-full flex-grow overflow-y-auto'>
+      <ul className='w-full flex-grow overflow-y-auto overflow-x-hidden'>
         {questions.map((question, index) => (
           <QuestionCard
             question={question}
@@ -75,7 +75,7 @@ export const QuestionList = () => {
           />
         ))}
       </ul>
-      <SmallButton type='button' text='+ Add question' onClick={handleAddQuestion} className='w-full mt-4' />
+      <SmallButton type='button' text='+ Add question' onClick={handleAddQuestion} className='w-full mt-12' />
     </div>
   );
 };
