@@ -33,12 +33,19 @@ Open your browser and navigate to `http://localhost:3000/` to use Surflow.
 
 Once into [http://localhost:3000](http://localhost:3000/) you will be directed to the Homepage. If you don’t have an account yet, click the "Yes, let's do this" button, which will take you to the login page. 
 
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375795/image_lhtmhh.png)
+
 ## Sign up & Login
 
 1. **Access the App**: If you already have an account, simply log in with your credentials. - If you're new to Surflow, click the "Not registered? Sign Up!" link to open the registration window. 
 
-3. **Register Your Account**: - Fill in your name, email address, and create a secure password. - Click the "Submit" button to complete your registration. 
-4.  **Welcome Email**: - After submitting your details, you will receive a welcome email from Surflow. - This email confirms that your registration was successful. 
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375795/image_2_nk3r5r.png)
+
+2. **Register Your Account**: - Fill in your name, email address, and create a secure password. - Click the "Submit" button to complete your registration. 
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375794/image_4_kkdnki.png)
+
+3.  **Welcome Email**: - After submitting your details, you will receive a welcome email from Surflow. - This email confirms that your registration was successful. 
 
 ![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721316051/Mail_example_2x-100_n2fmck.jpg)
 
@@ -46,38 +53,79 @@ Once into [http://localhost:3000](http://localhost:3000/) you will be directed t
 
 ## Create your first form
 
-You can delete the current file by clicking the **Remove** button in the file explorer. The file will be moved into the **Trash** folder and automatically deleted after 7 days of inactivity.
+To create a new form, simply press the "Create New Form" button. This button will redirect you to the form editing page, where you can start adding new questions to your form. Get creative and customize your form to gather the information you need efficiently. 
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375335/image_8_kvxg4i.png)
 
 ## Add new questions
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375297/Captura_de_Pantalla_2024-07-19_a_las_9.22.54_ixiemc.png)
 
-## Change question type
+`When you enter the form editing page, follow these steps to create and customize your form:
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+1. **Set a Title**:
+ - At the top right corner of the screen, you can choose a title for your form.
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721377894/Screenshot_2024-07-19_at_10.30.52_AM_vi6a9e.png)
+
+2. **Select Question Type**:
+ - Choose the type of question you want to add to your form from the available options.
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721377975/Screenshot_2024-07-19_at_10.32.44_AM_njvdhm.png)
+3. **Add Questions**:
+ - Press the "Add Question" button to add questions of the selected type to your form. To add different types of questions, simply change the question type and press "Add Question" again.
+
+4. **Delete Questions**:
+ - Use the "X" button to delete any questions you have added.
+
+5. **Edit Questions**:
+ - In the center of the screen, you'll find the editing window where you can modify the inputs for each question.
+
+6. **Edit Specific Questions**:
+ - To edit a specific question, click on the question in the left sidebar. The editing window will automatically switch to allow you to edit the selected question.
+
+By following these steps, you can efficiently create and customize your form to suit your needs. Happy form editing!
 
 ## Save a form
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+Once you are happy with your form, press the "Save" button. This will add the form to your workspace, where it can be edited whenever you need. Your form will be readily available for any future modifications or updates.
 
-## Share form
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378166/Screenshot_2024-07-19_at_10.35.59_AM_vrofib.png)
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+## Publish & Share form
+
+Once you have decided to publish your form and share it with the world, you can use the "Publish" button in the navbar (available when you are in the "Create New Form" window). 
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378576/Screenshot_2024-07-19_at_10.41.08_AM_pklqou.png)
+
+If you are in your workspace, you can also publish your form directly through the dropdown menu (...) on each form card. 
+
+![enter image description here]([https://res.cloudinary.com/dflb5okkq/image/upload/v1721378956/Screenshot_2024-07-19_at_10.48.16_AM_idzpug.png](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378956/Screenshot_2024-07-19_at_10.48.16_AM_idzpug.png))
+
+Both methods will open a popup with a link that you can share with the people you want to respond to your form. 
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378833/Screenshot_2024-07-19_at_10.46.56_AM_unn6uw.png)
 
 ## View responses
 
 You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
-##Synchronization
 
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721379154/Screenshot_2024-07-19_at_10.52.00_AM_szab6u.png)
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721378955/Screenshot_2024-07-19_at_10.48.22_AM_cvmzxm.png)
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721379153/Screenshot_2024-07-19_at_10.52.21_AM_onoqvy.png)
 ## Change profile data
 
 You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721375794/image_6_o9mzgt.png)
 
 ## Mongoose Data Schemas
 
 This diagram shows the different Schemas and relations between entities that the app's backend uses to manage users and forms incoming data.
 
-![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721315110/Artboard_1_2x-100_mxpdbc.jpg)
+![enter image description here]([https://res.cloudinary.com/dflb5okkq/image/upload/v1721324940/Artboard_1_2x-1002222_seqobj.jpg](https://res.cloudinary.com/dflb5okkq/image/upload/v1721324940/Artboard_1_2x-1002222_seqobj.jpg))
 
 ## Dependencies & Libraries
 
@@ -106,6 +154,7 @@ This diagram shows the different Schemas and relations between entities that the
 - Github Actions
 
 **Now you are ready to enjoy the power of Surflow!**
+
 
 
 
