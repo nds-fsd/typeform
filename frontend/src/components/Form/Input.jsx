@@ -5,7 +5,7 @@ const Input = forwardRef(({ error, label, type = 'text', onBlur, className, ...r
   return (
     <>
       {label && (
-        <label htmlFor='name' className='block text-sm font-medium text-gray-900 '>
+        <label htmlFor='name'>
           {label}
         </label>
       )}
