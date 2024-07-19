@@ -71,7 +71,7 @@ const QuestionChoices = ({ autoSave }) => {
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => removeChoice(index)}
               >
-                X
+                ×
               </button>
             )}
           </div>

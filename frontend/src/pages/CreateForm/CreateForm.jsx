@@ -71,7 +71,7 @@ export const CreateForm = withCustomFormProvider(() => {
           <div className='md:flex-row md:h-full h-6 flex flex-col md:gap-20 mb-18 justify-between mx-20 flex-grow pb-4'>
             {/* <QuestionOptions autoSave={handleSubmit(onSubmit)} /> */}
             <QuestionList autoSave={handleSubmit(onSubmit)} />
-            <SmallButton text='SAVE' className='md:w-60 w-full h-[72px] absolute bg-white hover:bg-black hover:text-white bottom-0 right-0 rounded-none md:rounded-2xl md:bottom-24 md:right-24' />
+            <SmallButton text='SAVE' className='md:w-60 w-full h-[72px] absolute hover:bg-black hover:text-underline bottom-0 right-0 rounded-none md:rounded-2xl md:bottom-24 md:right-24' />
             <QuestionForm autoSave={handleSubmit(onSubmit)} />
           </div>
           {/* <footer className='fixed bottom-0 left-0 w-full flex justify-end px-4 py-4'>

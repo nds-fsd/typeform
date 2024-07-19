@@ -27,7 +27,7 @@ const Dropdown = ({ form, handleDelete }) => {
       <div>
         <button
           type='button'
-          className='inline-flex justify-center w-full rounded-md border bg-azure/80 shadow-sm px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500'
+          className='inline-flex justify-center w-full rounded-md border bg-azure/80 shadow-sm px-2 py-1 text-black hover:bg-white/50 focus:outline-none focus:ring-neutral-500'
           id='options-menu'
           aria-haspopup='true'
           aria-expanded={isOpen}
