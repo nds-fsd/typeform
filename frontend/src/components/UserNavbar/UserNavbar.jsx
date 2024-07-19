@@ -25,7 +25,7 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     return (
         <div className='flex items-center min-w-screen pb-4 px-20 py-10 border-gray-800 bg-white/20 border-b-2 justify-between top-0'>
             <UsernamesWorkspace />
-            <div className={'flex align-right items-center justify-evenly gap-8'}>
+            <div className={'flex align-right items-center justify-evenly gap-4'}>
                 <UserGreeting />
                 {isCreateMode && (
                     <div className='flex gap-2'>

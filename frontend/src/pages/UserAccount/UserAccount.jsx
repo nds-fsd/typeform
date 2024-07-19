@@ -17,9 +17,10 @@ const UserAccount = () => {
             <UserNavbar showProfileIcon={true} />
             <div className={'flex flex-col items-center gap-6 mt-8'}>
                 <p className='text-2xl'>{userEmail}</p>
-                <SmallButton text='Change Username' className='w-[250px]' onClick={() => console.log('should allow user to change username')} />
-                <DeleteUser />
+                {/* <SmallButton text='Change Username' className='w-[250px]' onClick={() => console.log('should allow user to change username')} /> */}
                 <FileInput />
+                <DeleteUser />
+
                 <div>
                     {/* <ProfileIcon /> */}
                 </div>
