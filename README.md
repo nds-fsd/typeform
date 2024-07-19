@@ -129,7 +129,7 @@ In the "Profile" section, you can change your profile picture, update your passw
 
 This diagram shows the different Schemas and relations between entities that the app's backend uses to manage users and forms incoming data.
 
-![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721324940/Artboard_1_2x-1002222_seqobj.jpg)
+![enter image description here](https://res.cloudinary.com/dflb5okkq/image/upload/v1721403639/Artboard_1_2x-1004444_cu1qvi.jpg)
 
 ## Dependencies & Libraries
 
