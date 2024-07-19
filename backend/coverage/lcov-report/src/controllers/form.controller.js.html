@@ -146,9 +146,7 @@
 <a name='L81'></a><a href='#L81'>81</a>
 <a name='L82'></a><a href='#L82'>82</a>
 <a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L84'></a><a href='#L84'>84</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -191,7 +189,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -210,7 +207,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -237,84 +233,82 @@
 &nbsp;
 // Obtiene todos los formularios
 const getAllForms = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const user = <span class="cstat-no" title="statement not covered" >req.user;</span>
-        const allForms = <span class="cstat-no" title="statement not covered" >await Form.find({owner:user._id}).populate('questions');</span>
-<span class="cstat-no" title="statement not covered" >        res.json(allForms)</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error('Failed to get forms:', error);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: 'Failed to get forms' });</span>
-    }
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const user = <span class="cstat-no" title="statement not covered" >req.user;</span>
+    const allForms = <span class="cstat-no" title="statement not covered" >await Form.find({ owner: user._id }).populate('questions');</span>
+<span class="cstat-no" title="statement not covered" >    res.json(allForms);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Failed to get forms:', error);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: 'Failed to get forms' });</span>
+  }
 };
 &nbsp;
 // Obtiene un formulario por su ID de MongoDB
 const getForm = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-        const formFound = <span class="cstat-no" title="statement not covered" >await Form.findById(id).populate('questions');</span>
-<span class="cstat-no" title="statement not covered" >        if (!formFound) {</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(404).json({ error: 'Form not found' });</span>
-        }
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(formFound)</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error('Failed to get form:', error);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: 'Failed to get form' })</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+    const formFound = <span class="cstat-no" title="statement not covered" >await Form.findById(id).populate('questions');</span>
+<span class="cstat-no" title="statement not covered" >    if (!formFound) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(404).json({ error: 'Form not found' });</span>
     }
+<span class="cstat-no" title="statement not covered" >    res.status(200).json(formFound);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Failed to get form:', error);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: 'Failed to get form' });</span>
+  }
 };
 &nbsp;
 // Crea un nuevo formulario
 const createForm = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const { body } = <span class="cstat-no" title="statement not covered" >req;</span>
-        const user = <span class="cstat-no" title="statement not covered" >req.user;</span>
-        const newForm = <span class="cstat-no" title="statement not covered" >await Form.create({</span>
-            title: body.title,
-            status: body.status,
-            questions: body.questions,
-            creationDateTime: new Date(),
-            owner: user._id
-        });
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(newForm);</span>
-&nbsp;
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error('Failed to create form:', error);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: 'Failed to create form' });</span>
-    }
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const { body } = <span class="cstat-no" title="statement not covered" >req;</span>
+    const user = <span class="cstat-no" title="statement not covered" >req.user;</span>
+    const newForm = <span class="cstat-no" title="statement not covered" >await Form.create({</span>
+      title: body.title,
+      status: body.status,
+      questions: body.questions,
+      creationDateTime: new Date(),
+      owner: user._id,
+    });
+<span class="cstat-no" title="statement not covered" >    res.status(200).json(newForm);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Failed to create form:', error);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: 'Failed to create form' });</span>
+  }
 };
 &nbsp;
 // Actualiza un formulario existente
 const updateForm = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-        const { body } = <span class="cstat-no" title="statement not covered" >req;</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+    const { body } = <span class="cstat-no" title="statement not covered" >req;</span>
 &nbsp;
-        const updatedForm = <span class="cstat-no" title="statement not covered" >await Form.findByIdAndUpdate(id, body, { new: true });</span>
+    const updatedForm = <span class="cstat-no" title="statement not covered" >await Form.findByIdAndUpdate(id, body, { new: true });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (!updatedForm) {</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(404).json({ error: 'Form not found' });</span>
-        }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        res.json(updatedForm)</span>
-&nbsp;
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error('Failed to update form:', error);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: 'Failed to update form' });</span>
+<span class="cstat-no" title="statement not covered" >    if (!updatedForm) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(404).json({ error: 'Form not found' });</span>
     }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    res.json(updatedForm);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Failed to update form:', error);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: 'Failed to update form' });</span>
+  }
 };
 &nbsp;
 // Elimina un formulario existente
 const deleteForm = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-        const formToDelete = <span class="cstat-no" title="statement not covered" >await Form.findByIdAndDelete(id);</span>
-<span class="cstat-no" title="statement not covered" >        if (!formToDelete) {</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(404).json({ error: 'Form not found' });</span>
-        }
-<span class="cstat-no" title="statement not covered" >        res.status(204).json(formToDelete);</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error('Failed to delete form:', error);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: 'Failed to delete form' });</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
+    const formToDelete = <span class="cstat-no" title="statement not covered" >await Form.findByIdAndDelete(id);</span>
+<span class="cstat-no" title="statement not covered" >    if (!formToDelete) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(404).json({ error: 'Form not found' });</span>
     }
+<span class="cstat-no" title="statement not covered" >    res.status(204).json(formToDelete);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Failed to delete form:', error);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ error: 'Failed to delete form' });</span>
+  }
 };
 &nbsp;
 module.exports = { getAllForms, getForm, createForm, updateForm, deleteForm };
@@ -325,7 +319,7 @@ module.exports = { getAllForms, getForm, createForm, updateForm, deleteForm };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-30T21:11:57.392Z
+                at 2024-07-19T16:15:46.972Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

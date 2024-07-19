@@ -44,16 +44,17 @@ const FormAnswers = () => {
   //formTitle solo es necesario q aparezca una vez, en el header(?) */}
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll">
+    <div className="flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll ">
       <UserNavbar isCreateMode={false} />
-      {error && <p className="text-red-500">{error}</p>}
       <div className="overflow-x-auto">
-        <table className="w-full border-separate border-spacing-0">
+        {/* {error && <p className="text-red-500">{error}</p>} */}
+
+        <table className="w-full border-separate border-b border-t   border-black border-spacing-0 ">
           <thead>
             <tr>
-              <th className="border-l border-r border-black p-2">DATE</th>
+              <th className="border-r border-b   border-black p-10 text-left ">Date</th>
               {currentForm?.questions.map((question, index) => (
-                <th key={index} className="border-l border-r border-b border-black p-2">{question.text}</th>
+                <th key={index} className="border-r border-b border-black p-10 text-left">{question.text}</th>
               ))}
             </tr>
           </thead>
@@ -61,9 +62,9 @@ const FormAnswers = () => {
             {answers.length > 0 ? (
               answers.map((answerSet, index) => (
                 <tr key={index}>
-                  <td className="border-l border-t border-black p-2">{formatDate(answerSet.creationDateTime)}</td>
+                  <td className="border-black  p-10 text-left">{formatDate(answerSet.creationDateTime)}</td>
                   {currentForm?.questions.map((question, qIndex) => (
-                    <td key={qIndex} className="border-r border-l border-black p-2">
+                    <td key={qIndex} className="border-black p-2">
                       <AnswerCard answer={answerSet.answers[qIndex]} />
                     </td>
                   ))}
@@ -71,7 +72,7 @@ const FormAnswers = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={currentForm?.questions.length + 1} className="border-l border-r border-black p-2 text-center">No answers to display</td>
+                <td colSpan={currentForm?.questions.length + 1} className="text-xl p-14 border-black p-2 text-center">No answers to display</td>
               </tr>
             )}
           </tbody>
