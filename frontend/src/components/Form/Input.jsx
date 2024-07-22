@@ -1,22 +1,25 @@
 import { forwardRef } from 'react';
+import { classNames } from '../../utils/utils';
 
-const Input = forwardRef(({ error, label, type = 'text', onBlur, ...rest }, ref) => {
+const Input = forwardRef(({ error, label, type = 'text', onBlur, className, ...rest }, ref) => {
   return (
     <>
       {label && (
-        <label htmlFor='name' className='block text-sm font-medium text-gray-900 font-space mono'>
+        <label htmlFor='name'>
           {label}
         </label>
       )}
       <input
         type={type}
-        className='font-space mono mt-1 block w-full px-3 py-2 bg-transparent hover:bg-white/20 border border-transparent
-            rounded-md focus:outline-none focus:ring-blue-500 focus:border-gray-900 sm:text-sm'
+        className={classNames(
+          'w-full resize-none rounded-lg bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 outline-none transition duration-500',
+          className
+        )}
         ref={ref}
         onBlur={onBlur}
         {...rest}
       />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className='text-red-500'>{error}</p>}
     </>
   );
 });

@@ -7,10 +7,7 @@ const AnswerCard = ({ answer }) => {
     );
 
     return (
-        <div className={'min-w-[500px] p-4'}>
-            {questionType && (
-                <div>{questionType.icon}</div>
-            )}
+        <div className={'w-full text-sm'}>
             <p>{answer.answer}</p>
         </div>
     );

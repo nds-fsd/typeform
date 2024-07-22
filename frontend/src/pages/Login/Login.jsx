@@ -34,11 +34,12 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-custom-gradient">
-      <div className="bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-900">Welcome back!</h1>
+      <div className="bg-white/50 p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center">
+        <h1 className="mb-6 text-center">Welcome back!</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
           <div className="w-full">
             <Input
+              className="border-2 border-blue/20"
               error={errors?.email?.message}
               label="Email"
               placeholder='Email'
@@ -74,8 +75,8 @@ const Login = () => {
             }
           </div>
           <LargeButton submit={handleSubmit(onSubmit)} text={"LOGIN"} />
-          <a className="flex flex-row text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer"
-            onClick={() => { navigate('/signup') }}>Not registered? Sign Up!</a>
+          <p className="cursor-pointer hover:underline"
+            onClick={() => { navigate('/signup') }}>Not registered? Sign Up!</p>
         </form>
       </div>
     </div>

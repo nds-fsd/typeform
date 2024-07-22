@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserToken, removeUserSession } from './localStorage';
+import { getUserToken, removeUserSession, setUserSession } from './localStorage';
 
 export const api = () => {
   const token = getUserToken();
@@ -67,5 +67,15 @@ export const fetchUserData = async (userId) => {
   } catch (error) {
     console.error('Error fetching user data', error);
     throw new Error('Error fetching user data');
+  }
+};
+
+export const handleUpdateUserName = async (userId, newUserName) => {
+  try {
+    const res = await api().put(`/user/${userId}`, { name: newUserName });
+    return res.data;
+  } catch (error) {
+    console.error('Error updating username', error);
+    throw new Error('Failed to update username. Please try again.');
   }
 };

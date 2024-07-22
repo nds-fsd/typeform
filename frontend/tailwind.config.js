@@ -12,10 +12,12 @@ module.exports = {
         '4xl': '3rem',
       },
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(45deg, rgba(160,158,194,1) 0%, rgba(197,197,255,1) 43%, rgb(240, 255, 255) 100%)',
+        // 'custom-gradient-2': '#ff0000',
+        // 'custom-gradient': 'linear-gradient(45deg, rgba(226, 222, 243,1) 0%, rgb(240, 255, 255) 100%)',
+        'custom-gradient': 'linear-gradient(45deg, rgba(168,165,200,1) 0%, rgba(192,192,230,1) 43%, rgb(227, 230, 227) 100%)',
       },
       colors: {
-        azure: '#F0FFFF',
+        azure: 'rgb(192,192, 230)'
       },
       fontFamily: {
         'rubik': ['Rubik', 'sans-serif'],
@@ -24,6 +26,11 @@ module.exports = {
       },
       boxShadow: {
         'glow': '0 0 10px 5px rgba(255, 255, 255, 0.6)',
+      },
+      spacing: {
+        'base': '2rem',
+        'double-base': '4rem',
+        'triple-base': '6rem'
       }
     },
   },

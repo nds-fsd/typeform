@@ -11,47 +11,30 @@ const ProfileIcon = ({ accountSettingsId, profileIconId }) => {
   const navigate = useNavigate();
   const { userId, userName } = useUserProvider();
 
-  useEffect(() => {
-    console.log(getUserSession().email, 'email de getUsersession desde Profile');
-    console.log(userId, 'id recibido desde el contexto')
-
-  }, []);
-
   const { data: user } = useQuery(
     ['user', userId],
     () => fetchUserData(userId),
     { retry: false }
   );
 
-
   const handleLogout = () => {
     removeUserSession();
-    console.log(userName, 'logged out!')
     navigate('/login')
   }
 
   return (
-    <div className="flex items-center justify-center gap-3 dropdown dropdown-end scale-150 pl-6 pr-6">
-      <h2>Hi, {userName}</h2>
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-        <div className="w-10 rounded-full">
-          <ProfilePicture imageUrl={user?.profilePicture} />
-        </div>
+    <div className="flex items-center dropdown dropdown-end scale-100">
+      <div tabIndex={0} role="button" className="btn-circle outline-none hover:outline-offset-0 hover:outline-azure avatar">
+        <ProfilePicture imageUrl={user?.profilePicture} />
       </div>
-      <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        {/* <li>
-          <Link to={'/profile'} className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </Link>
-        </li> */}
+      <ul tabIndex={0} className="mt-36 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white/50 rounded-box w-52">
         <li>
-          <Link to={`/user/${userId}/account`} id={accountSettingsId}>
+          <Link to={`/user/${userId}/account`} id={accountSettingsId} className='hover:bg-white'>
             Settings
           </Link>
         </li>
         <li>
-          <button onClick={handleLogout}>
+          <button onClick={handleLogout} className='hover:bg-white'>
             Logout
           </button>
         </li>

@@ -25,7 +25,7 @@ const SignUp = () => {
       if (response?.data.token) {
         setUserSession(response.data);
         setUserInContext();
-        navigate('/workspace');
+        // navigate('/workspace');
       }
       return response.data;
     } catch (err) {
@@ -51,7 +51,7 @@ const SignUp = () => {
 
   return (
     <div className='flex items-center justify-center min-h-screen bg-custom-gradient'>
-      <div className='bg-white p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center'>
+      <div className='bg-white/50 p-16 rounded-3xl shadow-md w-full max-w-md flex flex-col items-center'>
         <h1 className='text-3xl font-bold mb-6 text-center text-gray-900'>Register to Flow!</h1>
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-6 w-full flex flex-col items-center'>
           <div className='w-full'>
@@ -60,7 +60,7 @@ const SignUp = () => {
               label='Email'
               placeholder='Email'
               {...register('email', {
-                required: { value: true, message: '*email is required' },
+                required: { value: true, message: 'Email is required' },
                 pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' },
               })}
             />
@@ -69,6 +69,7 @@ const SignUp = () => {
 
           <div className='w-full'>
             <Input
+              className='border-black'
               error={errors?.name?.message}
               label='Name'
               placeholder='Name'
@@ -90,9 +91,9 @@ const SignUp = () => {
           </div>
           {/* <input className={style.submit} type='submit' value={'Sign up'} disabled={mutation.isLoading}></input>
             {error && <p style={{ color: 'red' }}>{error}</p>} */}
-          <LargeButton submit={handleSubmit(onSubmit)} text={'SIGN UP'} />
+          <LargeButton onClick={handleSubmit(onSubmit)} text={'SIGN UP'} />
           <p
-            className='w-full flex flex-row justify-center text-blue-600 hover:text-blue-800 text-sm font-space mono cursor-pointer'
+            className="cursor-pointer hover:underline"
             onClick={() => {
               navigate('/login');
             }}

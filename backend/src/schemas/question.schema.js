@@ -44,25 +44,3 @@ exports.SingleChoiceQuestion = QuestionSchema.discriminator('SingleChoiceQuestio
 exports.YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({}));
 
 exports.QuestionSchema = QuestionSchema;
-
-// // quisiera entender porque eso no ha funcionado para crear automaticamente las opciones para YesNo type:
-// // ------VERSION 1
-// const YesNoQuestionSchema = new Schema({
-//     choices: [{
-//         label: {
-//             type: String,
-//             enum: ['Yes', 'No'],
-//             default: 'Yes',
-//         },
-//     }],
-// });
-
-// const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', YesNoQuestionSchema);
-
-// // ----------VERSION 2 - declarado irectamente
-// const YesNoQuestion = QuestionSchema.discriminator('YesNoQuestion', new Schema({
-//     choices: [
-//         { label: { type: String, default: 'Yes' } },
-//         { label: { type: String, default: 'No' } }
-//     ]
-// }));

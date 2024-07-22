@@ -18,6 +18,14 @@ h3 {
     font-family: 'Abril Fatface', serif;
 }
 
+h1 {
+    font-size: 2em
+}
+
+h2 {
+    font-size: 1em
+}
+
 #root {
     @apply h-full;
     box-sizing: border-box;

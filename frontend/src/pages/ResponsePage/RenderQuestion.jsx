@@ -25,7 +25,7 @@ const RenderQuestion = ({ question, index, register }) => {
               <div key={option._id}>
                 <input
                   type='radio'
-                  className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-indigo-600 focus:text-white hover:bg-neutral-100'
+                  className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-neutral-600 focus:text-white hover:bg-neutral-100'
                   id={option._id}
                   value={option.label}
                   {...register(`questions.${index}.answer`, { required: true })}
@@ -47,7 +47,7 @@ const RenderQuestion = ({ question, index, register }) => {
                 <input
                   type='checkbox'
                   id={option._id}
-                  className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-indigo-600 focus:text-white hover:bg-neutral-100'
+                  className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-neutral-600 focus:text-white hover:bg-neutral-100'
                   value={option.label}
                   {...register(`questions.${index}.answer`, { required: true })}
                 />
@@ -67,7 +67,7 @@ const RenderQuestion = ({ question, index, register }) => {
               <input
                 type='radio'
                 id={`${question._id}-yes`}
-                className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-indigo-600 focus:text-white hover:bg-neutral-100'
+                className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-neutral-600 focus:text-white hover:bg-neutral-100'
                 value='Yes'
                 {...register(`questions.${index}.answer`, { required: true })}
               />
@@ -77,7 +77,7 @@ const RenderQuestion = ({ question, index, register }) => {
               <input
                 type='radio'
                 id={`${question._id}-no`}
-                className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-indigo-600 focus:text-white hover:bg-neutral-100'
+                className='text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9 focus:bg-neutral-600 focus:text-white hover:bg-neutral-100'
                 value='No'
                 {...register(`questions.${index}.answer`, { required: true })}
               />

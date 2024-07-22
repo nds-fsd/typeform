@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import QuestionCard from './QuestionCard.jsx';
-import Input from '../../components/Form/Input.jsx';
 import SmallButton from '../../components/Buttons/SmallButton.jsx';
 import { useCustomFormProvider } from '../../context/FormContext.jsx';
+import { questionTypes } from '../../constants/questionTypes.jsx';
+import { useMemo } from 'react';
+import Select from '../../components/Form/Select.jsx';
 
-export const QuestionList = ({ autoSave }) => {
-  const { swapQuestion, addQuestion, setActiveQuestion, register, questions } = useCustomFormProvider();
+export const QuestionList = () => {
+  const { swapQuestion, addQuestion, setActiveQuestion, questions } = useCustomFormProvider();
 
   const [draggedIndex, setDraggedIndex] = useState(null);
 
@@ -26,33 +28,53 @@ export const QuestionList = ({ autoSave }) => {
   };
 
   const handleAddQuestion = () => {
-    setIsOpen(true);
     addQuestion({ text: '', type: 'TextQuestion', description: '' });
     const newIndex = questions.length;
     setActiveQuestion(newIndex);
   };
 
+  const { setValue, activeQuestion, watch } = useCustomFormProvider();
+
+  const currentType = watch(`questions.${activeQuestion}.type`);
+  const type = useMemo(() => questionTypes.find((questionType) => questionType.value === currentType), [currentType]);
+
+  const options = questionTypes.map((questionType) => ({
+    value: questionType.value,
+    label: (
+      <div className='flex gap-4'>
+        {questionType.icon}
+        {questionType.label}
+      </div>
+    ),
+  }));
+
+  const handleOnChangeType = (value) => {
+    setValue(`questions.${activeQuestion}.type`, value);
+  };
+
   return (
-    <div className='bg-white/20 p-14 rounded-3xl w-1/5 shadow-md'>
-      <header className='flex flex-col gap-2'>
-        <Input type='text' placeholder='Form name' {...register('title')} onBlur={autoSave} />
-        <h2 className='text-2xl'>Questions</h2>
-      </header>
-      <aside className='flex flex-col gap-2 items-center pt-2'>
-        <ul className='w-full flex flex-col gap-1'>
-          {questions.map((question, index) => (
-            <QuestionCard
-              question={question}
-              key={question.id}
-              index={index}
-              onDragStart={(e) => handleDragStart(e, index)}
-              onDrop={(e) => handleOnDrop(e, index)}
-              onDragOver={(e) => handleDragOver(e)}
-            />
-          ))}
-        </ul>
-        <SmallButton type='button' text='+ add question' onClick={handleAddQuestion} />
-      </aside>
-    </div >
+    <div className='flex-grow flex flex-col md:w-2/5 w-full rounded-3xl shadow-md bg-white/30 p-10 pb-4 items-center justify-center'>
+      <div className='max-h-42 w-full mb-10'>
+        <Select
+          label='Question Type'
+          value={options.find((option) => option.value === currentType)}
+          onChange={(value) => handleOnChangeType(value)}
+          options={options}
+        />
+      </div>
+      <ul className='w-full flex-grow overflow-y-auto overflow-x-hidden'>
+        {questions.map((question, index) => (
+          <QuestionCard
+            question={question}
+            key={question.id}
+            index={index}
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDrop={(e) => handleOnDrop(e, index)}
+            onDragOver={(e) => handleDragOver(e)}
+          />
+        ))}
+      </ul>
+      <SmallButton type='button' text='+ Add question' onClick={handleAddQuestion} className='w-full mt-12' />
+    </div>
   );
 };

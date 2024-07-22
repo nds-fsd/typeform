@@ -17,7 +17,6 @@ const questionValidationSchema = z.object({
       data.type === 'MultipleChoiceQuestion'
       || data.type === 'SingleChoiceQuestion'
     ) && (
-      // !data.choices || data.choices.length < 2
       !data.choices
     )
   ) {

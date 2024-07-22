@@ -1,9 +1,8 @@
-
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/controllers/singup.controller.js</title>
+    <title>Code coverage report for src/controllers/signup.controller.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -15,54 +14,56 @@
         }
     </style>
 </head>
-    
+
 <body>
-<div class='wrapper'>
-    <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> singup.controller.js</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>12/16</span>
+    <div class='wrapper'>
+        <div class='pad1'>
+            <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> signup.controller.js
+            </h1>
+            <div class='clearfix'>
+
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">77.77% </span>
+                    <span class="quiet">Statements</span>
+                    <span class='fraction'>14/18</span>
+                </div>
+
+
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">50% </span>
+                    <span class="quiet">Branches</span>
+                    <span class='fraction'>2/4</span>
+                </div>
+
+
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">100% </span>
+                    <span class="quiet">Functions</span>
+                    <span class='fraction'>1/1</span>
+                </div>
+
+
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">77.77% </span>
+                    <span class="quiet">Lines</span>
+                    <span class='fraction'>14/18</span>
+                </div>
+
+
             </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>12/16</span>
-            </div>
-        
-            
+            <p class="quiet">
+                Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em>
+                for the previous block.
+            </p>
+            <template id="filterTemplate">
+                <div class="quiet">
+                    Filter:
+                    <input type="search" id="fileSearch">
+                </div>
+            </template>
         </div>
-        <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-        </p>
-        <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input type="search" id="fileSearch">
-            </div>
-        </template>
-    </div>
-    <div class='status-line medium'></div>
-    <pre><table class="coverage">
+        <div class='status-line medium'></div>
+        <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -121,7 +122,13 @@
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -149,6 +156,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,7 +190,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const User = require('../schemas/user.schema');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { sendWelcomeEmail } = require('../service/email.service.js');
+const User = require('../schemas/user.schema');
 &nbsp;
 const signUp = async (req, res) =&gt; {
   const { email, name, password } = req.body;
@@ -191,7 +203,7 @@ const signUp = async (req, res) =&gt; {
     const existingUser = await User.findOne({ email: email });
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (existingUser) {
-<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ error: '*email already registered' });</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(409).json({ error: 'Email already registered' });</span>
     }
 &nbsp;
     const newUser = new User({
@@ -206,6 +218,10 @@ const signUp = async (req, res) =&gt; {
 &nbsp;
     const token = newUser.generateJWT();
     // el metodo "generateJWT" esta definido en 'user.schema.js'
+&nbsp;
+    // acá va la función sabre mail de bienvenida
+&nbsp;
+    await sendWelcomeEmail(email, name)
 &nbsp;
     return res.status(201).json({
       token,
@@ -237,23 +253,27 @@ module.exports = {
 // si el servidor no respionde 200 enviar error
 // almacenar el token en local storage
 //redirigir a la pagina /home
-&nbsp;</pre></td></tr></table></pre>
+&nbsp;</pre>
+        </td>
+        </tr>
+        </table>
+        </pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-30T21:11:57.392Z
-            </div>
-        <script src="../../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
-    </body>
+        <div class='push'></div><!-- for sticky footer -->
+    </div><!-- /wrapper -->
+    <div class='footer quiet pad2 space-top1 center small'>
+        Code coverage generated by
+        <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+        at 2024-07-19T16:15:46.972Z
+    </div>
+    <script src="../../prettify.js"></script>
+    <script>
+        window.onload = function () {
+            prettyPrint();
+        };
+    </script>
+    <script src="../../sorter.js"></script>
+    <script src="../../block-navigation.js"></script>
+</body>
+
 </html>
-    
