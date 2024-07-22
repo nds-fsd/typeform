@@ -23,15 +23,15 @@ const UserNavbar = ({ isCreateMode, showProfileIcon = true }) => {
     };
 
     return (
-        <div className='flex items-center min-w-screen pb-4 px-20 py-10 border-gray-800 bg-white/20 justify-between top-0'>
+        <div className='flex items-center min-w-screen pb-2 px-20 pt-10 border-gray-800 bg-white/30 justify-between top-0'>
             <UsernamesWorkspace />
             <div className={'flex align-right items-center justify-evenly gap-6'}>
                 <UserGreeting />
                 {isCreateMode && (
                     <div className='flex gap-2'>
-                        <ShareButton formId={id} className='bg-transparent' />
-                        <SmallButton className='bg-transparent' text='Results' onClick={() => { navigate(`/formAnswers?form=${id}`) }} />
-                        <SmallButton className='bg-transparent' text='Delete' onClick={() => setIsModalOpen(true)}
+                        <ShareButton formId={id} className='bg-transparent border-black border' />
+                        <SmallButton className='bg-transparent border-black border' text='Results' onClick={() => { navigate(`/formAnswers?form=${id}`) }} />
+                        <SmallButton className='bg-transparent border-black border' text='Delete' onClick={() => setIsModalOpen(true)}
                         />
                     </div>
                 )}

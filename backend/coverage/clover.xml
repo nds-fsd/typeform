@@ -110,7 +110,7 @@
         <line num="29" count="0" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
       </file>
-      <file name="singup.controller.js" path="/Users/hadassa/Documents/MasterFullStack/typeform_development/typeform/backend/src/controllers/singup.controller.js">
+      <file name="signup.controller.js" path="/Users/hadassa/Documents/MasterFullStack/typeform_development/typeform/backend/src/controllers/signup.controller.js">
         <metrics statements="18" coveredstatements="14" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>

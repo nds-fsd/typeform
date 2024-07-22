@@ -1,12 +1,12 @@
 const { sendWelcomeEmail } = require('../service/email.service.js');
-const User = require('../schemas/user.schema');
+const User = require('../schemas/user.schema.js');
 
 const signUp = async (req, res) => {
   const { email, name, password } = req.body;
 
   try {
     if (!email) {
-      return res.status(400).json({ error: { register: '*email not received' } });
+      return res.status(400).json({ error: { register: 'Email not received' } });
     }
     const existingUser = await User.findOne({ email: email });
 
@@ -28,7 +28,6 @@ const signUp = async (req, res) => {
     // el metodo "generateJWT" esta definido en 'user.schema.js'
 
     // acá va la función sabre mail de bienvenida
-
     await sendWelcomeEmail(email, name)
 
     return res.status(201).json({
@@ -49,15 +48,3 @@ const signUp = async (req, res) => {
 module.exports = {
   signUp,
 };
-
-// backedn - crear endpoint para registrarnos == recoger datos del usuarios que vienen en el body y validar que los datos son correctos
-//encriptar la contraseña y guardar los datos en la base de datos
-//con el id del nuevo usuario firmar un token con el jsonwebtokens
-//responder a la peticion con le token en el body.
-
-//forntend
-// crear el formulario
-// en onSubmit enviar un post a la ruta que he creado antes
-// si el servidor no respionde 200 enviar error
-// almacenar el token en local storage
-//redirigir a la pagina /home

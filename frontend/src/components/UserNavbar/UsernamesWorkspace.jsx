@@ -5,7 +5,7 @@ function UsernamesWorkspace({ children, text, to, ...rest }) {
     const { userName } = useUserProvider();
 
     return (
-        <Link className='text-4xl cursor-pointer font-abril-fatface' to={to ? to : '/workspace'}>
+        <Link className='text-2xl cursor-pointer font-abril-fatface' to={to ? to : '/workspace'}>
             {text ? text : `${userName}\'s workspace`}
         </Link>
     )

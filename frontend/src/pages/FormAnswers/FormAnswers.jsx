@@ -43,18 +43,27 @@ const FormAnswers = () => {
   }, [location]);
   //formTitle solo es necesario q aparezca una vez, en el header(?) */}
 
+  const questionType = (question) => questionTypes.find(
+    (questionType) => questionType.value === question?.type
+  );
+
   return (
-    <div className="flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll text-lg">
+    <div className="flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll text-sm">
       <UserNavbar isCreateMode={false} />
       <div className="overflow-x-auto">
         {/* {error && <p className="text-red-500">{error}</p>} */}
 
-        <table className="w-full border-separate border-b border-t   border-black border-spacing-0 ">
+        <table className="w-full border-separate border-t border-black border-spacing-0">
           <thead>
             <tr>
-              <th className="border-b   border-black p-10 text-left pl-20">Date</th>
+              <th className="border-b border-black text-left bg-white/30 px-20 font-normal">Date</th>
               {currentForm?.questions.map((question, index) => (
-                <th key={index} className="border-b border-black p-10 text-left">{question.text}</th>
+                <th key={index} className="border-b border-l border-black bg-white/30 py-4 text-left font-normal">
+                  <div className='flex items-center gap-4 pl-4'>
+                    {questionType(question).icon}
+                    {question.text}
+                  </div>
+                </th>
               ))}
             </tr>
           </thead>
@@ -62,23 +71,27 @@ const FormAnswers = () => {
             {answers.length > 0 ? (
               answers.map((answerSet, index) => (
                 <tr key={index}>
-                  <td className="border-black  p-10 text-left pl-20">{formatDate(answerSet.creationDateTime)}</td>
                   {currentForm?.questions.map((question, qIndex) => (
-                    <td key={qIndex} className="border-separate border-black p-4">
-                      <AnswerCard answer={answerSet.answers[qIndex]} />
-                    </td>
+                    <>
+                      {qIndex === 0 &&
+                        <td className="text-left pl-20 px-2 border-b border-black">{formatDate(answerSet.creationDateTime)}</td>
+                      }
+                      <td key={qIndex} className="border-b border-l pl-4 border-black">
+                        <AnswerCard answer={answerSet.answers[qIndex]} />
+                      </td>
+                    </>
                   ))}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={currentForm?.questions.length + 1} className="text-xl p-14 border-black p-2 text-center">No answers to display</td>
+                <td colSpan={currentForm?.questions.length + 1} className="border-black py-8 text-center">No answers to display</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-    </div>
+    </div >
   );
 };
 

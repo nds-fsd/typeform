@@ -17,7 +17,7 @@ const QuestionCard = ({ question, index, onDragStart, onDragOver, onDrop }) => {
     <div className='relative'>
       <li
         className={classNames(
-          'flex border border-1 border-white/50 p-2 rounded-md gap-4 w-11/12 items-center',
+          'flex border border-1 border-black/50 p-2 rounded-2xl gap-4 w-full items-center text-sm',
           isSelected ? 'border-1 border-neutral-900 font-semibold' : '',
         )}
         draggable
@@ -32,7 +32,7 @@ const QuestionCard = ({ question, index, onDragStart, onDragOver, onDrop }) => {
       {index > 0 && (
         <button
           type='button'
-          className='btn btn-square border-none btn-sm absolute right-[-0px] top-[6px] text-2xl text-black/30 bg-transparent hover:bg-azure hover:text-black'
+          className='btn btn-square rounded-xl border-none btn-sm absolute right-[5px] top-[6px] text-xl bg-azure hover:bg-white text-black'
           onClick={() => removeQuestion(index)}
         >
           ×

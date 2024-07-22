@@ -40,13 +40,13 @@ const QuestionChoices = ({ autoSave }) => {
               key={index}
               className={classNames(
                 `border px-2 py-1 rounded-lg flex items-center`,
-                isSingleChoice ? 'bg-purple-100 border-purple-300' : 'bg-yellow-100 border-yellow-300',
+                isSingleChoice ? 'bg-purple-100' : 'bg-yellow-100',
               )}
             >
               <span
                 className={classNames(
-                  `border  w-6 h-6 flex items-center justify-center`,
-                  isSingleChoice ? 'border-purple-300' : 'border-yellow-300',
+                  `rounded-lg w-6 h-6 flex items-center justify-center`,
+                  isSingleChoice ? 'bg-purple-200' : 'bg-yellow-200',
                 )}
               >
                 {toLetterAbbr(index + 1)}

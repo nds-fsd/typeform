@@ -23,7 +23,7 @@ const FormCard = ({ form }) => {
 
   return (
     <div
-      className='relative h-40 flex flex-col items-center justify-center flex-wrap p-8 shadow-md rounded-3xl bg-azure/80 hover:shadow-none transition-all duration-75 hover:bg-gray-200/30'
+      className='relative h-32 text-sm flex flex-col justify-center flex-wrap p-4 shadow-sm rounded-3xl bg-azure hover:shadow-none transition-all duration-500 hover:bg-white'
       onClick={() => navigate(`/createform/${form._id}`)}
     >
       <div className='absolute top-2 right-2'>

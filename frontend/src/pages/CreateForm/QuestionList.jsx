@@ -28,7 +28,6 @@ export const QuestionList = () => {
   };
 
   const handleAddQuestion = () => {
-    // setIsOpen(true);
     addQuestion({ text: '', type: 'TextQuestion', description: '' });
     const newIndex = questions.length;
     setActiveQuestion(newIndex);
@@ -54,8 +53,8 @@ export const QuestionList = () => {
   };
 
   return (
-    <div className='flex-grow flex flex-col max-w-3xl w-2/5 rounded-3xl shadow-md bg-white/50 p-12 pb-4 items-center justify-center'>
-      <div className='max-h-42 border-b-2 border-black w-full mb-10'>
+    <div className='flex-grow flex flex-col md:w-2/5 w-full rounded-3xl shadow-md bg-white/30 p-10 pb-4 items-center justify-center'>
+      <div className='max-h-42 w-full mb-10'>
         <Select
           label='Question Type'
           value={options.find((option) => option.value === currentType)}

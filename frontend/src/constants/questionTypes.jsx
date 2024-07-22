@@ -6,7 +6,7 @@ import React from 'react';
 
 const SquaredIcon = ({ icon, color, number }) => {
   return (
-    <span className={`rounded p-1 ${color} text-black flex items-center gap-1 text-sm w-10`}>
+    <span className={`rounded p-1 ${color} text-black flex items-center gap-3 text-sm w-fit`}>
       {icon}
       {number}
     </span>
@@ -22,7 +22,7 @@ export const questionTypes = [
   {
     value: 'MultipleChoiceQuestion',
     label: 'Multiple Choice Question',
-    icon: <SquaredIcon icon={<TbListLetters size={20} />} color='bg-yellow-200' />,
+    icon: <SquaredIcon icon={<TbListLetters size={20} />} color='bg-yellow-100' />,
   },
   {
     value: 'SingleChoiceQuestion',

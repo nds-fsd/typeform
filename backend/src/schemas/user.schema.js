@@ -6,7 +6,7 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET;
 
 const userSchema = new Schema({
-  email: { type: String }, //ver si es necesario acá que sea required, 
+  email: { type: String },
   name: { type: String },
   password: { type: String },
   createdAt: { type: Date, default: Date.now },
@@ -51,7 +51,6 @@ userSchema.methods.generateJWT = function () {
     expiresIn: parseInt(expirationDate.getTime() / 1000, 10)
   });
 };
-
 
 
 const User = model('user', userSchema);
