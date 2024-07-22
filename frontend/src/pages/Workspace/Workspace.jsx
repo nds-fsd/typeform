@@ -32,12 +32,12 @@ const Workspace = withCustomFormProvider(() => {
   };
 
   return (
-    <div className="flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient bg-cover">
+    <div className="flex flex-col m-0 min-h-screen min-w-screen bg-custom-gradient bg-cover ">
       <UserNavbar isCreateMode={false} />
-      <div className="flex-grow m-8 p-4 md:p-8 bg-white/50 rounded-2xl overflow-hidden">
+      <div className="flex-grow m-8 p-4 md:p-8 bg-white/50 rounded-2xl overflow-hidden ">
         <LargeButton text="Create new form" onClick={handleSubmit(handleCreate)} />
         <div className="mt- md:mt-8 p-2 h-full overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 px-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 px-20 ">
             {forms && forms.length > 0 ? (
               forms.map((form) => <FormCard key={form._id} form={form} />)
             ) : (

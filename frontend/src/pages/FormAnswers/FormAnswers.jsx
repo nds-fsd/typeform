@@ -44,7 +44,7 @@ const FormAnswers = () => {
   //formTitle solo es necesario q aparezca una vez, en el header(?) */}
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll ">
+    <div className="flex flex-col h-screen w-screen bg-custom-gradient bg-contain overflow-scroll text-lg">
       <UserNavbar isCreateMode={false} />
       <div className="overflow-x-auto">
         {/* {error && <p className="text-red-500">{error}</p>} */}
@@ -52,9 +52,9 @@ const FormAnswers = () => {
         <table className="w-full border-separate border-b border-t   border-black border-spacing-0 ">
           <thead>
             <tr>
-              <th className="border-r border-b   border-black p-10 text-left ">Date</th>
+              <th className="border-b   border-black p-10 text-left pl-20">Date</th>
               {currentForm?.questions.map((question, index) => (
-                <th key={index} className="border-r border-b border-black p-10 text-left">{question.text}</th>
+                <th key={index} className="border-b border-black p-10 text-left">{question.text}</th>
               ))}
             </tr>
           </thead>
@@ -62,9 +62,9 @@ const FormAnswers = () => {
             {answers.length > 0 ? (
               answers.map((answerSet, index) => (
                 <tr key={index}>
-                  <td className="border-black  p-10 text-left">{formatDate(answerSet.creationDateTime)}</td>
+                  <td className="border-black  p-10 text-left pl-20">{formatDate(answerSet.creationDateTime)}</td>
                   {currentForm?.questions.map((question, qIndex) => (
-                    <td key={qIndex} className="border-black p-2">
+                    <td key={qIndex} className="border-separate border-black p-4">
                       <AnswerCard answer={answerSet.answers[qIndex]} />
                     </td>
                   ))}

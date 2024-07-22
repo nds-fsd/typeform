@@ -30,7 +30,7 @@ describe('Login flow', () => {
         // cuando se incluya el mensaje para el usuario:
         // cy.contains('Invalid email or password').should('be.visible');
         cy.wait('@loginRequest').then((interception) => {
-            expect(interception.response.statusCode).to.eq(401);
+            expect(interception.response.statusCode).to.eq(404);
             // expect(interception.response.body).to.include('no encontrado')
             expect(interception.response.body.error.email).to.include('no encontrado');
         });
