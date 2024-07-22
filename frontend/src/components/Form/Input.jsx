@@ -5,14 +5,14 @@ const Input = forwardRef(({ error, label, type = 'text', onBlur, className, ...r
   return (
     <>
       {label && (
-        <label htmlFor='name'>
+        <label htmlFor='name' className='px-2'>
           {label}
         </label>
       )}
       <input
         type={type}
         className={classNames(
-          'w-full resize-none rounded-lg bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 outline-none transition duration-500',
+          'w-full resize-none rounded-lg px-2 bg-transparent hover:bg-white/50 border border-transparent focus:border-gray-900 outline-none transition duration-500',
           className
         )}
         ref={ref}

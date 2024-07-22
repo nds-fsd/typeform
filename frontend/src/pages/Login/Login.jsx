@@ -39,7 +39,6 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full flex flex-col items-center">
           <div className="w-full">
             <Input
-              className="border-2 border-blue/20"
               error={errors?.email?.message}
               label="Email"
               placeholder='Email'
