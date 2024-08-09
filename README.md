@@ -146,6 +146,7 @@ This diagram shows the different Schemas and relations between entities that the
  - React
  - Node.js
  - Express
+ - React Hook Form
  - Mongoose
  - Zod
  - Tailwind CSS
