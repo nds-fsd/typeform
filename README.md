@@ -15,15 +15,17 @@ Surflow is a dynamic web application designed to simplify the creation and shari
 
 1. **Clone the repository**:
 
-	    git clone https://github.com/yourusername/surflow.git
+	    git clone https://github.com/nds-fsd/typeform.git
 
 2. **cd surflow**:
 
 	    cd surflow
-3. **Install dependencies**:
+   
+4. **Install dependencies**:
 
 	    npm install
-4. **Start App**
+   
+6. **Start App**
 
 	    npm run dev
     
